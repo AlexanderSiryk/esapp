@@ -1,0 +1,32 @@
+.tableContainer {
+    font-size: 24px;
+    max-width: 500px;
+}
+
+.tableRow {
+    display: flex;
+    border-radius: 5px;
+    height: 1.5em;
+}
+
+.tableCol {
+    flex-basis: 120px;
+    border-right: 1px solid black;
+    flex-shrink: 0;
+}
+
+.tableCol:last-child {
+    border-right: none;
+}
+
+.tableRowHead {
+    font-weight: bold;
+}
+
+.tableRow:nth-child(even) {
+    background: lightgray;
+}
+
+.tableRow:nth-child(odd) {
+    background: gray;
+}

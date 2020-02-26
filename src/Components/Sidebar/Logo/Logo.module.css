@@ -1,0 +1,21 @@
+:root {
+    --wrapperHeight: 50px;
+    --logoHight: 40px;
+}
+
+.logoWrapper {
+    width: 100%;
+    height: var(--wrapperHeight);
+    box-sizing: border-box;
+    border: 1px solid crimson;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: var(--logoHight);
+    background: crimson;
+    overflow: hidden;
+    margin-left: calc((var(--wrapperHeight) - var(--logoHight)) / 2);
+}
