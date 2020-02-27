@@ -1,15 +1,24 @@
 import React from "react";
 
-let TagSelect = () => {
+function onlyUnique(value, index, self) {
+	return self.indexOf(value) === index;
+}
+
+let TagSelect = (props) => {
+	let tagsOptions = props.tableEntries.map((item) => {
+		return item.tag;
+	});
+	tagsOptions = tagsOptions.filter(onlyUnique);
+	tagsOptions = tagsOptions.map((item) => {
+		return (
+			<option value={item}>{item}</option>
+		);
+	});
+
 	return (
-		<>
-			<select id="cars">
-				<option value="f_o_1">Fake option 1</option>
-				<option value="f_o_2">Fake option 1</option>
-				<option value="f_o_3">Fake option 3</option>
-				<option value="f_o_4">Fake option 4</option>
-			</select>
-		</>
+		<select id="tags">
+			{tagsOptions}
+		</select>
 	);
 };
 

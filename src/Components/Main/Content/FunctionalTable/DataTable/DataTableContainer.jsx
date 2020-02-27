@@ -2,9 +2,9 @@ import {connect} from "react-redux";
 import DataTable from "./DataTable";
 
 
-let mapStateToProps = () => {
+let mapStateToProps = (state) => {
 	return ({
-
+		tableEntries: state.content.tableEntries,
 	});
 };
 
