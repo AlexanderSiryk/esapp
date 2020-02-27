@@ -4,9 +4,9 @@ import s from "./Sidebar.module.css"
 import Logo from "./Logo/Logo";
 
 let Sidebar = (props) => {
-	let items = props.items.map(item => {
+	let items = props.items.map((item, index) => {
 		return (
-			<li className={s.menuItem}>
+			<li className={s.menuItem} key={index}>
 				<NavLink to={item.link} activeClassName={s.active}>
 					{item.name}
 				</NavLink>

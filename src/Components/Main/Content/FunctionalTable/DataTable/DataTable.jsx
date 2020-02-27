@@ -3,7 +3,7 @@ import s from "./DataTable.module.css"
 
 let DataTable = (props) => {
 	let headRow = (
-		<div className={`${s.tableRow} ${s.tableRowHead}`}>
+		<div className={`${s.tableRow} ${s.tableRowHead}`} key={0}>
 			<div className={s.tableCol}>Name</div>
 			<div className={s.tableCol}>Login</div>
 			<div className={s.tableCol}>Password</div>
@@ -12,7 +12,7 @@ let DataTable = (props) => {
 	);
 	let rows = [headRow, ...props.tableEntries.map((item) => {
 		return (
-			<div className={`${s.tableRow}`}>
+			<div className={`${s.tableRow}`} key={item.id}>
 				<div className={s.tableCol}>{item.name}</div>
 				<div className={s.tableCol}>{item.login}</div>
 				<div className={s.tableCol}>{item.password}</div>

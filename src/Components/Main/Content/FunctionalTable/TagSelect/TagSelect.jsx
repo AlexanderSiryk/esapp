@@ -9,9 +9,9 @@ let TagSelect = (props) => {
 		return item.tag;
 	});
 	tagsOptions = tagsOptions.filter(onlyUnique);
-	tagsOptions = tagsOptions.map((item) => {
+	tagsOptions = tagsOptions.map((item, index) => {
 		return (
-			<option value={item}>{item}</option>
+			<option value={item} key={index}>{item}</option>
 		);
 	});
 
