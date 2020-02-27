@@ -1,4 +1,5 @@
 import React from "react";
+import s from "./TagSelect.module.css"
 
 function onlyUnique(value, index, self) {
 	return self.indexOf(value) === index;
@@ -16,7 +17,8 @@ let TagSelect = (props) => {
 	});
 
 	return (
-		<select id="tags">
+		<select id={s.tags}>
+			<option value="blank" key="0">select a tag</option>
 			{tagsOptions}
 		</select>
 	);
