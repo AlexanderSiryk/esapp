@@ -9,6 +9,4 @@ let reducersBundle = combineReducers({
 
 let store = createStore(reducersBundle);
 
-Window.state = store.getState();
-
 export default store;

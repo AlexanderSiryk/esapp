@@ -4,7 +4,8 @@ import DataTable from "./DataTable";
 
 let mapStateToProps = (state) => {
 	return ({
-		tableEntries: state.content.tableEntries,
+		searchBarText: state.content.searchBarText,
+		tableEntriesFiltered: state.content.filteredTableEntries
 	});
 };
 

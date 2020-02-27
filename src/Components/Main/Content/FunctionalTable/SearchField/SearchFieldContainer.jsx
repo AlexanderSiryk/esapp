@@ -1,19 +1,18 @@
 import {connect} from "react-redux";
 import SearchField from "./SearchField";
+import {updateFilteredEntries, updateSearchBarText} from "../../../../../Redux/contentReducer";
 
 
-let mapStateToProps = () => {
+let mapStateToProps = (state) => {
 	return ({
-
+		tableEntries: state.content.tableEntries,
+		searchBarText: state.content.searchBarText,
 	});
 };
 
-let mapDispatchToProps = () => {
-	return ({
-
-	});
-};
-
-let SearchFieldContainer = connect(mapStateToProps, mapDispatchToProps)(SearchField);
+let SearchFieldContainer = connect(mapStateToProps, {
+	updateSearchBarText,
+	updateFilteredEntries
+})(SearchField);
 
 export default SearchFieldContainer;
