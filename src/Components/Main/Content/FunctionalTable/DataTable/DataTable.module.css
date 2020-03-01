@@ -1,17 +1,19 @@
 .tableContainer {
     max-width: 500px;
+    user-select: none;
 }
 
 .tableRow {
     display: flex;
     border-radius: 5px;
-    height: 1.5em;
+    height: 30px;
 }
 
 .tableCol {
     flex-basis: 120px;
     border-right: 1px solid black;
     flex-shrink: 0;
+    overflow-x: auto;
 }
 
 .tableCol:last-child {
@@ -28,4 +30,20 @@
 
 .tableRow:nth-child(odd) {
     background: gray;
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb {
+    background: darkred;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

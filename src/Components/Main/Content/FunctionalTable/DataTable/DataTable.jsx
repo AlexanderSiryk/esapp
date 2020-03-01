@@ -11,7 +11,7 @@ let DataTable = (props) => {
 		</div>
 	);
 
-	let rows = [headRow, ...props.tableEntriesFiltered.map((item) => {
+	let rows = [headRow, ...props.filteredTableEntries.map((item) => {
 		return (
 			<div className={`${s.tableRow}`} key={item.id}>
 				<div className={s.tableCol}>{item.name}</div>

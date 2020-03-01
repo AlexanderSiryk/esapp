@@ -1,5 +1,9 @@
+import {passwordsAPI} from "../API/DAL_API";
+
 const UPDATE_SEARCH_BAR_TEXT = "UPDATE_SEARCH_BAR_TEXT";
-const UPDATE_FILTERED_TABLE_ENTRIES = "UPDATE_FILTERED_TABLE_ENTRIES";
+const APPLY_SEARCH_QUERRY = "APPLY_SEARCH_QUERRY";
+const APPLY_TAG_ON_SELECTION = "APPLY_TAG_ON_SELECTION";
+const SET_FAKE_DATA = "SET_FAKE_DATA";
 
 let initialState = {
 	searchBarText: "",
@@ -20,7 +24,7 @@ let initialState = {
 		},
 		{
 			id: 3,
-			name: "twitch",
+			name: "Twitch",
 			login: "login3",
 			password: "password3",
 			tag: "tag3",
@@ -37,7 +41,7 @@ let initialState = {
 			name: "instagram",
 			login: "login3",
 			password: "password3",
-			tag: "tag3",
+			tag: "tag5",
 		},
 		{
 			id: 6,
@@ -55,11 +59,14 @@ let initialState = {
 		},
 	],
 	filteredTableEntries: [],
+	fakeData: [],
 };
 
 (function () {
 	initialState.filteredTableEntries = [...initialState.tableEntries];
 })();
+
+
 
 let contentReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -68,28 +75,60 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				searchBarText: action.searchBarText,
 			});
-		case UPDATE_FILTERED_TABLE_ENTRIES:
+		case APPLY_SEARCH_QUERRY:
 			return ({
 				...state,
 				filteredTableEntries: [...action.filteredEntries]
 			});
+		case APPLY_TAG_ON_SELECTION:
+			return ({
+				...state,
+				filteredTableEntries: [...action.filteredEntries]
+			});
+		case SET_FAKE_DATA:
+			return ({
+				...state,
+				fakeData: [...action.fakeData]
+		});
 		default:
 			return state;
 	}
 };
 
+
 export let updateSearchBarText = (searchBarText) => {
 	return ({
-		type: "UPDATE_SEARCH_BAR_TEXT",
+		type: UPDATE_SEARCH_BAR_TEXT,
 		searchBarText
 	});
 };
-
-export let updateFilteredEntries = (filteredEntries) => {
+export let applySearchQuerry = (filteredEntries) => {
 	return ({
-		type: "UPDATE_FILTERED_TABLE_ENTRIES",
+		type: APPLY_SEARCH_QUERRY,
 		filteredEntries
 	});
+};
+export let applyTag = (filteredEntries) => {
+	return ({
+		type: APPLY_TAG_ON_SELECTION,
+		filteredEntries
+	});
+};
+export let setFakeData = (fakeData) => {
+	return ({
+		type: SET_FAKE_DATA,
+		fakeData
+	});
+};
+
+
+export let getData = () => {
+	return (dispatch) => {
+		passwordsAPI.getPasswords().then(fakeData => {
+			dispatch(setFakeData(fakeData.data));
+		})
+	}
+
 };
 
 export default contentReducer;

@@ -6,11 +6,11 @@ let SearchField = (props) => {
 		if (e.target.value !== "") {
 			let filteredEntries = props.tableEntries;
 			filteredEntries = filteredEntries.filter((item) => {
-				return item.name.indexOf(e.target.value.toLowerCase()) !== -1;
+				return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
 			});
-			props.updateFilteredEntries(filteredEntries);
+			props.applySearchQuerry(filteredEntries);
 		} else {
-			props.updateFilteredEntries(props.tableEntries);
+			props.applySearchQuerry(props.tableEntries);
 		}
 	};
 	return (
