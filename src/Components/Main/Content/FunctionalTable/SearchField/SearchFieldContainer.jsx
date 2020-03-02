@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import SearchField from "./SearchField";
-import {applySearchQuerry, updateSearchBarText} from "../../../../../Redux/contentReducer";
+import {applySearchQuery, updateSearchBarText} from "../../../../../Redux/contentReducer";
 
 
 let mapStateToProps = (state) => {
@@ -12,7 +12,7 @@ let mapStateToProps = (state) => {
 
 let SearchFieldContainer = connect(mapStateToProps, {
 	updateSearchBarText,
-	applySearchQuerry
+	applySearchQuery
 })(SearchField);
 
 export default SearchFieldContainer;

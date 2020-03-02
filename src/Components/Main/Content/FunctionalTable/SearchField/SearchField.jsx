@@ -8,9 +8,9 @@ let SearchField = (props) => {
 			filteredEntries = filteredEntries.filter((item) => {
 				return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
 			});
-			props.applySearchQuerry(filteredEntries);
+			props.applySearchQuery(filteredEntries);
 		} else {
-			props.applySearchQuerry(props.tableEntries);
+			props.applySearchQuery(props.tableEntries);
 		}
 	};
 	return (

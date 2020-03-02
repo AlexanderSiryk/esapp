@@ -1,7 +1,7 @@
 import {passwordsAPI} from "../API/DAL_API";
 
 const UPDATE_SEARCH_BAR_TEXT = "UPDATE_SEARCH_BAR_TEXT";
-const APPLY_SEARCH_QUERRY = "APPLY_SEARCH_QUERRY";
+const APPLY_SEARCH_QUERY = "APPLY_SEARCH_QUERY";
 const APPLY_TAG_ON_SELECTION = "APPLY_TAG_ON_SELECTION";
 const SET_FAKE_DATA = "SET_FAKE_DATA";
 
@@ -75,7 +75,7 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				searchBarText: action.searchBarText,
 			});
-		case APPLY_SEARCH_QUERRY:
+		case APPLY_SEARCH_QUERY:
 			return ({
 				...state,
 				filteredTableEntries: [...action.filteredEntries]
@@ -102,9 +102,9 @@ export let updateSearchBarText = (searchBarText) => {
 		searchBarText
 	});
 };
-export let applySearchQuerry = (filteredEntries) => {
+export let applySearchQuery = (filteredEntries) => {
 	return ({
-		type: APPLY_SEARCH_QUERRY,
+		type: APPLY_SEARCH_QUERY,
 		filteredEntries
 	});
 };
