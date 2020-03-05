@@ -1,12 +1,9 @@
-import {passwordsAPI} from "../API/DAL_API";
-
 const UPDATE_SEARCH_BAR_TEXT = "UPDATE_SEARCH_BAR_TEXT";
-const APPLY_SEARCH_QUERY = "APPLY_SEARCH_QUERY";
 const APPLY_TAG_ON_SELECTION = "APPLY_TAG_ON_SELECTION";
-const SET_FAKE_DATA = "SET_FAKE_DATA";
 
 let initialState = {
 	searchBarText: "",
+	tagSelected: "blank",
 	tableEntries: [
 		{
 			id: 1,
@@ -57,16 +54,8 @@ let initialState = {
 			password: "password3",
 			tag: "tag3",
 		},
-	],
-	filteredTableEntries: [],
-	fakeData: [],
+	]
 };
-
-(function () {
-	initialState.filteredTableEntries = [...initialState.tableEntries];
-})();
-
-
 
 let contentReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -75,26 +64,15 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				searchBarText: action.searchBarText,
 			});
-		case APPLY_SEARCH_QUERY:
-			return ({
-				...state,
-				filteredTableEntries: [...action.filteredEntries]
-			});
 		case APPLY_TAG_ON_SELECTION:
 			return ({
 				...state,
-				filteredTableEntries: [...action.filteredEntries]
+				tagSelected: action.tagSelected
 			});
-		case SET_FAKE_DATA:
-			return ({
-				...state,
-				fakeData: [...action.fakeData]
-		});
 		default:
 			return state;
 	}
 };
-
 
 export let updateSearchBarText = (searchBarText) => {
 	return ({
@@ -102,33 +80,11 @@ export let updateSearchBarText = (searchBarText) => {
 		searchBarText
 	});
 };
-export let applySearchQuery = (filteredEntries) => {
-	return ({
-		type: APPLY_SEARCH_QUERY,
-		filteredEntries
-	});
-};
-export let applyTag = (filteredEntries) => {
+export let applyTag = (tagSelected) => {
 	return ({
 		type: APPLY_TAG_ON_SELECTION,
-		filteredEntries
+		tagSelected
 	});
-};
-export let setFakeData = (fakeData) => {
-	return ({
-		type: SET_FAKE_DATA,
-		fakeData
-	});
-};
-
-
-export let getData = () => {
-	return (dispatch) => {
-		passwordsAPI.getPasswords().then(fakeData => {
-			dispatch(setFakeData(fakeData.data));
-		})
-	}
-
 };
 
 export default contentReducer;

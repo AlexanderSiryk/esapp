@@ -10,4 +10,6 @@ let reducersBundle = combineReducers({
 
 let store = createStore(reducersBundle, applyMiddleware(thunkMiddleware));
 
+window.state = store.getState();
+
 export default store;

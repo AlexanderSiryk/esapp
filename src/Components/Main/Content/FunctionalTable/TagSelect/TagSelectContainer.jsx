@@ -1,12 +1,13 @@
 import {connect} from "react-redux";
 import TagSelect from "./TagSelect";
 import {applyTag} from "../../../../../Redux/contentReducer";
+import {getUniqueTags, getTagSelected} from "../../../../../Redux/contentSelectors";
 
 
 let mapStateToProps = (state) => {
 	return ({
-		tableEntries: state.content.tableEntries,
-		filteredTableEntries: state.content.filteredTableEntries,
+		tagSelected: getTagSelected(state),
+		uniqueTags: getUniqueTags(state),
 	});
 };
 
