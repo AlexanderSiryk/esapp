@@ -15,7 +15,7 @@ let initialState = {
 	]
 };
 
-let sidebarReducer = (state = initialState, action) => {
+let sidebarReducer = (state = initialState) => {
 	return state;
 };
 
