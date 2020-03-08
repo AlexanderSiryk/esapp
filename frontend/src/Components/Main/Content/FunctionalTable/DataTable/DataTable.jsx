@@ -11,10 +11,17 @@ let DataTable = (props) => {
 		</div>
 	);
 
+	let onNameDbClick = (id) => {
+		props.toggleEditWindow(id);
+	};
+
 	let rows = [headRow, ...props.filteredTableEntries.map((item) => {
 		return (
 			<div className={`${s.tableRow}`} key={item.id}>
-				<div className={s.tableCol}>{item.name}</div>
+				<div
+					className={s.tableCol}
+					onDoubleClick={onNameDbClick.bind(null, item.id)}
+				>{item.name}</div>
 				<div className={s.tableCol}>{item.login}</div>
 				<div className={s.tableCol}>{item.password}</div>
 				<div className={s.tableCol}>{`#${item.tag}`}</div>

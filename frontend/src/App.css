@@ -1,3 +1,28 @@
 body {
     background: #212121;
 }
+
+::-webkit-scrollbar {
+    height: 1vw;
+    width: 1vw;
+}
+
+::-webkit-scrollbar-track {
+    background: #22211D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #33302B;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3C3A34;
+}
+
+label {
+    user-select: none;
+}
+
+button {
+    user-select: none;
+}

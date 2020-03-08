@@ -33,19 +33,3 @@
 .tableRow:nth-child(odd) {
     background: gray;
 }
-
-::-webkit-scrollbar {
-    height: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: #888;
-}
-
-::-webkit-scrollbar-thumb {
-    background: darkred;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}

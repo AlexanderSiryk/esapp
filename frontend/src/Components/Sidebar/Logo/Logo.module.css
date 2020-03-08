@@ -10,6 +10,7 @@
     border: 1px solid crimson;
     display: flex;
     align-items: center;
+    user-select: none;
 }
 
 .logo {

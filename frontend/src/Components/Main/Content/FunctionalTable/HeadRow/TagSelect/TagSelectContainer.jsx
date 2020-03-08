@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import TagSelect from "./TagSelect";
-import {applyTag} from "../../../../../Redux/contentReducer";
-import {getUniqueTags, getTagSelected} from "../../../../../Redux/contentSelectors";
+import {applyTag} from "../../../../../../Redux/contentReducer";
+import {getUniqueTags, getTagSelected} from "../../../../../../Redux/contentSelectors";
 
 
 let mapStateToProps = (state) => {

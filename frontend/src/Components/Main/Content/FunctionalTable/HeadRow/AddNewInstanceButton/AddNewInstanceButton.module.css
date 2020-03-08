@@ -1,0 +1,10 @@
+.addButton {
+    background: red;
+    border-radius: 5px;
+    border: 2px solid red;
+}
+
+.addButton:hover {
+    background: wheat;
+    border: 2px solid wheat;
+}

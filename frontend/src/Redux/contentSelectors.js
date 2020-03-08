@@ -1,5 +1,4 @@
 import {createSelector} from "reselect"
-import React from "react";
 
 export const getTable = state => state.content.tableEntries;
 

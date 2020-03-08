@@ -1,17 +1,16 @@
-import React from "react";
 import DataTableContainer from "./DataTable/DataTableContainer";
-import SearchFieldContainer from "./SearchField/SearchFieldContainer";
-import TagSelectContainer from "./TagSelect/TagSelectContainer";
-import s from "./FunctionalTable.module.css"
+import ModalWindowAddContainer from "./ModalWindowAdd/ModalWindowAddContainer";
+import HeadRowContainer from "./HeadRow/HeadRowContainer";
+import React from "react";
+import ModalWindowEditContainer from "./ModalWindowEdit/ModalWindowEditContainer";
 
 let FunctionalTable = () => {
 	return (
 		<>
-			<div className={s.row}>
-				<SearchFieldContainer/>
-				<TagSelectContainer/>
-			</div>
+			<HeadRowContainer/>
 			<DataTableContainer/>
+			<ModalWindowAddContainer/>
+			<ModalWindowEditContainer/>
 		</>
 	);
 };
