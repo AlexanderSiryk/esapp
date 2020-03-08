@@ -1,7 +1,7 @@
 import React from "react";
 import SidebarContainer from "../Sidebar/SidebarContainer";
 import Main from "../Main/Main";
-import Login from "../Login/Login";
+import Login from "./Login/Login";
 import {Redirect, Route} from "react-router-dom";
 
 let LoggedInCheckLayer = (props) => {

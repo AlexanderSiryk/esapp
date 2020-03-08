@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import ModalWindowEdit from "./ModalWindowEdit";
-import {saveEditedEntry, toggleEditWindow} from "../../../../../Redux/contentReducer";
+import {deleteEntry, saveEditedEntry, toggleEditWindow} from "../../../../../Redux/contentReducer";
 
 let mapStateToProps = (state) => {
 	return ({
@@ -13,6 +13,7 @@ let mapStateToProps = (state) => {
 let ModalWindowEditContainer = connect(mapStateToProps, {
 	toggleEditWindow,
 	saveEditedEntry,
+	deleteEntry,
 })(ModalWindowEdit);
 
 

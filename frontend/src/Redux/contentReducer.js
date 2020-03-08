@@ -5,10 +5,10 @@ const TOGGLE_ADD_WINDOW = "TOGGLE_ADD_WINDOW";
 const CLEAR_TAG = "CLEAR_TAG";
 const TOGGLE_EDIT_WINDOW = "TOGGLE_EDIT_WINDOW";
 const SAVE_EDITED_ENTRY = "SAVE_EDITED_ENTRY";
+const DELETE_ENTRY = "DELETE_ENTRY";
 
 let initialState = {
 	editingEntryId: 0,
-	lastEntryId: 7,
 	searchBarText: "",
 	tagSelected: "blank",
 	tableEntries: [
@@ -67,6 +67,8 @@ let initialState = {
 };
 
 let contentReducer = (state = initialState, action) => {
+	let id;
+	let tableEntries;
 	switch (action.type) {
 		case UPDATE_SEARCH_BAR_TEXT:
 			return ({
@@ -79,7 +81,8 @@ let contentReducer = (state = initialState, action) => {
 				tagSelected: action.tagSelected,
 			});
 		case ADD_ENTRY:
-			let id = ++state.lastEntryId;
+			id = state.tableEntries.length;
+			id++;
 			let entry = {
 				id: id,
 				name: action.entry.name,
@@ -109,14 +112,26 @@ let contentReducer = (state = initialState, action) => {
 				editingEntryId: action.editingEntryId,
 			});
 		case SAVE_EDITED_ENTRY:
-			let tableEntries;
-			let entryId = action.entry.id - 1;
-			if (JSON.stringify(action.entry) !== JSON.stringify(state.tableEntries[entryId])) {
+			id = action.entry.id - 1;
+			if (JSON.stringify(action.entry) !== JSON.stringify(state.tableEntries[id])) {
 				tableEntries = [...state.tableEntries];
 				tableEntries[action.entry.id - 1] = action.entry;
 			} else {
 				tableEntries = state.tableEntries;
 			}
+			return ({
+				...state,
+				tableEntries,
+			});
+		case DELETE_ENTRY:
+			tableEntries = [...state.tableEntries];
+			id = tableEntries.length - 1;
+			for (let i = action.id - 1; i < id; i++) {
+				console.log(tableEntries[i].id);
+				tableEntries[i] = tableEntries[i + 1];
+				tableEntries[i].id = i + 1;
+			}
+			tableEntries.pop();
 			return ({
 				...state,
 				tableEntries,
@@ -165,6 +180,12 @@ export let saveEditedEntry = (entry) => {
 	return ({
 		type: SAVE_EDITED_ENTRY,
 		entry,
+	});
+};
+export let deleteEntry = (id) => {
+	return ({
+		type: DELETE_ENTRY,
+		id,
 	});
 };
 

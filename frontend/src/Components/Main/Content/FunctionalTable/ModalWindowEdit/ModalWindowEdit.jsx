@@ -26,6 +26,7 @@ let ModalWindowEdit = (props) => {
 
 
 	let onSaveButton = () => {
+		props.toggleEditWindow(0);
 		props.saveEditedEntry({
 			id: props.editingEntryId,
 			name: nameField,
@@ -33,6 +34,9 @@ let ModalWindowEdit = (props) => {
 			password: passField,
 			tag: tagField,
 		});
+	};
+	let onDeleteButton = () => {
+		props.deleteEntry(props.editingEntryId);
 		props.toggleEditWindow(0);
 	};
 	let onCancelButton = () => {
@@ -100,6 +104,7 @@ let ModalWindowEdit = (props) => {
 						<div className="buttonRow">
 							<button onClick={onSaveButton}>Save Changes</button>
 							<button onClick={onCancelButton}>Cancel</button>
+							<button onClick={onDeleteButton}>Delete</button>
 						</div>
 					</div>
 				</div>
