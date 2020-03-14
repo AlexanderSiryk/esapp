@@ -3,7 +3,7 @@ import s from "./Main.module.css"
 import {Route} from "react-router-dom";
 import Content from "./Content/Content";
 import Tags from "./Tags/Tags";
-import Preferences from "./Preferences/Preferences";
+import PreferencesContainer from "./Preferences/PreferencesContainer";
 
 let Main = () => {
 	return (
@@ -18,7 +18,7 @@ let Main = () => {
 			/>
 			<Route
 				path="/preferences"
-				render={() => <Preferences/>}
+				render={() => <PreferencesContainer/>}
 			/>
 		</div>
 	);

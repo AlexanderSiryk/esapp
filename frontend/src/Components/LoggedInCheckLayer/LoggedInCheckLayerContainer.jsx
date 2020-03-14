@@ -1,9 +1,9 @@
 import {connect} from "react-redux";
 import LoggedInCheckLayer from "./LoggedInCheckLayer";
 
-let mapStateToProps = () => {
+let mapStateToProps = (state) => {
 	return ({
-		loggedIn: true,
+		isSignedIn: state.logIn.isSignedIn,
 	});
 };
 

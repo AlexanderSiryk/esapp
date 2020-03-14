@@ -1,25 +1,30 @@
 import React from "react";
 import SidebarContainer from "../Sidebar/SidebarContainer";
 import Main from "../Main/Main";
-import Login from "./Login/Login";
 import {Redirect, Route} from "react-router-dom";
+import LoginContainer from "./Login/LoginContainer";
 
 let LoggedInCheckLayer = (props) => {
 	return (
 		<>
 			{
-				props.loggedIn &&
+				props.isSignedIn &&
 				<>
 					<SidebarContainer/>
 					<Main/>
+					<Redirect
+						to={{
+							pathname: "/content"
+						}}
+					/>
 				</>
 			}
 			{
-				!props.loggedIn &&
+				!props.isSignedIn &&
 				<>
 					<Route
 						path="/login"
-						render={() => <Login/>}
+						render={() => <LoginContainer/>}
 					/>
 					<Redirect
 						to={{
