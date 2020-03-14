@@ -7,16 +7,27 @@ class Login extends React.Component {
 	}
 
 	onSuccess = (GoogleUser) => {
-		console.log({
+		let bp = GoogleUser.getBasicProfile();
+		console.dir({
 			0: GoogleUser.isSignedIn(),
 			1: GoogleUser.getId(),
 			2: GoogleUser.getHostedDomain(),
 			3: GoogleUser.getGrantedScopes(),
 			4: GoogleUser.getBasicProfile(),
 			5: GoogleUser.getAuthResponse().id_token,
+			6: bp.getEmail(),
+			7: bp.getName(),
+			8: bp.getImageUrl(),
+			9: bp.getGivenName(),
+			10: bp.getFamilyName(),
 		});
-		let a = GoogleUser.isSignedIn();
-		this.props.setIsSignedIn(a);
+		this.props.setUserData({
+			mail: bp.getEmail(),
+			login: bp.getName(),
+			token: GoogleUser.getAuthResponse().id_token,
+			image: bp.getImageUrl(),
+		});
+		this.props.setIsSignedIn(GoogleUser.isSignedIn());
 	}
 
 	onFailure = () => {

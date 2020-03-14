@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import LoggedInCheckLayerContainer from "./Components/LoggedInCheckLayer/LoggedInCheckLayerContainer";
+import LoggedInCheckLayerContainer from "./Components/Common/LoggedInCheckLayer/LoggedInCheckLayerContainer";
 
 function App() {
 	return (

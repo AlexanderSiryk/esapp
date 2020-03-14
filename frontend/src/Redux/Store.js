@@ -2,12 +2,12 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import sidebarReducer from "./sidebarReducer";
 import contentReducer from "./contentReducer";
 import thunkMiddleware from "redux-thunk";
-import logInReducer from "./logInReducer";
+import layersReducer from "./layersReducer";
 
 let reducersBundle = combineReducers({
 	sidebar: sidebarReducer,
 	content: contentReducer,
-	logIn: logInReducer,
+	layers: layersReducer,
 });
 
 let store = createStore(reducersBundle, applyMiddleware(thunkMiddleware));

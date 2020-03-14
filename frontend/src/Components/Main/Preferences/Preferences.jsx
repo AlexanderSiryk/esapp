@@ -1,7 +1,6 @@
 import React from "react";
-import s from "./Preferences.module.css"
 
-let Preferences = (props) => {
+let Preferences = () => {
 	/*let auth2 = window.gapi.auth2.getAuthInstance();*/
 	let signOut = () => {
 		/*debugger;

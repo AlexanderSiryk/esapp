@@ -3,7 +3,7 @@ import LoggedInCheckLayer from "./LoggedInCheckLayer";
 
 let mapStateToProps = (state) => {
 	return ({
-		isSignedIn: state.logIn.isSignedIn,
+		isSignedIn: state.layers.isSignedIn,
 	});
 };
 

@@ -1,26 +1,19 @@
 import React from "react";
-import SidebarContainer from "../Sidebar/SidebarContainer";
-import Main from "../Main/Main";
 import {Redirect, Route} from "react-router-dom";
+import DecryptingLayerContainer from "../DecryptingLayer/DecryptingLayerContainer";
 import LoginContainer from "./Login/LoginContainer";
 
-let LoggedInCheckLayer = (props) => {
+let LoggedInCheckLayer = ({isSignedIn}) => {
 	return (
 		<>
 			{
-				props.isSignedIn &&
+				isSignedIn &&
 				<>
-					<SidebarContainer/>
-					<Main/>
-					<Redirect
-						to={{
-							pathname: "/content"
-						}}
-					/>
+					<DecryptingLayerContainer/>
 				</>
 			}
 			{
-				!props.isSignedIn &&
+				!isSignedIn &&
 				<>
 					<Route
 						path="/login"
@@ -33,7 +26,6 @@ let LoggedInCheckLayer = (props) => {
 					/>
 				</>
 			}
-
 		</>
 	);
 };

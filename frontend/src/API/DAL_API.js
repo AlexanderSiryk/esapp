@@ -1,3 +1,4 @@
+/*
 import * as axios from "axios";
 const URL = "http://jsonplaceholder.typicode.com/users";
 
@@ -8,3 +9,4 @@ export const passwordsAPI = {
 		});
 	}
 };
+*/

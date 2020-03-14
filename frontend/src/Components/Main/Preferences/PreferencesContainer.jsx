@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
 import Preferences from "./Preferences";
-import {setIsSignedIn} from "../../../Redux/logInReducer";
+import {setIsSignedIn} from "../../../Redux/layersReducer";
 
-let mapStateToProps = (state) => {
+let mapStateToProps = () => {
 	return ({
 
 	});

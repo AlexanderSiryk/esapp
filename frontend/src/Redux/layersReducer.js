@@ -1,15 +1,17 @@
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
+const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
 
 let initialState = {
-	isSignedIn: true,
+	isDecrypted: false,
+	isSignedIn: false,
 	userMail: null,
 	userLogin: null,
 	userToken: null,
-	userImage: null,
+	userImageURL: null,
 };
 
-let logInReducer = (state = initialState, action) => {
+let layersReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_IS_SIGNED_IN:
 			return ({
@@ -19,7 +21,17 @@ let logInReducer = (state = initialState, action) => {
 		case SET_USER_DATA:
 			return ({
 				...state,
+				userMail: action.data.mail,
+				userLogin: action.data.login,
+				userToken: action.data.token,
+				userImageURL: action.data.image,
 			});
+		case SET_IS_DECRYPTED:
+			return ({
+				...state,
+				isDecrypted: action.isDecrypted,
+			});
+
 		default:
 			return state;
 	}
@@ -39,4 +51,11 @@ export let setUserData = (data) => {
 	});
 };
 
-export default logInReducer;
+export let setIsDecrypted = (isDecrypted) => {
+	return ({
+		type: SET_IS_DECRYPTED,
+		isDecrypted,
+	});
+};
+
+export default layersReducer;
