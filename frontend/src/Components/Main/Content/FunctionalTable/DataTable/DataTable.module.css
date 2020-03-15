@@ -22,6 +22,11 @@
     border-right: none;
 }
 
+.tableCol::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
 .tableRowHead {
     font-weight: bold;
 }

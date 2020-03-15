@@ -71,7 +71,7 @@ let ModalWindowAdd = (props) => {
 		<>
 			{
 				props.addWindowShown &&
-				<div className={s.wrapper} onClick={onCancel}>
+				<div className={s.wrapper} onMouseDown={onCancel}>
 					<div className={s.modalContainer}>
 						<div className={s.inputRow}>
 							<label htmlFor="nameAdd">Name</label>

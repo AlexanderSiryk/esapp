@@ -17,6 +17,7 @@ let ModalWindowEdit = (props) => {
 			tag: "",
 		};
 	}
+
 	useEffect(() => {
 		setNameField(entry.name);
 		setLoginField(entry.login);
@@ -24,16 +25,41 @@ let ModalWindowEdit = (props) => {
 		setTagField(entry.tag);
 	}, [entry]);
 
+	let isInputValueValid = ({type, value}) => {
+
+		let r;
+		switch (type) {
+			case "name":
+				r = new RegExp(/^[^\s.][\w.]{0,24}((?<=\w)[\s](?=\w))?[\w.]{0,24}$(?<=\w)/);
+				return r.test(value);
+			case 'login':
+				r = new RegExp(/^\w[\w.]{0,23}@?\w{0,10}\.?[a-zA-Z]{0,6}$(?<=\w)/);
+				return r.test(value);
+			case 'password':
+				r = new RegExp(/^..{0,50}/);
+				return r.test(value);
+			case 'tag':
+				r = new RegExp(/^\w\w{0,23}$(?<=\w)/);
+				return r.test(value);
+			default:
+				return false;
+		}
+	}
 
 	let onSaveButton = () => {
-		props.toggleEditWindow(0);
-		props.saveEditedEntry({
-			id: props.editingEntryId,
-			name: nameField,
-			login: loginField,
-			password: passField,
-			tag: tagField,
-		});
+		if (isInputValueValid({type: "name", value: nameField}) &&
+			isInputValueValid({type: "login", value: loginField}) &&
+			isInputValueValid({type: "password", value: passField}) &&
+			isInputValueValid({type: "tag", value: tagField})) {
+			props.toggleEditWindow(0);
+			props.saveEditedEntry({
+				id: props.editingEntryId,
+				name: nameField,
+				login: loginField,
+				password: passField,
+				tag: tagField,
+			});
+		} else alert("wrong input");
 	};
 	let onDeleteButton = () => {
 		props.deleteEntry(props.editingEntryId);
@@ -63,7 +89,7 @@ let ModalWindowEdit = (props) => {
 		<>
 			{
 				props.editWindowShown &&
-				<div className={s.wrapper} onClick={onCancel}>
+				<div className={s.wrapper} onMouseDown={onCancel}>
 					<div className={s.modalContainer}>
 						<div className={s.inputRow}>
 							<label htmlFor="nameAdd">Name</label>
