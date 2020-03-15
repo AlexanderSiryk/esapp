@@ -1,32 +1,12 @@
 import React, {useState} from "react";
 import s from "./ModalWindowAdd.module.css"
 
-let ModalWindowAdd = (props) => {
+let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 	let [nameField, setNameField] = useState("");
 	let [loginField, setLoginField] = useState("");
 	let [passField, setPassField] = useState("");
 	let [tagField, setTagField] = useState("");
 
-	let isInputValueValid = ({type, value}) => {
-
-		let r;
-		switch (type) {
-			case "name":
-				r = new RegExp(/^[^\s.][\w.]{0,24}((?<=\w)[\s](?=\w))?[\w.]{0,24}$(?<=\w)/);
-				return r.test(value);
-			case 'login':
-				r = new RegExp(/^\w[\w.]{0,23}@?\w{0,10}\.?[a-zA-Z]{0,6}$(?<=\w)/);
-				return r.test(value);
-			case 'password':
-				r = new RegExp(/^..{0,50}/);
-				return r.test(value);
-			case 'tag':
-				r = new RegExp(/^\w\w{0,23}$(?<=\w)/);
-				return r.test(value);
-			default:
-				return false;
-		}
-	}
 	let onSaveButton = () => {
 		if (isInputValueValid({type: "name", value: nameField}) &&
 			isInputValueValid({type: "login", value: loginField}) &&
