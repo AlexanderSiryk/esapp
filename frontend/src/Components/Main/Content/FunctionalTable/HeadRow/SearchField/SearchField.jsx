@@ -6,7 +6,11 @@ let SearchField = (props) => {
 		props.clearTag();
 	};
 	return (
-		<input type="text" value={props.searchBarText} onChange={onTextChange}/>
+		<input
+			type="text"
+			value={props.searchBarText}
+			onChange={onTextChange}
+		/>
 	);
 };
 

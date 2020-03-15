@@ -16,8 +16,13 @@ export const gButtonOperations = {
 		});
 	},
 	logOut: () => {
-		let GoogleAuth = window.gapi.auth2.getAuthInstance();
-		let GoogleUser = GoogleAuth.currentUser.get();
-		return GoogleAuth.signOut().then(() => GoogleUser.isSignedIn());
+		if (window.gapi.auth2 !== undefined)
+		{
+			let GoogleAuth = window.gapi.auth2.getAuthInstance();
+			let GoogleUser = GoogleAuth.currentUser.get();
+			return GoogleAuth.signOut().then(() => GoogleUser.isSignedIn());
+		} else {
+			return true;
+		}
 	},
 }

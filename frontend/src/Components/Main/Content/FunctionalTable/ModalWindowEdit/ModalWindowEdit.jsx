@@ -41,6 +41,9 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 		} else alert("wrong input");
 	};
 	let onDeleteButton = () => {
+		if (props.filteredTableEntries.length <= 1) {
+			props.clearSearchField();
+		}
 		props.deleteEntry(props.editingEntryId);
 		props.toggleEditWindow(0);
 	};

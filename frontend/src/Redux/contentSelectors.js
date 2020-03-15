@@ -36,4 +36,5 @@ export const getSortedTable = createSelector(
 			});
 		}
 		return t;
-	});
+	}
+);
