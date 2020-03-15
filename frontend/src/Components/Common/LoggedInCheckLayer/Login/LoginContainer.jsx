@@ -1,6 +1,6 @@
 import Login from "./Login";
 import {connect} from "react-redux";
-import {setIsSignedIn, setUserData} from "../../../../Redux/layersReducer";
+import {logIn, setIsSignedIn} from "../../../../Redux/layersReducer";
 
 let mapStateToProps = (state) => {
 	return ({
@@ -10,7 +10,7 @@ let mapStateToProps = (state) => {
 
 let LoginContainer = connect(mapStateToProps, {
 	setIsSignedIn,
-	setUserData
+	logIn,
 })(Login);
 
 export default LoginContainer;

@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import Preferences from "./Preferences";
-import {setIsSignedIn} from "../../../Redux/layersReducer";
+import {logOut, setIsSignedIn} from "../../../Redux/layersReducer";
 
 let mapStateToProps = () => {
 	return ({
@@ -10,6 +10,7 @@ let mapStateToProps = () => {
 
 let PreferencesContainer = connect(mapStateToProps, {
 	setIsSignedIn,
+	logOut,
 })(Preferences);
 
 export default PreferencesContainer;
