@@ -8,19 +8,6 @@ class Login extends React.Component {
 
 	onSuccess = (GoogleUser) => {
 		let bp = GoogleUser.getBasicProfile();
-		console.dir({
-			0: GoogleUser.isSignedIn(),
-			1: GoogleUser.getId(),
-			2: GoogleUser.getHostedDomain(),
-			3: GoogleUser.getGrantedScopes(),
-			4: GoogleUser.getBasicProfile(),
-			5: GoogleUser.getAuthResponse().id_token,
-			6: bp.getEmail(),
-			7: bp.getName(),
-			8: bp.getImageUrl(),
-			9: bp.getGivenName(),
-			10: bp.getFamilyName(),
-		});
 		this.props.setUserData({
 			mail: bp.getEmail(),
 			login: bp.getName(),
@@ -65,7 +52,21 @@ export default Login;
 
 //
 // Sign out
-//
+// and some features
+
+/*console.dir({
+			0: GoogleUser.isSignedIn(),
+			1: GoogleUser.getId(),
+			2: GoogleUser.getHostedDomain(),
+			3: GoogleUser.getGrantedScopes(),
+			4: GoogleUser.getBasicProfile(),
+			5: GoogleUser.getAuthResponse().id_token,
+			6: bp.getEmail(),
+			7: bp.getName(),
+			8: bp.getImageUrl(),
+			9: bp.getGivenName(),
+			10: bp.getFamilyName(),
+		});*/
 
 /*someClick = () => {
 		let GoogleUser = this.GoogleAuth.currentUser.get();

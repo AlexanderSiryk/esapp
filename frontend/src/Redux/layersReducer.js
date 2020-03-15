@@ -3,8 +3,8 @@ const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
 
 let initialState = {
-	isDecrypted: false,
-	isSignedIn: false,
+	isDecrypted: true,
+	isSignedIn: true,
 	userMail: null,
 	userLogin: null,
 	userToken: null,

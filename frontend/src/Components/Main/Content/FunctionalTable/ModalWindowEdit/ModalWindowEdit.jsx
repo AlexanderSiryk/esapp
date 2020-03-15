@@ -69,6 +69,7 @@ let ModalWindowEdit = (props) => {
 							<label htmlFor="nameAdd">Name</label>
 							<input
 								type="text"
+								autoFocus
 								value={nameField}
 								id="nameAdd"
 								onChange={onNameChange}

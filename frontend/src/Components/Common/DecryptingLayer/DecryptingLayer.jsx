@@ -23,6 +23,11 @@ let DecryptingLayer = ({isDecrypted}) => {
 				!isDecrypted &&
 				<>
 					<DecryptWindowContainer/>
+					<Redirect
+						to={{
+							pathname: "/"
+						}}
+					/>
 				</>
 			}
 		</>
