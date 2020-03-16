@@ -4,6 +4,7 @@ import contentReducer from "./contentReducer";
 import thunkMiddleware from "redux-thunk";
 import layersReducer from "./layersReducer";
 
+
 let reducersBundle = combineReducers({
 	sidebar: sidebarReducer,
 	content: contentReducer,

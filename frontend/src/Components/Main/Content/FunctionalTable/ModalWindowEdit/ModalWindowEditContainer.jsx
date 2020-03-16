@@ -8,7 +8,7 @@ import {
 	toggleEditWindow
 } from "../../../../../Redux/contentReducer";
 import {isInputValueValid} from "../../../../../API/validation";
-import {getSortedTable} from "../../../../../Redux/contentSelectors";
+import {getSortedTable} from "../../../../../Redux/Selectors/contentSelectors";
 
 let MWEContainer = ({tableEntries, editingEntryId ,editWindowShown, filteredTableEntries, ...props}) => {
 	return (

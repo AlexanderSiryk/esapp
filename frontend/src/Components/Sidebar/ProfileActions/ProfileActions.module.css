@@ -8,7 +8,14 @@
     user-select: none;
 }
 
-.container:hover {
+.blockContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.blockContainer:hover {
     background: red;
 }
 
@@ -37,5 +44,6 @@
     height: 2.3em;
     background-size: cover !important;
     background-repeat: no-repeat !important;
+    background: #000;
     border-radius: 50%;
 }

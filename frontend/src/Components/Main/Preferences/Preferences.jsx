@@ -1,13 +1,9 @@
 import React from "react";
+import LogOutButtonContainer from "../../Common/LogOutButton/LogOutButtonContainer";
 
-let Preferences = (props) => {
-	let signOut = () => {
-		props.logOut();
-	}
+let Preferences = () => {
 	return (
-		<>
-			<button onClick={signOut}>Log out</button>
-		</>
+		<LogOutButtonContainer/>
 	);
 };
 

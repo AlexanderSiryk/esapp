@@ -3,17 +3,21 @@ import {gButtonOperations} from "../API/googleAPI";
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
+const RESET_LAYERS = "RESET_LAYERS"
 
 let initialState = {
 	isDecrypted: true,
 	isSignedIn: false,
-	userMail: null,
+	userEmail: null,
 	userLogin: null,
 	userToken: null,
 	userImageURL: null,
 };
 
 let layersReducer = (state = initialState, action) => {
+	if (!state) {
+		state = initialState;
+	}
 	switch (action.type) {
 		case SET_IS_SIGNED_IN:
 			return ({
@@ -33,7 +37,8 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				isDecrypted: action.isDecrypted,
 			});
-
+		case RESET_LAYERS:
+			return null;
 		default:
 			return state;
 	}
@@ -59,6 +64,9 @@ export let setIsDecrypted = (isDecrypted) => {
 		isDecrypted,
 	});
 };
+export let resetLayers = () => ({
+	type: RESET_LAYERS,
+});
 
 export let logIn = () => {
 	return async (dispatch) => {
@@ -74,5 +82,6 @@ export let logOut = () => {
 		dispatch(setIsSignedIn(response));
 	}
 }
+
 
 export default layersReducer;

@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import SearchField from "./SearchField";
 import {clearTag, updateSearchBarText} from "../../../../../../Redux/contentReducer";
-import {getSearchBarText} from "../../../../../../Redux/contentSelectors";
+import {getSearchBarText} from "../../../../../../Redux/Selectors/contentSelectors";
 
 let mapStateToProps = (state) => {
 	return ({

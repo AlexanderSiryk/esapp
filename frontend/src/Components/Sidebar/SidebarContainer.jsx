@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar";
-import {getMenuItems} from "../../Redux/sidebarSelectors";
+import {getMenuItems} from "../../Redux/Selectors/sidebarSelectors";
 
 let mapStateToProps = (state) => {
 	return ({
