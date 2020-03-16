@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import sidebarReducer from "./sidebarReducer";
 import contentReducer from "./contentReducer";
 import thunkMiddleware from "redux-thunk";
@@ -10,6 +10,9 @@ let reducersBundle = combineReducers({
 	layers: layersReducer,
 });
 
-let store = createStore(reducersBundle, applyMiddleware(thunkMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store = createStore(reducersBundle,
+	composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 export default store;

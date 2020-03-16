@@ -7,7 +7,7 @@ export const gButtonOperations = {
 			return {
 				isSignedIn: GoogleUser.isSignedIn(),
 				data: {
-					mail: bp.getEmail(),
+					email: bp.getEmail(),
 					login: bp.getName(),
 					token: GoogleUser.getAuthResponse().id_token,
 					image: bp.getImageUrl(),

@@ -23,7 +23,7 @@ let layersReducer = (state = initialState, action) => {
 		case SET_USER_DATA:
 			return ({
 				...state,
-				userMail: action.data.mail,
+				userEmail: action.data.email,
 				userLogin: action.data.login,
 				userToken: action.data.token,
 				userImageURL: action.data.image,

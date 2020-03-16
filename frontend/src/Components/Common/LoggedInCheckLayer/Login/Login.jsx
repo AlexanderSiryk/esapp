@@ -11,7 +11,15 @@ class Login extends React.Component {
 	}
 
 	onSuccess = (GoogleUser) => {
+		let bp = GoogleUser.getBasicProfile();
+		let data = {
+			email: bp.getEmail(),
+			login: bp.getName(),
+			token: GoogleUser.getAuthResponse().id_token,
+			image: bp.getImageUrl(),
+		};
 		this.props.setIsSignedIn(GoogleUser.isSignedIn())
+		this.props.setUserData(data);
 	}
 
 	onFailure = () => {
