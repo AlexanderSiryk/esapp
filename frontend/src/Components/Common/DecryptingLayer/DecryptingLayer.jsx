@@ -1,8 +1,8 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
 import DecryptWindowContainer from "./DecryptWindow/DecryptWindowContainer";
-import SidebarContainer from "../../Sidebar/SidebarContainer";
 import Main from "../../Main/Main";
+import Sidebar from "../../Sidebar/Sidebar";
 
 let DecryptingLayer = ({isDecrypted}) => {
 	return (
@@ -10,7 +10,7 @@ let DecryptingLayer = ({isDecrypted}) => {
 			{
 				isDecrypted &&
 				<>
-					<SidebarContainer/>
+					<Sidebar/>
 					<Main/>
 					<Redirect
 						to={{

@@ -8,9 +8,14 @@ import {
 	toggleEditWindow
 } from "../../../../../Redux/contentReducer";
 import {isInputValueValid} from "../../../../../API/validation";
-import {getSortedTable} from "../../../../../Redux/Selectors/contentSelectors";
+import {
+	getEditingEntryId,
+	getEditWindowShown,
+	getSortedTable,
+	getTableEntries
+} from "../../../../../Redux/Selectors/contentSelectors";
 
-let MWEContainer = ({tableEntries, editingEntryId ,editWindowShown, filteredTableEntries, ...props}) => {
+let MWEContainer = ({tableEntries, editingEntryId, editWindowShown, filteredTableEntries, ...props}) => {
 	return (
 		<ModalWindowEdit
 			isInputValueValid={isInputValueValid}
@@ -26,14 +31,12 @@ let MWEContainer = ({tableEntries, editingEntryId ,editWindowShown, filteredTabl
 	)
 }
 
-let mapStateToProps = (state) => {
-	return ({
-		tableEntries: state.content.tableEntries,
-		editingEntryId: state.content.editingEntryId,
-		editWindowShown: state.content.editWindowShown,
-		filteredTableEntries: getSortedTable(state),
-	});
-};
+let mapStateToProps = (state) => ({
+	tableEntries: getTableEntries(state),
+	editingEntryId: getEditingEntryId(state),
+	editWindowShown: getEditWindowShown(state),
+	filteredTableEntries: getSortedTable(state),
+});
 
 let ModalWindowEditContainer = connect(mapStateToProps, {
 	toggleEditWindow,
@@ -41,7 +44,5 @@ let ModalWindowEditContainer = connect(mapStateToProps, {
 	deleteEntry,
 	clearSearchField,
 })(MWEContainer);
-
-
 
 export default ModalWindowEditContainer;

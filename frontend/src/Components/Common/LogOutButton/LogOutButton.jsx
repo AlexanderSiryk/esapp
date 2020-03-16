@@ -2,10 +2,12 @@ import React from "react";
 
 let LogOutButton = (props) => {
 	let signOut = () => {
-		props.logOut();
-		props.resetLayers();
-		props.resetSidebar();
-		props.resetContent();
+		if (props.userLogin) {
+			props.logOut();
+			props.resetLayers();
+			props.resetSidebar();
+			props.resetContent();
+		}
 	}
 	return (
 		<>

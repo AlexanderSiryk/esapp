@@ -1,9 +1,9 @@
 import React from "react";
-import LogOutButtonContainer from "../../Common/LogOutButton/LogOutButtonContainer";
+import s from "./Preferences.module.css"
 
 let Preferences = () => {
 	return (
-		<LogOutButtonContainer/>
+		<h2 className={s.headerText}>Preferences page is empty</h2>
 	);
 };
 

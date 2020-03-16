@@ -21,7 +21,7 @@ let Main = () => {
 				render={() => <Preferences/>}
 			/>
 		</div>
-	);
-};
+	)
+}
 
 export default Main;

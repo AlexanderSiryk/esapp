@@ -7,7 +7,7 @@ const RESET_LAYERS = "RESET_LAYERS"
 
 let initialState = {
 	isDecrypted: true,
-	isSignedIn: false,
+	isSignedIn: true,
 	userEmail: null,
 	userLogin: null,
 	userToken: null,

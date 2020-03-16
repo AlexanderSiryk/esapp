@@ -37,7 +37,12 @@ let ProfileActions = ({image, login, email, ...props}) => {
 			</div>
 			{
 				props.isProfileActionsModalShown &&
-				<ProfileActionsModalContainer/>
+				<ProfileActionsModalContainer
+					login={login}
+					image={image}
+					email={email}
+					isProfileActionsModalShown={props.isProfileActionsModalShown}
+				/>
 			}
 
 		</>

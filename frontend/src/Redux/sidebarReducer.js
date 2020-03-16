@@ -3,20 +3,6 @@ const RESET_SIDEBAR = "RESET_SIDEBAR";
 
 let initialState = {
 	isProfileActionsModalShown: false,
-	items: [
-		{
-			name: "Content",
-			link: "content"
-		},
-		{
-			name: "Tags",
-			link: "tags"
-		},
-		{
-			name: "Preferences",
-			link: "preferences"
-		},
-	]
 };
 
 let sidebarReducer = (state = initialState, action) => {

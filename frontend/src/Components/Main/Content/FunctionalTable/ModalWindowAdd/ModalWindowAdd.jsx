@@ -6,7 +6,6 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 	let [loginField, setLoginField] = useState("");
 	let [passField, setPassField] = useState("");
 	let [tagField, setTagField] = useState("");
-
 	let onSaveButton = () => {
 		if (isInputValueValid({type: "name", value: nameField}) &&
 			isInputValueValid({type: "login", value: loginField}) &&

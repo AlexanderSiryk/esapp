@@ -1,1 +1,1 @@
-export const getMenuItems = state => state.sidebar.items;
+export const getIsProfileActionsModalShown = state => state.sidebar.isProfileActionsModalShown;
