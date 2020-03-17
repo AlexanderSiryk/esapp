@@ -25,4 +25,18 @@ export const gButtonOperations = {
 			return true;
 		}
 	},
+	loadButton: () => {
+		window.gapi.load("auth2", () => {
+			window.gapi.auth2.init({
+				client_id: "543293527953-vts0fcpac0jn00ihje2sqomqpe37u866.apps.googleusercontent.com",
+			});
+		});
+	},
+	renderButton: (id, onSuccess, onFailure) => {
+		window.gapi.signin2.render(id, {
+			theme: 'dark',
+			'onsuccess': onSuccess,
+			'onfailure': onFailure,
+		});
+	},
 }
