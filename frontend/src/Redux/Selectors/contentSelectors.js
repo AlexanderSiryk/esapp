@@ -1,13 +1,14 @@
 import {createSelector} from "reselect"
 
-export const getTable = state => state.content.tableEntries;
-
+export const getTableEntries = state => state.content.tableEntries;
 export const getTagSelected = state => state.content.tagSelected;
-
 export const getSearchBarText = state => state.content.searchBarText;
+export const getEditingEntryId = state => state.content.editingEntryId;
+export const getEditWindowShown = state => state.content.editWindowShown;
+export const getAddWindowShown = state => state.content.addWindowShown;
 
 export const getUniqueTags = createSelector(
-	getTable,
+	getTableEntries,
 	(table) => {
 		let t = table.map(item => {
 			return item.tag;
@@ -19,7 +20,7 @@ export const getUniqueTags = createSelector(
 );
 
 export const getSortedTable = createSelector(
-	getTable,
+	getTableEntries,
 	getTagSelected,
 	getSearchBarText,
 	(table, tag, text) => {
@@ -36,4 +37,5 @@ export const getSortedTable = createSelector(
 			});
 		}
 		return t;
-	});
+	}
+);

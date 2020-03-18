@@ -6,13 +6,14 @@
     position: fixed;
     height: 100%;
     width: 200px;
+    padding: 5px;
 }
 
 .menuItem {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     color: crimson;
     text-decoration: none;
-
 }
 
 .menuItem > * {
@@ -24,12 +25,8 @@
     color: chocolate;
 }
 
-ul {
+.navUl {
     margin: 0;
     padding: 0;
     user-select: none;
-}
-
-li {
-    list-style: none;
 }

@@ -1,0 +1,56 @@
+.profileActionsModal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 25px;
+    left: 225px;
+    width: 225px;
+    height: 250px;
+    background: #000;
+}
+
+.popUpBackground {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
+.head {
+    width: 100%;
+    background: wheat;
+}
+
+.blockContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.text {
+    font-size: 0.8em;
+    font-family: Roboto, sans-serif;
+}
+
+.text:first-child {
+    font-weight: bold;
+}
+
+.avatar {
+    width: 2.3em;
+    height: 2.3em;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background: #000;
+    border-radius: 50%;
+}
+
+.logOutButtonContainer {
+    margin-top: auto;
+}

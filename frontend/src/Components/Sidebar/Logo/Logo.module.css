@@ -1,22 +1,23 @@
 :root {
-    --wrapperHeight: 50px;
-    --logoHight: 40px;
+    --logoWrapperHeight: 50px;
+    --logoHight: 50px;
 }
 
 .logoWrapper {
     width: 100%;
-    height: var(--wrapperHeight);
-    box-sizing: border-box;
-    border: 1px solid crimson;
+    height: var(--logoWrapperHeight);
     display: flex;
     align-items: center;
     user-select: none;
+    background: crimson;
 }
 
 .logo {
     width: 100px;
     height: var(--logoHight);
-    background: crimson;
     overflow: hidden;
-    margin-left: calc((var(--wrapperHeight) - var(--logoHight)) / 2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*margin-left: calc((var(--logoWrapperHeight) - var(--logoHight)) / 2);*/
 }

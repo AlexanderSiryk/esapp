@@ -1,17 +1,23 @@
+import {gButtonOperations} from "../API/googleAPI";
+
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
+const RESET_LAYERS = "RESET_LAYERS"
 
 let initialState = {
 	isDecrypted: true,
-	isSignedIn: true,
-	userMail: null,
+	isSignedIn: false,
+	userEmail: null,
 	userLogin: null,
 	userToken: null,
 	userImageURL: null,
 };
 
 let layersReducer = (state = initialState, action) => {
+	if (!state) {
+		state = initialState;
+	}
 	switch (action.type) {
 		case SET_IS_SIGNED_IN:
 			return ({
@@ -21,7 +27,7 @@ let layersReducer = (state = initialState, action) => {
 		case SET_USER_DATA:
 			return ({
 				...state,
-				userMail: action.data.mail,
+				userEmail: action.data.email,
 				userLogin: action.data.login,
 				userToken: action.data.token,
 				userImageURL: action.data.image,
@@ -31,7 +37,8 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				isDecrypted: action.isDecrypted,
 			});
-
+		case RESET_LAYERS:
+			return null;
 		default:
 			return state;
 	}
@@ -57,5 +64,24 @@ export let setIsDecrypted = (isDecrypted) => {
 		isDecrypted,
 	});
 };
+export let resetLayers = () => ({
+	type: RESET_LAYERS,
+});
+
+export let logIn = () => {
+	return async (dispatch) => {
+		const response = await gButtonOperations.logIn();
+		dispatch(setIsSignedIn(response.isSignedIn));
+		dispatch(setUserData(response.data))
+	}
+}
+
+export let logOut = () => {
+	return async (dispatch) => {
+		const response = await gButtonOperations.logOut();
+		dispatch(setIsSignedIn(response));
+	}
+}
+
 
 export default layersReducer;

@@ -1,20 +1,21 @@
 import React from "react";
+import {gButtonOperations} from "../../../../API/googleAPI";
 
 class Login extends React.Component {
-	constructor(props) {
-		super(props);
-		this.gapi = window.gapi;
+	onSignIn = () => {
+		this.props.logIn();
 	}
 
 	onSuccess = (GoogleUser) => {
 		let bp = GoogleUser.getBasicProfile();
-		this.props.setUserData({
-			mail: bp.getEmail(),
+		let data = {
+			email: bp.getEmail(),
 			login: bp.getName(),
 			token: GoogleUser.getAuthResponse().id_token,
 			image: bp.getImageUrl(),
-		});
-		this.props.setIsSignedIn(GoogleUser.isSignedIn());
+		};
+		this.props.setIsSignedIn(GoogleUser.isSignedIn())
+		this.props.setUserData(data);
 	}
 
 	onFailure = () => {
@@ -22,16 +23,8 @@ class Login extends React.Component {
 	}
 
 	componentDidMount() {
-		this.gapi.load("auth2", () => {
-			this.gapi.auth2.init({
-				client_id: "543293527953-vts0fcpac0jn00ihje2sqomqpe37u866.apps.googleusercontent.com",
-			});
-		});
-		window.gapi.signin2.render('g-signin2', {
-			theme: 'dark',
-			'onsuccess': this.onSuccess,
-			'onfailure': this.onFailure,
-		});
+		gButtonOperations.loadButton();
+		gButtonOperations.renderButton("g-signin2", this.onSuccess, this.onFailure);
 	}
 
 	render() {
@@ -40,6 +33,7 @@ class Login extends React.Component {
 				<header className="App-header">
 					<div
 						id="g-signin2"
+						onClick={this.onSignIn}
 						className="g-signin2"
 						data-theme="dark"/>
 				</header>
@@ -49,45 +43,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-//
-// Sign out
-// and some features
-
-/*console.dir({
-			0: GoogleUser.isSignedIn(),
-			1: GoogleUser.getId(),
-			2: GoogleUser.getHostedDomain(),
-			3: GoogleUser.getGrantedScopes(),
-			4: GoogleUser.getBasicProfile(),
-			5: GoogleUser.getAuthResponse().id_token,
-			6: bp.getEmail(),
-			7: bp.getName(),
-			8: bp.getImageUrl(),
-			9: bp.getGivenName(),
-			10: bp.getFamilyName(),
-		});*/
-
-/*someClick = () => {
-		let GoogleUser = this.GoogleAuth.currentUser.get();
-		/!*alert(GoogleUser.getId());
-		console.log({
-			0: GoogleUser.isSignedIn(),
-			1: GoogleUser.getId(),
-			2: GoogleUser.getHostedDomain(),
-			3: GoogleUser.getGrantedScopes(),
-			4: GoogleUser.getBasicProfile(),
-			5: GoogleUser.getAuthResponse().id_token,
-		});*!/
-		this.props.setIsSignedIn(GoogleUser.isSignedIn());
-	}
-
-	signOut = () => {
-		let auth2 = this.gapi.auth2.getAuthInstance();
-		auth2.signOut().then(() => {
-			console.log('User signed out.');
-		});
-	}*/
-/*
-<button onClick={this.someClick}>Continue to page</button>
-<button onClick={this.signOut}>logOut</button>*/

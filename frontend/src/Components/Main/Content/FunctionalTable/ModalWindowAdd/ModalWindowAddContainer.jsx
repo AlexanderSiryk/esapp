@@ -3,6 +3,7 @@ import ModalWindowAdd from "./ModalWindowAdd";
 import {addEntry, toggleAddWindow} from "../../../../../Redux/contentReducer";
 import {isInputValueValid} from "../../../../../API/validation";
 import React from "react";
+import {getAddWindowShown} from "../../../../../Redux/Selectors/contentSelectors";
 
 let MWAContainer = ({addWindowShown, addEntry, toggleAddWindow}) => {
 	return (
@@ -15,17 +16,13 @@ let MWAContainer = ({addWindowShown, addEntry, toggleAddWindow}) => {
 	)
 }
 
-let mapStateToProps = (state) => {
-	return ({
-		addWindowShown: state.content.addWindowShown,
-	});
-};
+let mapStateToProps = (state) => ({
+	addWindowShown: getAddWindowShown(state),
+});
 
 let ModalWindowAddContainer = connect(mapStateToProps, {
 	addEntry,
 	toggleAddWindow,
 })(MWAContainer);
-
-
 
 export default ModalWindowAddContainer;

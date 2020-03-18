@@ -6,6 +6,8 @@ const CLEAR_TAG = "CLEAR_TAG";
 const TOGGLE_EDIT_WINDOW = "TOGGLE_EDIT_WINDOW";
 const SAVE_EDITED_ENTRY = "SAVE_EDITED_ENTRY";
 const DELETE_ENTRY = "DELETE_ENTRY";
+const CLEAR_SEARCH_FIELD = "CLEAR_SEARCH_FIELD";
+const RESET_CONTENT = "RESET_CONTENT";
 
 let initialState = {
 	editingEntryId: 0,
@@ -67,6 +69,9 @@ let initialState = {
 };
 
 let contentReducer = (state = initialState, action) => {
+	if (!state) {
+		state = initialState;
+	}
 	let id;
 	let tableEntries;
 	switch (action.type) {
@@ -136,7 +141,13 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				tableEntries,
 			});
-
+		case CLEAR_SEARCH_FIELD:
+			return ({
+				...state,
+				searchBarText: "",
+			});
+		case RESET_CONTENT:
+			return null;
 		default:
 			return state;
 	}
@@ -188,5 +199,13 @@ export let deleteEntry = (id) => {
 		id,
 	});
 };
+export let clearSearchField = () => {
+	return ({
+		type: CLEAR_SEARCH_FIELD,
+	});
+}
+export let resetContent = () => ({
+	type: RESET_CONTENT,
+});
 
 export default contentReducer;

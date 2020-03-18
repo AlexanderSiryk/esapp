@@ -7,7 +7,7 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 	let [passField, setPassField] = useState("");
 	let [tagField, setTagField] = useState("");
 	let entry;
-	if (props.editingEntryId !== 0) {
+	if (props.editingEntryId && props.editingEntryId !== 0) {
 		entry = props.tableEntries[props.editingEntryId - 1];
 	} else {
 		entry = {
@@ -41,6 +41,9 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 		} else alert("wrong input");
 	};
 	let onDeleteButton = () => {
+		if (props.filteredTableEntries.length <= 1) {
+			props.clearSearchField();
+		}
 		props.deleteEntry(props.editingEntryId);
 		props.toggleEditWindow(0);
 	};
