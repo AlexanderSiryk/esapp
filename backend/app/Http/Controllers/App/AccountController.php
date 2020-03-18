@@ -92,7 +92,16 @@ class AccountController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $account = new Account();
+        $account->name = $request->name;
+        $account->login = $request->login;
+        $account->password = $request->password;
+        $account->tag = $request->tag;
+        $account->save();
+
+        if($account){
+            return response()->json(['message' => 'create']);
+        }
     }
 
     /**
@@ -114,6 +123,11 @@ class AccountController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $account = Account::findOrFail($id);
+        $account->delete();
+
+        if($account){
+            return response()->json(['message' => 'delete']);
+        }
     }
 }
