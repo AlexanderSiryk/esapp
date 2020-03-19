@@ -16,7 +16,8 @@ class AccountRepository extends BaseRepository
 
         $result = $this->startCondition()
                         ->select($columns)
-                        ->where('user_id' , $userId)
+                        //->where('user_id' , $userId)
+                            ->where('user_id', '!=', 0)
                         ->get();
 
         return $result;

@@ -28,7 +28,6 @@ class AccountController extends BaseController
     public function index()
     {
         $accounts = $this->accountRepository->getAllAccounts(Cookie::get('token'));
-
         return response()->json($accounts->toArray());
     }
 

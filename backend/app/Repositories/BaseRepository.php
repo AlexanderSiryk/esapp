@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Repositories;
-use Illuminate\Database\Eloquent\Model;
 
+
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository
 {
@@ -11,10 +12,14 @@ abstract class BaseRepository
      */
     protected $model;
 
-    public function _construct()
+    /**
+     * CoreRepository constructor
+     */
+    public function __construct()
     {
         $this->model = app($this->getModelClass());
     }
+
 
     protected function startCondition()
     {
