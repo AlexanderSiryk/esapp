@@ -3,3 +3,4 @@ export const getUserLogin = state => state.layers.userLogin;
 export const getUserImageURL = state => state.layers.userImageURL;
 export const getIsDecrypted = state => state.layers.isDecrypted;
 export const getIsSignedIn = state => state.layers.isSignedIn;
+export const getImageKey = state => state.layers.imageKey;

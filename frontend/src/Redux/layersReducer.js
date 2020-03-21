@@ -3,15 +3,19 @@ import {gButtonOperations} from "../API/googleAPI";
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
-const RESET_LAYERS = "RESET_LAYERS"
+const RESET_LAYERS = "RESET_LAYERS";
+const SET_IMAGE_KEY = "SET_IMAGE_KEY";
+const SET_KEY = "SET_KEY";
 
 let initialState = {
-	isDecrypted: true,
-	isSignedIn: false,
+	isDecrypted: false,
+	isSignedIn: true,
 	userEmail: null,
 	userLogin: null,
 	userToken: null,
 	userImageURL: null,
+	imageKey: null,
+	key: null,
 };
 
 let layersReducer = (state = initialState, action) => {
@@ -37,6 +41,16 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				isDecrypted: action.isDecrypted,
 			});
+		case SET_IMAGE_KEY:
+			return ({
+				...state,
+				imageKey: action.image,
+			});
+		case SET_KEY:
+			return ({
+				...state,
+				key: action.key,
+			})
 		case RESET_LAYERS:
 			return null;
 		default:
@@ -44,28 +58,28 @@ let layersReducer = (state = initialState, action) => {
 	}
 };
 
-export let setIsSignedIn = (isSignedIn) => {
-	return ({
-		type: SET_IS_SIGNED_IN,
-		isSignedIn,
-	});
-};
-
-export let setUserData = (data) => {
-	return ({
-		type: SET_USER_DATA,
-		data,
-	});
-};
-
-export let setIsDecrypted = (isDecrypted) => {
-	return ({
-		type: SET_IS_DECRYPTED,
-		isDecrypted,
-	});
-};
+export let setIsSignedIn = (isSignedIn) => ({
+	type: SET_IS_SIGNED_IN,
+	isSignedIn,
+});
+export let setUserData = (data) => ({
+	type: SET_USER_DATA,
+	data,
+});
+export let setIsDecrypted = (isDecrypted) => ({
+	type: SET_IS_DECRYPTED,
+	isDecrypted,
+});
 export let resetLayers = () => ({
 	type: RESET_LAYERS,
+});
+export let setImageKey = (image) => ({
+	type: SET_IMAGE_KEY,
+	image,
+});
+export let setKey = (key) => ({
+	type: SET_KEY,
+	key
 });
 
 export let logIn = () => {
