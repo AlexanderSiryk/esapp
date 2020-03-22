@@ -1,10 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import DecryptWindow from "./DecryptWindow";
-import {freeUpImageKey, setImageKey, setIsDecrypted, setKey} from "../../../../Redux/layersReducer";
+import {freeUpImageKey, setImageKey, setIsDecrypted} from "../../../../Redux/layersReducer";
 import {getImageKey} from "../../../../Redux/Selectors/layersSelectors";
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {getTableEntries} from "../../../../Redux/Selectors/contentSelectors";
+import {setTableEntriesDecrypted} from "../../../../Redux/contentReducer";
 
 let dwc = (props) => {
 	return (<DecryptWindow
@@ -13,13 +14,11 @@ let dwc = (props) => {
 		imageKey={props.imageKey}
 		setIsDecrypted={props.setIsDecrypted}
 		setImageKey={props.setImageKey}
-		setKey={props.setKey}
 		freeUpImageKey={props.freeUpImageKey}
 		tableEntries={props.tableEntries}
+		setTableEntriesDecrypted={props.setTableEntriesDecrypted}
 	/>);
 }
-
-// TODO tableEntries is redundant
 
 let mapStateToProps = (state) => {
 	return {
@@ -31,8 +30,8 @@ let mapStateToProps = (state) => {
 let DecryptWindowContainer = connect(mapStateToProps, {
 	setIsDecrypted,
 	setImageKey,
-	setKey,
 	freeUpImageKey,
+	setTableEntriesDecrypted,
 })(dwc);
 
 export default DecryptWindowContainer;

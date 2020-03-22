@@ -1,5 +1,4 @@
 import aesjs from "aes-js";
-import {pbkdf2Sync} from "pbkdf2";
 
 export const getImage = (imgURL) => {
 	return new Promise(resolve => {
@@ -12,19 +11,23 @@ export const getImage = (imgURL) => {
 let calcBits = (imgArr) => {
 	const PERMISSIBLE_COLOR_DEVIATION = 25;
 	const ROWS_QUANTITY = 16;
-	/*const COLS_QUANTITY = 16;*/
+	const COLS_QUANTITY = 33; // 16data + 17margins
+	const SIDE_COLS_QUANTITY = 2;
+	const LAST_COL_OFFSET = 4;
 	const CELL_SIZE = 6;
 	const HORIZONTAL_MARGIN = 35;
-	const WORK_ROW_WIDTH = 182;
+	const WORK_ROW_WIDTH = CELL_SIZE * (COLS_QUANTITY - SIDE_COLS_QUANTITY) - LAST_COL_OFFSET; // 182
 	const VERTICAL_MARGIN = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 29;
 	const IDENT_BETWEEN_ROWS = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 15;
 
-	let startPoint = (VERTICAL_MARGIN + HORIZONTAL_MARGIN) * 4;
-	let step = (CELL_SIZE * 2) * 4;
+	let startPoint = VERTICAL_MARGIN + HORIZONTAL_MARGIN;
+	let step = CELL_SIZE * 2;
+
 	const bitsArr = [[]];
 	let bitsArrLength = 0;
+
 	for (let n = 0; n < ROWS_QUANTITY; n++) {
-		for (let i = startPoint; i <= startPoint + (WORK_ROW_WIDTH * 4); i += step) {
+		for (let i = startPoint * 4; i <= (startPoint + WORK_ROW_WIDTH) * 4; i += step * 4) {
 			if (!(bitsArr[bitsArrLength].length % 4) && (bitsArr[bitsArrLength].length !== 0)) {
 				bitsArr.push([]);
 				bitsArrLength++;
@@ -32,18 +35,16 @@ let calcBits = (imgArr) => {
 					imgArr[i + 1] <= PERMISSIBLE_COLOR_DEVIATION &&
 					imgArr[i + 2] <= PERMISSIBLE_COLOR_DEVIATION) {
 					bitsArr[bitsArrLength].push(0);
-				}
-				else bitsArr[bitsArrLength].push(1);
+				} else bitsArr[bitsArrLength].push(1);
 			} else {
 				if (imgArr[i] <= PERMISSIBLE_COLOR_DEVIATION &&
 					imgArr[i + 1] <= PERMISSIBLE_COLOR_DEVIATION &&
 					imgArr[i + 2] <= PERMISSIBLE_COLOR_DEVIATION) {
 					bitsArr[bitsArrLength].push(0);
-				}
-				else bitsArr[bitsArrLength].push(1);
+				} else bitsArr[bitsArrLength].push(1);
 			}
 		}
-		startPoint += ((IDENT_BETWEEN_ROWS) * 4);
+		startPoint += IDENT_BETWEEN_ROWS;
 	}
 	return bitsArr;
 }
@@ -58,16 +59,6 @@ export let calcKey = (imgArr) => {
 	}
 	return key;
 }
-
-let generateKey = (password, salt) => {
-	let key = pbkdf2Sync(password, salt, 1, 256 / 8, 'sha512');
-	return aesjs.utils.hex.fromBytes(key);
-}
-
-console.log(generateKey("pass", "salt"));
-
-// TODO Fix repeating code encryptEntries and decryptEntries
-
 export let encryptEntries = (entries, keyStr) => {
 	let key = new Uint8Array(aesjs.utils.hex.toBytes(keyStr));
 	return entries.map((item) => {

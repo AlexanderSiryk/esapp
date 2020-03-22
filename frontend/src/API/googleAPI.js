@@ -16,14 +16,11 @@ export const gButtonOperations = {
 		});
 	},
 	logOut: () => {
-		if (window.gapi.auth2 !== undefined)
-		{
+		return new Promise((resolve) => {
 			let GoogleAuth = window.gapi.auth2.getAuthInstance();
 			let GoogleUser = GoogleAuth.currentUser.get();
-			return GoogleAuth.signOut().then(() => GoogleUser.isSignedIn());
-		} else {
-			return true;
-		}
+			GoogleAuth.signOut().then(() => resolve(GoogleUser.isSignedIn()));
+		});
 	},
 	loadButton: () => {
 		window.gapi.load("auth2", () => {

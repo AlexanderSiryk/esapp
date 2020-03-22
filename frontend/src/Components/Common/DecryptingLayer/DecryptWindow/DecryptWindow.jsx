@@ -1,11 +1,8 @@
 import React, {useRef} from "react";
 import s from "./DecryptWindow.module.css";
-import {decryptEntries, encryptEntries} from "../../../../API/encryptingOperations";
+import {decryptEntries} from "../../../../API/encryptingOperations";
 
 let DecryptWindow = ({imageKey, ...props}) => {
-	let onProceedClick = () => {
-		props.setIsDecrypted(true);
-	}
 	let onInputChange = (e) => {
 		if (e.target.files.length) {
 			if (e.target.files[0].type !== "image/png" &&
@@ -21,9 +18,7 @@ let DecryptWindow = ({imageKey, ...props}) => {
 			}
 		}
 	}
-
 	const canvas = useRef(null);
-
 	if (imageKey) {
 		props.getImage(imageKey).then((img) => {
 			if (img.width !== 252 || img.height !== 285) {
@@ -36,15 +31,13 @@ let DecryptWindow = ({imageKey, ...props}) => {
 			ctx.drawImage(img, 0, 0);
 			let mgData = ctx.getImageData(0, 0, img.width, img.height);
 			const key = props.calcKey(mgData.data);
-			//props.freeUpImageKey(); TODO free up space in further
-			props.setKey(key);
-			let encrypted = encryptEntries(props.tableEntries, key);
-			let decrypted = decryptEntries(encrypted, key);
-			console.log(key);
-			console.dir({
-				encrypted,
-				decrypted,
-			});
+			props.setIsDecrypted(true);
+
+			// Doesn't re-render due to state changes below
+			// because of the component set isDecrypted: true
+			// so on the next render parent component will not exist
+			props.setTableEntriesDecrypted(decryptEntries(props.tableEntries, key));
+			props.freeUpImageKey();
 		});
 
 	}
@@ -52,11 +45,9 @@ let DecryptWindow = ({imageKey, ...props}) => {
 	return (
 		<>
 			<div>
+				<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
 				<input type="file" onChange={onInputChange} className={s.input}/>
-				<canvas ref={canvas}/>
-			</div>
-			<div>
-				<button onClick={onProceedClick} className={s.button}>Proceed</button>
+				<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
 			</div>
 		</>
 	)
