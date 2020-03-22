@@ -6,6 +6,9 @@ const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
 const RESET_LAYERS = "RESET_LAYERS";
 const SET_IMAGE_KEY = "SET_IMAGE_KEY";
 const SET_KEY = "SET_KEY";
+const FREE_UP_IMAGE_KEY = "FREE_UP_IMAGE_KEY";
+
+// TODO send salt to the server
 
 let initialState = {
 	isDecrypted: false,
@@ -16,6 +19,7 @@ let initialState = {
 	userImageURL: null,
 	imageKey: null,
 	key: null,
+	salt: null,
 };
 
 let layersReducer = (state = initialState, action) => {
@@ -51,6 +55,11 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				key: action.key,
 			})
+		case FREE_UP_IMAGE_KEY:
+			return ({
+				...state,
+				imageKey: null,
+			})
 		case RESET_LAYERS:
 			return null;
 		default:
@@ -80,6 +89,9 @@ export let setImageKey = (image) => ({
 export let setKey = (key) => ({
 	type: SET_KEY,
 	key
+});
+export let freeUpImageKey = () => ({
+	type: FREE_UP_IMAGE_KEY
 });
 
 export let logIn = () => {

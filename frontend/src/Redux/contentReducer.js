@@ -9,6 +9,10 @@ const DELETE_ENTRY = "DELETE_ENTRY";
 const CLEAR_SEARCH_FIELD = "CLEAR_SEARCH_FIELD";
 const RESET_CONTENT = "RESET_CONTENT";
 
+// TODO get tableEntries from the server
+// TODO send token to the server
+// TODO send tableEntries to the server {onDelete, onEdit, onAdd}
+
 let initialState = {
 	editingEntryId: 0,
 	searchBarText: "",
