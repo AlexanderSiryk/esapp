@@ -5,7 +5,10 @@ import {gButtonOperations} from "../../../../API/googleAPI";
 
 class Login extends React.Component {
 	onSignIn = () => {
-		this.props.logIn();
+		gButtonOperations.logIn().then(response => {
+			this.props.setUserData(response.data);
+			this.props.setIsSignedIn(response.isSignedIn);
+		});
 	}
 
 	onSuccess = (GoogleUser) => {
@@ -17,7 +20,7 @@ class Login extends React.Component {
 			image: bp.getImageUrl(),
 		};
 		this.props.setUserData(data);
-		this.props.setIsSignedIn(GoogleUser.isSignedIn())
+		this.props.setIsSignedIn(GoogleUser.isSignedIn());
 	}
 
 	onFailure = () => {

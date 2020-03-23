@@ -1,5 +1,3 @@
-import {gButtonOperations} from "../API/googleAPI";
-
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
@@ -76,14 +74,5 @@ export const setImageKey = (image) => ({
 export const freeUpImageKey = () => ({
 	type: FREE_UP_IMAGE_KEY
 });
-
-// TODO replace logIn by the promise
-export let logIn = () => {
-	return async (dispatch) => {
-		const response = await gButtonOperations.logIn();
-		dispatch(setIsSignedIn(response.isSignedIn));
-		dispatch(setUserData(response.data))
-	}
-}
 
 export default layersReducer;
