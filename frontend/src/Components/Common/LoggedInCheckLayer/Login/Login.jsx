@@ -1,9 +1,14 @@
 import React from "react";
 import {gButtonOperations} from "../../../../API/googleAPI";
 
+// TODO refactor Login to the functional component
+
 class Login extends React.Component {
 	onSignIn = () => {
-		this.props.logIn();
+		gButtonOperations.logIn().then(response => {
+			this.props.setUserData(response.data);
+			this.props.setIsSignedIn(response.isSignedIn);
+		});
 	}
 
 	onSuccess = (GoogleUser) => {
@@ -14,8 +19,8 @@ class Login extends React.Component {
 			token: GoogleUser.getAuthResponse().id_token,
 			image: bp.getImageUrl(),
 		};
-		this.props.setIsSignedIn(GoogleUser.isSignedIn())
 		this.props.setUserData(data);
+		this.props.setIsSignedIn(GoogleUser.isSignedIn());
 	}
 
 	onFailure = () => {

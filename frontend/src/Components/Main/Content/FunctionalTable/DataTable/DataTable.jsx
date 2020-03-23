@@ -24,7 +24,7 @@ let DataTable = (props) => {
 				>{item.name}</div>
 				<div className={s.tableCol}>{item.login}</div>
 				<div className={s.tableCol}>{item.password}</div>
-				<div className={s.tableCol}>{`#${item.tag}`}</div>
+				<div className={s.tableCol}>{`#${item.tag || ""}`}</div>
 			</div>
 		);
 	})];

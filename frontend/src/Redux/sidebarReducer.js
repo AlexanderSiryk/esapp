@@ -1,9 +1,9 @@
 const SET_IS_PROFILE_ACTIONS_MODAL_SHOWN = "SET_IS_PROFILE_ACTIONS_MODAL_SHOWN";
 const RESET_SIDEBAR = "RESET_SIDEBAR";
 
-let initialState = {
+const initialState = {
 	isProfileActionsModalShown: false,
-};
+}
 
 let sidebarReducer = (state = initialState, action) => {
 	if (!state) {
@@ -16,18 +16,18 @@ let sidebarReducer = (state = initialState, action) => {
 				isProfileActionsModalShown: action.isShown,
 			}
 		case RESET_SIDEBAR:
-			return null;
+			return {...initialState};
 		default:
 			return state;
 	}
-};
+}
 
 // PAM - ProfileActionsModal
-export let setIsPAMShown = (isShown) => ({
+export const setIsPAMShown = (isShown) => ({
 	type: SET_IS_PROFILE_ACTIONS_MODAL_SHOWN,
 	isShown,
 });
-export let resetSidebar = () => ({
+export const resetSidebar = () => ({
 	type: RESET_SIDEBAR,
 });
 

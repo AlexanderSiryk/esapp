@@ -8,83 +8,39 @@ const SAVE_EDITED_ENTRY = "SAVE_EDITED_ENTRY";
 const DELETE_ENTRY = "DELETE_ENTRY";
 const CLEAR_SEARCH_FIELD = "CLEAR_SEARCH_FIELD";
 const RESET_CONTENT = "RESET_CONTENT";
+const SET_TABLE_ENTRIES_DECRYPTED = "SET_TABLE_ENTRIES_DECRYPTED";
 
-let initialState = {
+const initialState = {
 	editingEntryId: 0,
 	searchBarText: "",
 	tagSelected: "blank",
 	tableEntries: [
-		{
-			id: 1,
-			name: "google",
-			login: "login1",
-			password: "password1",
-			tag: "tag1",
-		},
-		{
-			id: 2,
-			name: "amazon",
-			login: "login2",
-			password: "password2",
-			tag: "tag2",
-		},
-		{
-			id: 3,
-			name: "Twitch",
-			login: "login3",
-			password: "password3",
-			tag: "tag3",
-		},
-		{
-			id: 4,
-			name: "twitter",
-			login: "login4",
-			password: "password4",
-			tag: "tag3",
-		},
-		{
-			id: 5,
-			name: "instagram",
-			login: "login5",
-			password: "password5",
-			tag: "tag5",
-		},
-		{
-			id: 6,
-			name: "aliexpress",
-			login: "login6",
-			password: "password6",
-			tag: "tag3",
-		},
-		{
-			id: 7,
-			name: "alibaba",
-			login: "login7",
-			password: "password7",
-			tag: "tag3",
-		},
+		{id: 1, name: "240daddc0abd", login: "2f0da5d208e9", password: "3303b1c811b786d506", tag: "3703a58a"},
+		{id: 2, name: "220fa3c109b6", login: "2f0da5d208ea", password: "3303b1c811b786d505", tag: "3703a589"},
+		{id: 3, name: "1715abcf05b0", login: "2f0da5d208eb", password: "3303b1c811b786d504", tag: "3703a588"},
+		{id: 4, name: "3715abcf12bd86", login: "2f0da5d208ec", password: "3303b1c811b786d503", tag: "3703a588"},
+		{id: 5, name: "2a0cb1cf07bf86d05a", login: "2f0da5d208ed", password: "3303b1c811b786d502", tag: "3703a58e"},
+		{id: 6, name: "220eabde1ea886d4448f", login: "2f0da5d208ee", password: "3303b1c811b786d501", tag: "3703a588"},
+		{id: 7, name: "220eabd907ba95", login: "2f0da5d208ef", password: "3303b1c811b786d500", tag: "3703a588"}
 	],
 	addWindowShown: false,
 	editWindowShown: false,
-};
+}
 
 let contentReducer = (state = initialState, action) => {
-	if (!state) {
-		state = initialState;
-	}
 	let id;
 	let tableEntries;
 	switch (action.type) {
 		case UPDATE_SEARCH_BAR_TEXT:
-			return ({
+			return {
 				...state,
 				searchBarText: action.searchBarText,
-			});
+			}
 		case APPLY_TAG_ON_SELECTION:
-			return ({
+			return {
 				...state,
 				tagSelected: action.tagSelected,
-			});
+			}
 		case ADD_ENTRY:
 			id = state.tableEntries.length;
 			id++;
@@ -95,27 +51,27 @@ let contentReducer = (state = initialState, action) => {
 				password: action.entry.password,
 				tag: action.entry.tag,
 			};
-			return ({
+			return {
 				...state,
 				lastPostId: id,
 				tableEntries: [...state.tableEntries, entry],
-			});
+			}
 		case TOGGLE_ADD_WINDOW:
-			return ({
+			return {
 				...state,
 				addWindowShown: !state.addWindowShown,
-			});
+			}
 		case CLEAR_TAG:
-			return ({
+			return {
 				...state,
 				tagSelected: "blank",
-			});
+			}
 		case TOGGLE_EDIT_WINDOW:
-			return ({
+			return {
 				...state,
 				editWindowShown: !state.editWindowShown,
 				editingEntryId: action.editingEntryId,
-			});
+			}
 		case SAVE_EDITED_ENTRY:
 			id = action.entry.id - 1;
 			if (JSON.stringify(action.entry) !== JSON.stringify(state.tableEntries[id])) {
@@ -124,10 +80,10 @@ let contentReducer = (state = initialState, action) => {
 			} else {
 				tableEntries = state.tableEntries;
 			}
-			return ({
+			return {
 				...state,
 				tableEntries,
-			});
+			}
 		case DELETE_ENTRY:
 			tableEntries = [...state.tableEntries];
 			id = tableEntries.length - 1;
@@ -137,75 +93,66 @@ let contentReducer = (state = initialState, action) => {
 				tableEntries[i].id = i + 1;
 			}
 			tableEntries.pop();
-			return ({
+			return {
 				...state,
 				tableEntries,
-			});
+			}
 		case CLEAR_SEARCH_FIELD:
-			return ({
+			return {
 				...state,
 				searchBarText: "",
-			});
+			}
+		case SET_TABLE_ENTRIES_DECRYPTED:
+			return {
+				...state,
+				tableEntries: [...action.tableEntries],
+			}
 		case RESET_CONTENT:
-			return null;
+			return {...initialState}
 		default:
 			return state;
 	}
-};
-
-export let updateSearchBarText = (searchBarText) => {
-	return ({
-		type: UPDATE_SEARCH_BAR_TEXT,
-		searchBarText,
-	});
-};
-export let applyTag = (tagSelected) => {
-	return ({
-		type: APPLY_TAG_ON_SELECTION,
-		tagSelected,
-	});
-};
-export let addEntry = (entry) => {
-	return ({
-		type: ADD_ENTRY,
-		entry,
-	});
-};
-export let toggleAddWindow = () => {
-	return ({
-		type: TOGGLE_ADD_WINDOW,
-	});
-};
-export let toggleEditWindow = (editingEntryId) => {
-	return ({
-		type: TOGGLE_EDIT_WINDOW,
-		editingEntryId,
-	});
-};
-export let clearTag = () => {
-	return ({
-		type: CLEAR_TAG,
-	});
-};
-export let saveEditedEntry = (entry) => {
-	return ({
-		type: SAVE_EDITED_ENTRY,
-		entry,
-	});
-};
-export let deleteEntry = (id) => {
-	return ({
-		type: DELETE_ENTRY,
-		id,
-	});
-};
-export let clearSearchField = () => {
-	return ({
-		type: CLEAR_SEARCH_FIELD,
-	});
 }
-export let resetContent = () => ({
+
+export const updateSearchBarText = (searchBarText) => ({
+	type: UPDATE_SEARCH_BAR_TEXT,
+	searchBarText,
+});
+export const applyTag = (tagSelected) => ({
+	type: APPLY_TAG_ON_SELECTION,
+	tagSelected,
+});
+export const addEntry = (entry) => ({
+	type: ADD_ENTRY,
+	entry,
+});
+export const toggleAddWindow = () => ({
+	type: TOGGLE_ADD_WINDOW,
+});
+export const toggleEditWindow = (editingEntryId) => ({
+	type: TOGGLE_EDIT_WINDOW,
+	editingEntryId,
+});
+export const clearTag = () => ({
+	type: CLEAR_TAG,
+});
+export const saveEditedEntry = (entry) => ({
+	type: SAVE_EDITED_ENTRY,
+	entry,
+});
+export const deleteEntry = (id) => ({
+	type: DELETE_ENTRY,
+	id,
+});
+export const clearSearchField = () => ({
+	type: CLEAR_SEARCH_FIELD,
+});
+export const resetContent = () => ({
 	type: RESET_CONTENT,
+});
+export const setTableEntriesDecrypted = (tableEntries) => ({
+	type: SET_TABLE_ENTRIES_DECRYPTED,
+	tableEntries,
 });
 
 export default contentReducer;
