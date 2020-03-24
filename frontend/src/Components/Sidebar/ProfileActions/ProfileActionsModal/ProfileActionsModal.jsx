@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from "react";
 import s from "./ProfileActionsModal.module.css"
 import LogOutButtonContainer from "../../../Common/LogOutButton/LogOutButtonContainer";
 
-let ProfileActionsModal = ({image, login, email,...props}) => {
+let ProfileActionsModal = ({image, login, email, ...props}) => {
 	let refObject = useRef(null);
 	let handleClickOutside = (e) => {
 		if (refObject.current && !refObject.current.contains(e.target)) {

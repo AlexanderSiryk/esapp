@@ -1,18 +1,20 @@
 import React from "react";
+import {GoogleLogout} from "react-google-login";
 
 let LogOutButton = (props) => {
-	let signOut = () => {
-		props.logOut().then(isSignedIn => {
-			props.setIsSignedIn(isSignedIn);
-			props.resetContent();
-			props.resetSidebar();
-			props.resetLayers();
-		});
+	let logOut = () => {
+		props.setIsSignedIn(false);
+		props.resetContent();
+		props.resetSidebar();
+		props.resetLayers();
+
 	}
 	return (
-		<>
-			<button onClick={signOut}>Log out</button>
-		</>
+		<GoogleLogout
+			clientId={props.GOOGLE_CLIENT_ID}
+			buttonText="Logout"
+			onLogoutSuccess={logOut}
+		/>
 	);
 }
 

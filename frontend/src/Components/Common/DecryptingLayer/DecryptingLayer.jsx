@@ -5,33 +5,24 @@ import Main from "../../Main/Main";
 import Sidebar from "../../Sidebar/Sidebar";
 
 let DecryptingLayer = ({isDecrypted}) => {
-	return (
-		<>
-			{
-				isDecrypted &&
-				<>
-					<Sidebar/>
-					<Main/>
-					<Redirect
-						to={{
-							pathname: "/content"
-						}}
-					/>
-				</>
-			}
-			{
-				!isDecrypted &&
-				<>
-					<DecryptWindowContainer/>
-					<Redirect
-						to={{
-							pathname: "/"
-						}}
-					/>
-				</>
-			}
+	return isDecrypted
+		? <>
+			<Sidebar/>
+			<Main/>
+			<Redirect
+				to={{
+					pathname: "/content"
+				}}
+			/>
 		</>
-	);
+		: <>
+			<DecryptWindowContainer/>
+			<Redirect
+				to={{
+					pathname: "/"
+				}}
+			/>
+		</>;
 }
 
 export default DecryptingLayer;
