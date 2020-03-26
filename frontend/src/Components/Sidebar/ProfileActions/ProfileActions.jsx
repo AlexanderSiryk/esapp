@@ -1,52 +1,41 @@
 import React from "react";
 import s from "./ProfileActions.module.css"
-import ProfileActionsModalContainer from "./ProfileActionsModal/ProfileActionsModalContainer";
+import ProfileWindowContainer from "./ProfileActionsModal/ProfileWindowContainer";
 
 let ProfileActions = ({image, login, email, ...props}) => {
 	let onProfileActionsClick = () => {
-		props.setIsPAMShown(true);
+		props.setIsProfileWindowShown(true);
 	}
-	return (
-		<>
-			<div className={s.container}>
-				{
-					(login && email && image) &&
-					<div className={s.blockContainer} onClick={onProfileActionsClick}>
-						<div className={s.textContainer}>
-							<span className={s.text}>{login}</span>
-							<span className={s.text}>{email}</span>
-						</div>
-						<div>
-							<div className={s.avatar} style={{background: `url("${image}")`}}/>
-						</div>
-					</div>
-				}
-				{
-					!(login && email && image) &&
-					<div className={s.blockContainer} onClick={onProfileActionsClick}>
-						<div className={s.textContainer}>
-							<span className={s.text}>login</span>
-							<span className={s.text}>email</span>
-						</div>
-						<div>
-							<div className={s.avatar}/>
-						</div>
-					</div>
-				}
-
-			</div>
+	return <>
+		<div className={s.container}>
 			{
-				props.isProfileActionsModalShown &&
-				<ProfileActionsModalContainer
-					login={login}
-					image={image}
-					email={email}
-					isProfileActionsModalShown={props.isProfileActionsModalShown}
-				/>
+				(login && email && image) &&
+				<div className={s.blockContainer} onClick={onProfileActionsClick}>
+					<div className={s.textContainer}>
+						<span className={s.text}>{login}</span>
+						<span className={s.text}>{email}</span>
+					</div>
+					<div>
+						<div className={s.avatar} style={{background: `url("${image}")`}}/>
+					</div>
+				</div>
+			}
+			{
+				!(login && email && image) &&
+				<div className={s.blockContainer} onClick={onProfileActionsClick}>
+					<div className={s.textContainer}>
+						<span className={s.text}>login</span>
+						<span className={s.text}>email</span>
+					</div>
+					<div>
+						<div className={s.avatar}/>
+					</div>
+				</div>
 			}
 
-		</>
-	);
-};
+		</div>
+		<ProfileWindowContainer/>
+	</>
+}
 
 export default ProfileActions;

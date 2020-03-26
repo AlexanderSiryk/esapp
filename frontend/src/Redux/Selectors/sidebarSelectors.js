@@ -1,1 +1,1 @@
-export const getIsProfileActionsModalShown = state => state.sidebar.isProfileActionsModalShown;
+export const getIsProfileWindowShown = state => state.sidebar.isProfileWindowShown;

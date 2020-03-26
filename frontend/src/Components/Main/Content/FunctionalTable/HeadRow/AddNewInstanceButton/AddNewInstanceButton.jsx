@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./AddNewInstanceButton.module.css"
 
-let AddNewInstanceButton = (props) => {
+let AddNewInstanceButton = ({toggleAddWindow}) => {
 	let onAddButtonClick = () => {
-		props.toggleAddWindow();
+		toggleAddWindow();
 	}
 	return <button
 		className={s.addButton}

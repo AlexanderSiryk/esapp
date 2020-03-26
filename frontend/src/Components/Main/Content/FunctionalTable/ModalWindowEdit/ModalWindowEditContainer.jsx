@@ -5,14 +5,14 @@ import {
 } from "../../../../../Redux/contentReducer";
 import {isInputValueValid} from "../../../../../API/validation";
 import {
-	getEditingEntryId, getEditWindowShown, getSortedTable, getTableEntries
+	getEditingEntryId, getEditWindowShown, getFilteredTableLength, getTableEntries
 } from "../../../../../Redux/Selectors/contentSelectors";
 
 let mapStateToProps = (state) => ({
 	tableEntries: getTableEntries(state),
 	editingEntryId: getEditingEntryId(state),
 	editWindowShown: getEditWindowShown(state),
-	filteredTableEntries: getSortedTable(state),
+	tableEntriesLength: getFilteredTableLength(state),
 	isInputValueValid: isInputValueValid,
 });
 

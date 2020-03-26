@@ -2,21 +2,20 @@ import React, {useEffect, useRef} from "react";
 import s from "./ProfileActionsModal.module.css"
 import LogOutButtonContainer from "../../../Common/LogOutButton/LogOutButtonContainer";
 
-let ProfileActionsModal = ({image, login, email, ...props}) => {
+let ProfileWindow = ({image, login, email, isProfileWindowShown, setIsProfileWindowShown}) => {
 	let refObject = useRef(null);
 	let handleClickOutside = (e) => {
 		if (refObject.current && !refObject.current.contains(e.target)) {
-			props.setIsPAMShown(false);
+			setIsProfileWindowShown(false);
 		}
 	}
 	useEffect(() => {
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
-		};
+		}
 	});
-
-	return (
+	return isProfileWindowShown ?
 		<div className={s.popUpBackground}>
 			<div ref={refObject} className={s.profileActionsModal}>
 				<div className={s.head}>
@@ -50,7 +49,7 @@ let ProfileActionsModal = ({image, login, email, ...props}) => {
 				</div>
 			</div>
 		</div>
-	)
+		: null
 }
 
-export default ProfileActionsModal;
+export default ProfileWindow;

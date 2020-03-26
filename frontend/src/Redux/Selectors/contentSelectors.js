@@ -16,10 +16,9 @@ export const getUniqueTags = createSelector(
 		return t.filter((item, index, arr) => {
 			return arr.indexOf(item) === index;
 		});
-	}
-);
+	});
 
-export const getSortedTable = createSelector(
+export const getFilteredTable = createSelector(
 	getTableEntries,
 	getTagSelected,
 	getSearchBarText,
@@ -32,10 +31,9 @@ export const getSortedTable = createSelector(
 		}
 		t = t === undefined ? table : t;
 		if (text !== "") {
-			t = t.filter((item) => {
-				return item.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
-			});
+			t = t.filter((item) => item.name.toLowerCase().indexOf(text.toLowerCase()) !== -1);
 		}
 		return t;
-	}
-);
+	});
+
+export const getFilteredTableLength = (state) => getFilteredTable(state).length;
