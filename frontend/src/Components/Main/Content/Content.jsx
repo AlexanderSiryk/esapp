@@ -4,11 +4,9 @@ import FunctionalTable from "./FunctionalTable/FunctionalTable";
 
 
 let Content = () => {
-	return (
-		<div className={s.container}>
-			<FunctionalTable/>
-		</div>
-	);
-};
+	return <div className={s.container}>
+		<FunctionalTable/>
+	</div>
+}
 
 export default Content;

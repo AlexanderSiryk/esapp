@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
 
-let LogInButton = (props) => {
+let LogInButton = ({clientId, setUserData, setIsSignedIn}) => {
 	let onSuccess = (GoogleUser) => {
 		let bp = GoogleUser.getBasicProfile();
 		let data = {
@@ -9,15 +9,15 @@ let LogInButton = (props) => {
 			login: bp.getName(),
 			token: GoogleUser.getAuthResponse().id_token,
 			image: bp.getImageUrl(),
-		};
-		props.setUserData(data);
-		props.setIsSignedIn(GoogleUser.isSignedIn());
+		}
+		setUserData(data);
+		setIsSignedIn(GoogleUser.isSignedIn());
 	}
 	let onFailure = () => {
 		alert("Failure");
 	}
 	return <GoogleLogin
-		clientId={props.GOOGLE_CLIENT_ID}
+		clientId={clientId}
 		buttonText="Login"
 		onSuccess={onSuccess}
 		onFailure={onFailure}

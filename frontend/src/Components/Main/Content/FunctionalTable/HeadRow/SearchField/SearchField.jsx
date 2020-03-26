@@ -6,14 +6,12 @@ let SearchField = (props) => {
 		if (props.tagSelected !== "blank") {
 			props.clearTag();
 		}
-	};
-	return (
-		<input
-			type="text"
-			value={props.searchBarText}
-			onChange={onTextChange}
-		/>
-	);
-};
+	}
+	return <input
+		type="text"
+		value={props.searchBarText}
+		onChange={onTextChange}
+	/>
+}
 
 export default SearchField;

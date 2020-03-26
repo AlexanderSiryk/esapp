@@ -9,13 +9,11 @@ let LogOutButton = (props) => {
 		props.resetLayers();
 
 	}
-	return (
-		<GoogleLogout
-			clientId={props.GOOGLE_CLIENT_ID}
-			buttonText="Logout"
-			onLogoutSuccess={logOut}
-		/>
-	);
+	return <GoogleLogout
+		clientId={props.clientId}
+		buttonText="Logout"
+		onLogoutSuccess={logOut}
+	/>
 }
 
 export default LogOutButton;

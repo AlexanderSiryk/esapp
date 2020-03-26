@@ -25,79 +25,78 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 		} else {
 			alert("wrong input");
 		}
-	};
+	}
+	// TODO remove redundant?
 	let onCancelButton = () => {
 		props.toggleAddWindow();
-	};
+	}
 	let onCancel = (e) => {
 		if (e.target.className === s.wrapper) {
 			props.toggleAddWindow();
 		}
-	};
+	}
 	let onNameChange = (e) => {
 		setNameField(e.target.value);
-	};
+	}
 	let onLoginChange = (e) => {
 		setLoginField(e.target.value);
-	};
+	}
 	let onPassChange = (e) => {
 		setPassField(e.target.value);
-	};
+	}
 	let onTagChange = (e) => {
 		setTagField(e.target.value);
-	};
-	return (
-		<>
-			{
-				props.addWindowShown &&
-				<div className={s.wrapper} onMouseDown={onCancel}>
-					<div className={s.modalContainer}>
-						<div className={s.inputRow}>
-							<label htmlFor="nameAdd">Name</label>
-							<input
-								type="text"
-								autoFocus
-								value={nameField}
-								id="nameAdd"
-								onChange={onNameChange}
-							/>
-						</div>
-						<div className={s.inputRow}>
-							<label htmlFor="loginAdd">Login</label>
-							<input
-								type="text"
-								value={loginField}
-								id="loginAdd"
-								onChange={onLoginChange}
-							/>
-						</div>
-						<div className={s.inputRow}>
-							<label htmlFor="passwAdd">Password</label>
-							<input
-								type="text"
-								value={passField}
-								id="passwAdd"
-								onChange={onPassChange}
-							/>
-						</div>
-						<div className={s.inputRow}>
-							<label htmlFor="tagAdd">Tag</label>
-							<input
-								type="text"
-								value={tagField}
-								id="tagAdd"
-								onChange={onTagChange}
-							/>
-						</div>
-						<div className="buttonRow">
-							<button onClick={onSaveButton}>Save</button>
-							<button onClick={onCancelButton}>Cancel</button>
-						</div>
+	}
+	return <>
+		{
+			props.addWindowShown &&
+			<div className={s.wrapper} onMouseDown={onCancel}>
+				<div className={s.modalContainer}>
+					<div className={s.inputRow}>
+						<label htmlFor="nameAdd">Name</label>
+						<input
+							type="text"
+							autoFocus
+							value={nameField}
+							id="nameAdd"
+							onChange={onNameChange}
+						/>
+					</div>
+					<div className={s.inputRow}>
+						<label htmlFor="loginAdd">Login</label>
+						<input
+							type="text"
+							value={loginField}
+							id="loginAdd"
+							onChange={onLoginChange}
+						/>
+					</div>
+					<div className={s.inputRow}>
+						<label htmlFor="passwAdd">Password</label>
+						<input
+							type="text"
+							value={passField}
+							id="passwAdd"
+							onChange={onPassChange}
+						/>
+					</div>
+					<div className={s.inputRow}>
+						<label htmlFor="tagAdd">Tag</label>
+						<input
+							type="text"
+							value={tagField}
+							id="tagAdd"
+							onChange={onTagChange}
+						/>
+					</div>
+					<div className="buttonRow">
+						<button onClick={onSaveButton}>Save</button>
+						<button onClick={onCancelButton}>Cancel</button>
 					</div>
 				</div>
-			}
-		</>
-	);
-};
+			</div>
+		}
+	</>
+}
 
 export default ModalWindowAdd;

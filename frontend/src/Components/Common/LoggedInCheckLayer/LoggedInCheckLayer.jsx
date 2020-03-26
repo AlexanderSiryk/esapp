@@ -16,7 +16,7 @@ let LoggedInCheckLayer = ({isSignedIn}) => {
 					pathname: "/login"
 				}}
 			/>
-		</>;
+		</>
 }
 
 export default LoggedInCheckLayer;

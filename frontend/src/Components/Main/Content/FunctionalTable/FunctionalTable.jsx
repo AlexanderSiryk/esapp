@@ -5,14 +5,12 @@ import React from "react";
 import ModalWindowEditContainer from "./ModalWindowEdit/ModalWindowEditContainer";
 
 let FunctionalTable = () => {
-	return (
-		<>
-			<HeadRowContainer/>
-			<DataTableContainer/>
-			<ModalWindowAddContainer/>
-			<ModalWindowEditContainer/>
-		</>
-	);
-};
+	return <>
+		<HeadRowContainer/>
+		<DataTableContainer/>
+		<ModalWindowAddContainer/>
+		<ModalWindowEditContainer/>
+	</>
+}
 
 export default FunctionalTable;

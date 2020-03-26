@@ -39,18 +39,13 @@ let DecryptWindow = ({imageKey, ...props}) => {
 			props.setTableEntriesDecrypted(decryptEntries(props.tableEntries, key));
 			props.freeUpImageKey();
 		});
-
 	}
 
-	return (
-		<>
-			<div>
-				<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
-				<input type="file" onChange={onInputChange} className={s.input}/>
-				<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
-			</div>
-		</>
-	)
+	return <div>
+		<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
+		<input type="file" onChange={onInputChange} className={s.input}/>
+		<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
+	</div>
 }
 
 export default DecryptWindow;

@@ -22,7 +22,7 @@ let DecryptingLayer = ({isDecrypted}) => {
 					pathname: "/"
 				}}
 			/>
-		</>;
+		</>
 }
 
 export default DecryptingLayer;

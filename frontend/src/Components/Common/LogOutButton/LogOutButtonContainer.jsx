@@ -4,11 +4,11 @@ import {resetLayers, setIsSignedIn} from "../../../Redux/layersReducer";
 import {resetContent} from "../../../Redux/contentReducer";
 import {resetSidebar} from "../../../Redux/sidebarReducer";
 import {getUserLogin} from "../../../Redux/Selectors/layersSelectors";
-import {GOOGLE_CLIENT_ID} from "../../../API/DAL_API";
+import {getClientId} from "../../../Redux/Selectors/applicationSelectors";
 
 let mapStateToProps = (state) => ({
 	userLogin: getUserLogin(state),
-	GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID,
+	clientId: getClientId(state),
 });
 
 let LogOutButtonContainer = connect(mapStateToProps, {
