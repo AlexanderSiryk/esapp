@@ -11,7 +11,7 @@ const RESET_CONTENT = "RESET_CONTENT";
 const SET_TABLE_ENTRIES_DECRYPTED = "SET_TABLE_ENTRIES_DECRYPTED";
 
 const initialState = {
-	editingEntryId: 0,
+	editingEntryId: null,
 	searchBarText: "",
 	tagSelected: "blank",
 	tableEntries: [

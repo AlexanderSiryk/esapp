@@ -2,8 +2,6 @@ const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
 const RESET_LAYERS = "RESET_LAYERS";
-const SET_IMAGE_KEY = "SET_IMAGE_KEY";
-const FREE_UP_IMAGE_KEY = "FREE_UP_IMAGE_KEY";
 
 const initialState = {
 	isDecrypted: false,
@@ -35,16 +33,6 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				isDecrypted: action.isDecrypted,
 			}
-		case SET_IMAGE_KEY:
-			return {
-				...state,
-				imageKey: action.image,
-			}
-		case FREE_UP_IMAGE_KEY:
-			return {
-				...state,
-				imageKey: null,
-			}
 		case RESET_LAYERS:
 			return {...initialState}
 		default:
@@ -66,13 +54,6 @@ export const setIsDecrypted = (isDecrypted) => ({
 });
 export const resetLayers = () => ({
 	type: RESET_LAYERS,
-});
-export const setImageKey = (image) => ({
-	type: SET_IMAGE_KEY,
-	image,
-});
-export const freeUpImageKey = () => ({
-	type: FREE_UP_IMAGE_KEY
 });
 
 export default layersReducer;

@@ -1,4 +1,4 @@
-.wrapper {
+.overlay {
     background: rgba(0, 0, 0, 0.5);
     width: 100vw;
     height: 100vh;
@@ -35,8 +35,4 @@
 
 .buttonRow {
     margin-top: auto;
-}
-
-.cancel {
-    color: black;
 }

@@ -1,57 +1,40 @@
-import React, {useEffect, useState} from "react";
-import s from "./ModalWindowEdit.module.css";
+import React, {useRef, useState} from "react";
+import s from "../ModalWindows.module.css"
 
-let ModalWindowEdit = ({isInputValueValid, ...props}) => {
+let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 	let [nameField, setNameField] = useState("");
 	let [loginField, setLoginField] = useState("");
 	let [passField, setPassField] = useState("");
 	let [tagField, setTagField] = useState("");
-	let entry;
-	if (props.editingEntryId &&
-		props.editingEntryId !== 0) {
-		entry = props.tableEntries[props.editingEntryId - 1];
-	} else {
-		entry = {
-			name: "",
-			login: "",
-			password: "",
-			tag: "",
-		}
-	}
 
-	useEffect(() => {
-		setNameField(entry.name);
-		setLoginField(entry.login);
-		setPassField(entry.password);
-		setTagField(entry.tag);
-	}, [entry]);
+	let overlay = useRef(null);
+	let cancelButton = useRef(null);
 
 	let onSave = () => {
 		if (isInputValueValid({type: "name", value: nameField}) &&
 			isInputValueValid({type: "login", value: loginField}) &&
 			isInputValueValid({type: "password", value: passField}) &&
 			isInputValueValid({type: "tag", value: tagField})) {
-			props.toggleEditWindow(0);
-			props.saveEditedEntry({
-				id: props.editingEntryId,
+			props.addEntry({
 				name: nameField,
 				login: loginField,
 				password: passField,
-				tag: tagField,
+				tag: tagField
 			});
-		} else alert("wrong input");
-	}
-	let onDelete = () => {
-		if (props.tableEntriesLength <= 1) {
-			props.clearSearchField();
+			props.toggleAddWindow();
+			setNameField("");
+			setLoginField("");
+			setPassField("");
+			setTagField("");
+		} else {
+			alert("wrong input");
 		}
-		props.deleteEntry(props.editingEntryId);
-		props.toggleEditWindow(0);
 	}
 	let onCancel = (e) => {
-		if (e.target.className === s.wrapper ||
-			e.target.className === s.cancel) {
-			props.toggleEditWindow(0);
+		if (e.target === overlay.current ||
+			e.target === cancelButton.current) {
+			e.target = null; 			// Because of onCancel is used by two elements
+			props.toggleAddWindow(); 	// so it toggles twice
 		}
 	}
 
@@ -68,8 +51,8 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 		setTagField(e.target.value);
 	}
 
-	return props.editWindowShown &&
-		<div className={s.wrapper} onClick={onCancel}>
+	return props.addWindowShown &&
+		<div ref={overlay} className={s.overlay} onClick={onCancel}>
 			<div className={s.modalContainer}>
 				<div className={s.inputRow}>
 					<label htmlFor="nameAdd">Name</label>
@@ -109,12 +92,11 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 					/>
 				</div>
 				<div className="buttonRow">
-					<button onClick={onSave}>Save Changes</button>
-					<button onClick={onCancel} className={s.cancel}>Cancel</button>
-					<button onClick={onDelete}>Delete</button>
+					<button onClick={onSave}>Save</button>
+					<button ref={cancelButton} onClick={onCancel}>Cancel</button>
 				</div>
 			</div>
 		</div>
 }
 
-export default ModalWindowEdit;
+export default ModalWindowAdd;

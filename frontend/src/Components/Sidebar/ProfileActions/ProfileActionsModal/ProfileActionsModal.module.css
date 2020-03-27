@@ -9,7 +9,7 @@
     background: #000;
 }
 
-.popUpBackground {
+.overlay {
     width: 100vw;
     height: 100vh;
     position: absolute;

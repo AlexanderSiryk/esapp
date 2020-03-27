@@ -1,23 +1,19 @@
-import React, {useEffect, useRef} from "react";
+import React, {useRef} from "react";
 import s from "./ProfileActionsModal.module.css"
 import LogOutButtonContainer from "../../../Common/LogOutButton/LogOutButtonContainer";
 
 let ProfileWindow = ({image, login, email, isProfileWindowShown, setIsProfileWindowShown}) => {
-	let refObject = useRef(null);
-	let handleClickOutside = (e) => {
-		if (refObject.current && !refObject.current.contains(e.target)) {
+	let overlay = useRef(null);
+
+	let onClickOutside = (e) => {
+		if (e.target === overlay.current) {
 			setIsProfileWindowShown(false);
 		}
 	}
-	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		}
-	});
+
 	return isProfileWindowShown ?
-		<div className={s.popUpBackground}>
-			<div ref={refObject} className={s.profileActionsModal}>
+		<div ref={overlay} className={s.overlay} onClick={onClickOutside}>
+			<div className={s.profileActionsModal}>
 				<div className={s.head}>
 					{
 						(login && email && image) &&
