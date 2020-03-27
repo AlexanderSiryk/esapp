@@ -8,7 +8,6 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 	let [tagField, setTagField] = useState("");
 
 	let overlay = useRef(null);
-	let cancelButton = useRef(null);
 
 	let onSave = () => {
 		if (isInputValueValid({type: "name", value: nameField}) &&
@@ -30,12 +29,15 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 			alert("wrong input");
 		}
 	}
+
+	// Do not combine onCancel and onCancelButton
 	let onCancel = (e) => {
-		if (e.target === overlay.current ||
-			e.target === cancelButton.current) {
-			e.target = null; 			// Because of onCancel is used by two elements
-			props.toggleAddWindow(); 	// so it toggles twice
+		if (e.target === overlay.current) {
+			props.toggleAddWindow();
 		}
+	}
+	let onCancelButton = () => {
+		props.toggleAddWindow();
 	}
 
 	let onNameChange = (e) => {
@@ -52,7 +54,7 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 	}
 
 	return props.addWindowShown &&
-		<div ref={overlay} className={s.overlay} onClick={onCancel}>
+		<div ref={overlay} className={s.overlay} onMouseDown={onCancel}>
 			<div className={s.modalContainer}>
 				<div className={s.inputRow}>
 					<label htmlFor="nameAdd">Name</label>
@@ -93,7 +95,7 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 				</div>
 				<div className="buttonRow">
 					<button onClick={onSave}>Save</button>
-					<button ref={cancelButton} onClick={onCancel}>Cancel</button>
+					<button onClick={onCancelButton}>Cancel</button>
 				</div>
 			</div>
 		</div>

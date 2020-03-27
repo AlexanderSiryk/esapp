@@ -19,7 +19,6 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 	}
 
 	let overlay = useRef(null);
-	let cancelButton = useRef(null);
 
 	useEffect(() => {
 		setNameField(entry.name);
@@ -50,12 +49,15 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 		props.deleteEntry(props.editingEntryId);
 		props.toggleEditWindow(null);
 	}
+
+	// Do not combine onCancel and onCancelButton
 	let onCancel = (e) => {
-		if (e.target === overlay.current ||
-			e.target === cancelButton.current) {
-			e.target = null;
+		if (e.target === overlay.current) {
 			props.toggleEditWindow(null);
 		}
+	}
+	let onCancelButton = () => {
+		props.toggleEditWindow(null);
 	}
 
 	let onNameChange = (e) => {
@@ -72,7 +74,7 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 	}
 
 	return props.editWindowShown
-		? <div ref={overlay} className={s.overlay} onClick={onCancel}>
+		? <div ref={overlay} className={s.overlay} onMouseDown={onCancel}>
 			<div className={s.modalContainer}>
 				<div className={s.inputRow}>
 					<label htmlFor="nameAdd">Name</label>
@@ -113,7 +115,7 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 				</div>
 				<div className="buttonRow">
 					<button onClick={onSave}>Save Changes</button>
-					<button ref={cancelButton} onClick={onCancel}>Cancel</button>
+					<button onClick={onCancelButton}>Cancel</button>
 					<button onClick={onDelete}>Delete</button>
 				</div>
 			</div>
