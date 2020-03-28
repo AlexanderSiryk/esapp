@@ -2,11 +2,11 @@ import {connect} from "react-redux";
 import ModalWindowEdit from "./ModalWindowEdit";
 import {
 	clearSearchField, deleteEntry, saveEditedEntry, toggleEditWindow
-} from "../../../../../../Redux/contentReducer";
-import {isInputValueValid} from "../../../../../../API/validation";
+} from "../../../../Redux/contentReducer";
+import {isInputValueValid} from "../../../../API/validation";
 import {
 	getEditingEntryId, getEditWindowShown, getFilteredTableLength, getTableEntries
-} from "../../../../../../Redux/Selectors/contentSelectors";
+} from "../../../../Redux/Selectors/contentSelectors";
 
 let mapStateToProps = (state) => ({
 	tableEntries: getTableEntries(state),

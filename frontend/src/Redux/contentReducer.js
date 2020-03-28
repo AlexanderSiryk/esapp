@@ -8,21 +8,14 @@ const SAVE_EDITED_ENTRY = "SAVE_EDITED_ENTRY";
 const DELETE_ENTRY = "DELETE_ENTRY";
 const CLEAR_SEARCH_FIELD = "CLEAR_SEARCH_FIELD";
 const RESET_CONTENT = "RESET_CONTENT";
-const SET_TABLE_ENTRIES_DECRYPTED = "SET_TABLE_ENTRIES_DECRYPTED";
+const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
+const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
 
 const initialState = {
 	editingEntryId: null,
 	searchBarText: "",
 	tagSelected: "blank",
-	tableEntries: [
-		{id: 1, name: "240daddc0abd", login: "2f0da5d208e9", password: "3303b1c811b786d506", tag: "3703a58a"},
-		{id: 2, name: "220fa3c109b6", login: "2f0da5d208ea", password: "3303b1c811b786d505", tag: "3703a589"},
-		{id: 3, name: "1715abcf05b0", login: "2f0da5d208eb", password: "3303b1c811b786d504", tag: "3703a588"},
-		{id: 4, name: "3715abcf12bd86", login: "2f0da5d208ec", password: "3303b1c811b786d503", tag: "3703a588"},
-		{id: 5, name: "2a0cb1cf07bf86d05a", login: "2f0da5d208ed", password: "3303b1c811b786d502", tag: "3703a58e"},
-		{id: 6, name: "220eabde1ea886d4448f", login: "2f0da5d208ee", password: "3303b1c811b786d501", tag: "3703a588"},
-		{id: 7, name: "220eabd907ba95", login: "2f0da5d208ef", password: "3303b1c811b786d500", tag: "3703a588"}
-	],
+	tableEntries: null, 	//[{id: null, name: null, login: null, password: null, tag: null,}],
 	addWindowShown: false,
 	editWindowShown: false,
 }
@@ -88,7 +81,6 @@ let contentReducer = (state = initialState, action) => {
 			tableEntries = [...state.tableEntries];
 			id = tableEntries.length - 1;
 			for (let i = action.id - 1; i < id; i++) {
-				console.log(tableEntries[i].id);
 				tableEntries[i] = tableEntries[i + 1];
 				tableEntries[i].id = i + 1;
 			}
@@ -102,7 +94,12 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				searchBarText: "",
 			}
-		case SET_TABLE_ENTRIES_DECRYPTED:
+		case SET_TABLE_ENTRIES:
+			return {
+				...state,
+				tableEntries: action.tableEntries,
+			}
+		case SET_DECRYPTED_TABLE_ENTRIES:
 			return {
 				...state,
 				tableEntries: [...action.tableEntries],
@@ -150,8 +147,12 @@ export const clearSearchField = () => ({
 export const resetContent = () => ({
 	type: RESET_CONTENT,
 });
-export const setTableEntriesDecrypted = (tableEntries) => ({
-	type: SET_TABLE_ENTRIES_DECRYPTED,
+export const setDecryptedTableEntries = (tableEntries) => ({
+	type: SET_DECRYPTED_TABLE_ENTRIES,
+	tableEntries,
+});
+export const setTableEntries = (tableEntries) => ({
+	type: SET_TABLE_ENTRIES,
 	tableEntries,
 });
 

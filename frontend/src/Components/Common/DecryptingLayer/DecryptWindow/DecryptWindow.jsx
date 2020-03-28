@@ -1,13 +1,15 @@
 import React, {useRef, useState} from "react";
 import s from "./DecryptWindow.module.css";
 import {decryptEntries} from "../../../../API/encryptingOperations";
+import WaitingForFetching from "../../WaitingForFetching/WaitingForFetching";
 
-let DecryptWindow = ({getImage, calcKey, tableEntries, setTableEntriesDecrypted, setIsDecrypted}) => {
+let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) => {
+	if (isFetching) props.fetchEntries();
 	let [imageKey, setImageKey] = useState(null);
 	const IMAGE_KEY_WIDTH = 252;
 	const IMAGE_KEY_HEIGHT = 285;
 
-	let onInputChange = (e) => {
+let onInputChange = (e) => {
 		if (e.target.files.length) {
 			if (e.target.files[0].type !== "image/png" &&
 				e.target.files[0].type !== "image/jpeg") {
@@ -36,17 +38,20 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, setTableEntriesDecrypted,
 			ctx.drawImage(img, 0, 0);
 			let mgData = ctx.getImageData(0, 0, img.width, img.height);
 			const key = calcKey(mgData.data);
-			setIsDecrypted(true);
+			props.setKey(key);
+			props.setIsDecrypted(true);
 
 			// Doesn't re-render due to state changes below
 			// because of the component set isDecrypted: true
-			// so on the next render parent component will not exist
-			setTableEntriesDecrypted(decryptEntries(tableEntries, key));
+			// so on the next render parent component will be unmounted
+			// TODO unsubscribe from state updates
+			props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
 			setImageKey(null);
 		});
 	}
 
 	return <div>
+		{isFetching && <WaitingForFetching/>}
 		<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
 		<input type="file" onChange={onInputChange} className={s.input}/>
 		<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>

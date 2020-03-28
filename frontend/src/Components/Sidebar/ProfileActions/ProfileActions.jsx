@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./ProfileActions.module.css"
-import ProfileWindowContainer from "./ProfileActionsModal/ProfileWindowContainer";
+import ProfileWindowContainer from "./ProfileWindow/ProfileWindowContainer";
 
 let ProfileActions = ({image, login, email, ...props}) => {
 	let onProfileActionsClick = () => {

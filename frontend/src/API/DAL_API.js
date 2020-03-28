@@ -1,15 +1,15 @@
-/*import * as axios from "axios";*/
+import * as axios from "axios";
 
-//const URL = "http://localhost/public/accounts";
-/*
-export const dal = {
-	getPasswords() {
+const URL = "http://localhost/public/accounts";
+export const server = {
+	fetchPasswords() {
 		return axios.get(URL).then(response => {
 			return response;
 		});
 	},
-	setPasswords() {
-		return axios.post(URL, {
+	postPassword(obj) {
+		return axios.put(URL, obj).then(() => 0);
+		/*return axios.post(URL, {
 			id: 10,
 			name: "test",
 			login: "test",
@@ -17,6 +17,6 @@ export const dal = {
 			tag: "test",
 		}).then(response => {
 			return response;
-		});
+		});*/
 	},
-}*/
+}

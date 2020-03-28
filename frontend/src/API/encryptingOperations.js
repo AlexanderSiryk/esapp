@@ -59,19 +59,17 @@ export let calcKey = (imgArr) => {
 	}
 	return key;
 }
-export let encryptEntries = (entries, keyStr) => {
+export let encryptEntry = (entry, keyStr) => {
 	let key = new Uint8Array(aesjs.utils.hex.toBytes(keyStr));
-	return entries.map((item) => {
-		let obj = {...item};
-		for (const prop in obj) {
-			if (prop !== "id") {
-				if (obj.hasOwnProperty(prop)) {
-					obj[prop] = encryptString(obj[prop], key);
-				} else throw new Error(`There is no instance ${prop} in ${item}`);
-			}
+	let obj = {...entry};
+	for (const prop in obj) {
+		if (prop !== "id") {
+			if (obj.hasOwnProperty(prop)) {
+				obj[prop] = encryptString(obj[prop], key);
+			} else throw new Error(`There is no instance ${prop} in ${obj}`);
 		}
-		return obj;
-	});
+	}
+	return obj;
 }
 
 export let decryptEntries = (entries, keyStr) => {

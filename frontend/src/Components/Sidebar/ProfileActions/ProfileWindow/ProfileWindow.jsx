@@ -12,7 +12,7 @@ let ProfileWindow = ({image, login, email, isProfileWindowShown, setIsProfileWin
 	}
 
 	return isProfileWindowShown ?
-		<div ref={overlay} className={s.overlay} onClick={onClickOutside}>
+		<div ref={overlay} className={s.overlay} onMouseDown={onClickOutside}>
 			<div className={s.profileActionsModal}>
 				<div className={s.head}>
 					{

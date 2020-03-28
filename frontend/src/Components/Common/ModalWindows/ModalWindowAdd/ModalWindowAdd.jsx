@@ -1,25 +1,25 @@
 import React, {useRef, useState} from "react";
 import s from "../ModalWindows.module.css"
 
-let ModalWindowAdd = ({isInputValueValid, ...props}) => {
+let ModalWindowAdd = ({isInputValueValid, addWindowShown, decryptingKey, ...props}) => {
 	let [nameField, setNameField] = useState("");
 	let [loginField, setLoginField] = useState("");
 	let [passField, setPassField] = useState("");
 	let [tagField, setTagField] = useState("");
 
 	let overlay = useRef(null);
-
 	let onSave = () => {
 		if (isInputValueValid({type: "name", value: nameField}) &&
 			isInputValueValid({type: "login", value: loginField}) &&
 			isInputValueValid({type: "password", value: passField}) &&
 			isInputValueValid({type: "tag", value: tagField})) {
-			props.addEntry({
-				name: nameField,
-				login: loginField,
-				password: passField,
-				tag: tagField
-			});
+			let entry = {
+				name: nameField, login: loginField, password: passField, tag: tagField,
+			}
+			let encryptedEntry = props.encryptEntry(entry, decryptingKey);
+			// TODO request doesn't work + add paper toast
+			props.postEntry(encryptedEntry);
+			props.addEntry(entry);
 			props.toggleAddWindow();
 			setNameField("");
 			setLoginField("");
@@ -53,7 +53,7 @@ let ModalWindowAdd = ({isInputValueValid, ...props}) => {
 		setTagField(e.target.value);
 	}
 
-	return props.addWindowShown &&
+	return addWindowShown &&
 		<div ref={overlay} className={s.overlay} onMouseDown={onCancel}>
 			<div className={s.modalContainer}>
 				<div className={s.inputRow}>

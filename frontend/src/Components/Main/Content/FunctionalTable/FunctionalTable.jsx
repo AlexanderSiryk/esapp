@@ -1,7 +1,7 @@
 import DataTableContainer from "./DataTable/DataTableContainer";
-import ModalWindowAddContainer from "./ModalWindows/ModalWindowAdd/ModalWindowAddContainer";
+import ModalWindowAddContainer from "../../../Common/ModalWindows/ModalWindowAdd/ModalWindowAddContainer";
 import React from "react";
-import ModalWindowEditContainer from "./ModalWindows/ModalWindowEdit/ModalWindowEditContainer";
+import ModalWindowEditContainer from "../../../Common/ModalWindows/ModalWindowEdit/ModalWindowEditContainer";
 import HeadRow from "./HeadRow/HeadRow";
 
 let FunctionalTable = () => {
