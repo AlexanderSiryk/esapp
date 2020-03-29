@@ -50,7 +50,7 @@ let ModalWindowEdit = ({isInputValueValid, ...props}) => {
 		props.toggleEditWindow(null);
 	}
 
-	// Do not combine onCancel and onCancelButton
+	// onCancel and onCancelButton use different listeners
 	let onCancel = (e) => {
 		if (e.target === overlay.current) {
 			props.toggleEditWindow(null);
