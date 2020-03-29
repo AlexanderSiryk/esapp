@@ -1,5 +1,4 @@
 import React, {useRef, useState} from "react";
-import s from "./DecryptWindow.module.css";
 import {decryptEntries} from "../../../../API/encryptingOperations";
 import LoadingWindow from "../../LoadingWindow/LoadingWindow";
 import Grid from "@material-ui/core/Grid";
@@ -54,14 +53,18 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 			props.setIsDecrypted(true);
 		});
 	}
-	return <div>
-		{isFetching && <LoadingWindow/>}
-		<Grid container className={styles.root}>
-			<Typography>Please, decrypt using the image</Typography>
-			<input type="file" onChange={onInputChange} className={s.input}/>
-		</Grid>
-		<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
-	</div>
+	return (
+		<div>
+			{isFetching && <LoadingWindow/>}
+			<Grid container className={styles.root}>
+				<Grid item xs={12}>
+					<Typography>Please, decrypt using the image</Typography>
+					<input type="file" onChange={onInputChange}/>
+				</Grid>
+			</Grid>
+			<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
+		</div>
+	);
 }
 
 export default DecryptWindow;
