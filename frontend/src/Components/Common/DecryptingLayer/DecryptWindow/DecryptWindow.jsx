@@ -1,19 +1,7 @@
 import React, {useRef, useState} from "react";
-import s from "./DecryptWindow.module.css";
 import {decryptEntries} from "../../../../API/encryptingOperations";
 import LoadingWindow from "../../LoadingWindow/LoadingWindow";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
-
-const useStyles = makeStyles(() => ({
-	root: {
-		height: '100vh',
-	},
-}));
-
 let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) => {
-	const styles = useStyles();
 	if (isFetching) props.fetchEntries();
 	let [imageKey, setImageKey] = useState(null);
 	const IMAGE_KEY_WIDTH = 252;
@@ -55,12 +43,12 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 		});
 	}
 	return <div>
-		{isFetching && <LoadingWindow/>}
-		<Grid container className={styles.root}>
-			<Typography>Please, decrypt using the image</Typography>
-			<input type="file" onChange={onInputChange} className={s.input}/>
-		</Grid>
-		<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
+		<div>
+			{isFetching && <LoadingWindow/>}
+			<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
+			<input type="file" onChange={onInputChange}/>
+			<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
+		</div>
 	</div>
 }
 
