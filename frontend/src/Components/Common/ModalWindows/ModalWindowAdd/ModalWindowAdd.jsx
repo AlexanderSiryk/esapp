@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import s from "../ModalWindows.module.css"
 
-let ModalWindowAdd = ({isInputValueValid, addWindowShown, decryptingKey, ...props}) => {
+let ModalWindowAdd = ({isInputValueValid, addWindowShown, aesKey, ...props}) => {
 	let [nameField, setNameField] = useState("");
 	let [loginField, setLoginField] = useState("");
 	let [passField, setPassField] = useState("");
@@ -16,9 +16,6 @@ let ModalWindowAdd = ({isInputValueValid, addWindowShown, decryptingKey, ...prop
 			let entry = {
 				name: nameField, login: loginField, password: passField, tag: tagField,
 			}
-			let encryptedEntry = props.encryptEntry(entry, decryptingKey);
-			// TODO request doesn't work + add paper toast
-			props.postEntry(encryptedEntry);
 			props.addEntry(entry);
 			props.toggleAddWindow();
 			setNameField("");
@@ -30,7 +27,7 @@ let ModalWindowAdd = ({isInputValueValid, addWindowShown, decryptingKey, ...prop
 		}
 	}
 
-	// Do not combine onCancel and onCancelButton
+	// onCancel and onCancelButton use different listeners
 	let onCancel = (e) => {
 		if (e.target === overlay.current) {
 			props.toggleAddWindow();

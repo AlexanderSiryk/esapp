@@ -1,16 +1,26 @@
 import React, {useRef, useState} from "react";
 import s from "./DecryptWindow.module.css";
 import {decryptEntries} from "../../../../API/encryptingOperations";
-import WaitingForFetching from "../../WaitingForFetching/WaitingForFetching";
+import LoadingWindow from "../../LoadingWindow/LoadingWindow";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+	root: {
+		height: '100vh',
+	},
+}));
 
 let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) => {
+	const styles = useStyles();
 	if (isFetching) props.fetchEntries();
 	let [imageKey, setImageKey] = useState(null);
 	const IMAGE_KEY_WIDTH = 252;
 	const IMAGE_KEY_HEIGHT = 285;
 
-let onInputChange = (e) => {
-		if (e.target.files.length) {
+	let onInputChange = (e) => {
+		if (e.target.files?.length) {
 			if (e.target.files[0].type !== "image/png" &&
 				e.target.files[0].type !== "image/jpeg") {
 				alert("Wrong file type");
@@ -39,21 +49,17 @@ let onInputChange = (e) => {
 			let mgData = ctx.getImageData(0, 0, img.width, img.height);
 			const key = calcKey(mgData.data);
 			props.setKey(key);
-			props.setIsDecrypted(true);
-
-			// Doesn't re-render due to state changes below
-			// because of the component set isDecrypted: true
-			// so on the next render parent component will be unmounted
-			// TODO unsubscribe from state updates
-			props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
 			setImageKey(null);
+			props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
+			props.setIsDecrypted(true);
 		});
 	}
-
 	return <div>
-		{isFetching && <WaitingForFetching/>}
-		<h2 style={{color: "wheat"}}>Please, decrypt using the image</h2>
-		<input type="file" onChange={onInputChange} className={s.input}/>
+		{isFetching && <LoadingWindow/>}
+		<Grid container className={styles.root}>
+			<Typography>Please, decrypt using the image</Typography>
+			<input type="file" onChange={onInputChange} className={s.input}/>
+		</Grid>
 		<canvas ref={canvas} style={{position: "absolute", zIndex: -10}}/>
 	</div>
 }

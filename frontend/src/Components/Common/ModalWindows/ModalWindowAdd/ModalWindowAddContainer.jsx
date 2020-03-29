@@ -9,7 +9,7 @@ import {encryptEntry} from "../../../../API/encryptingOperations";
 
 let mapStateToProps = (state) => ({
 	addWindowShown: getAddWindowShown(state),
-	decryptingKey: getKey(state),
+	aesKey: getKey(state),
 	isInputValueValid,
 	encryptEntry,
 });

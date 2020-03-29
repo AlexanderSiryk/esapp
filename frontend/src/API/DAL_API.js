@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import axios from "axios"
 
 const URL = "http://localhost/public/accounts";
 export const server = {
@@ -9,6 +9,19 @@ export const server = {
 	},
 	postPassword(obj) {
 		return axios.put(URL, obj).then(() => 0);
+		/*axios({
+			method: 'post',
+			url: URL,
+			data: {
+				id: 10,
+				name: "test",
+				login: "test",
+				password: "test",
+				tag: "test",
+			},
+			headers: {"X-CSRFToken": prompt()},
+		});
+		return 0;*/
 		/*return axios.post(URL, {
 			id: 10,
 			name: "test",
