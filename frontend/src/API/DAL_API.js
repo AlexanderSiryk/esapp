@@ -1,7 +1,7 @@
 import axios from "axios"
 
-//const URL = "http://localhost/public/accounts";
-const URL = "http://cor/app/backend/public/accounts";
+const URL = "http://localhost/public/accounts";
+
 export const server = {
 	fetchPasswords() {
 		return axios.get(URL).then(response => {
