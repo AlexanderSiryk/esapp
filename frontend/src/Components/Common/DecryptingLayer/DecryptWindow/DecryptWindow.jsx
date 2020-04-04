@@ -86,7 +86,6 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 		setFileDropping(true);
 	}
 	const onFileDragOver = (e) => {
-		// TODO debounce function
 		clearDefaultBehaviour(e);
 	}
 	const onFileDragLeave = () => {

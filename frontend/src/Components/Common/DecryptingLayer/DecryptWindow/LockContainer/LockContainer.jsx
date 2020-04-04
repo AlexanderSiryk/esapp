@@ -45,10 +45,10 @@ let LockContainer = ({children, animationTriggered, onFileHandle}) => {
 		e.preventDefault();
 		e.stopPropagation();
 	}
-	const onDrop = (e) => { // Lifts up dropped file
+	const onDrop = (e) => {
 		clearDefaultBehaviour(e);
 		if (e.dataTransfer?.files.length) onFileHandle(e.dataTransfer.files[0]);
-	}
+	} // Lifts up dropped file
 
 	return (
 		<div className={`${s.main} ${t.main}`}>
