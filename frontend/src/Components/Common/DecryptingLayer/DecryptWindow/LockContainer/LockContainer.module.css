@@ -1,0 +1,106 @@
+.main {
+    --lockWidth: 15vw;
+    --lockHeight: calc(var(--lockWidth) * 1.14285);
+    --underLockHeight: calc(var(--lockWidth) * 0.2857 - var(--borderSize) / 2);
+    --underlockTop: calc(var(--lockHeight) / 2 + var(--lockWidth) * 0.02857);
+    --borderSize: calc(var(--lockWidth) * 0.11428);
+    --lockHideTop: calc(var(--lockHeight) / 2 + var(--underLockHeight) + var(--lockWidth) * 0.02857);
+    --bodyWidth: calc(var(--lockWidth) + var(--underLockHeight));
+    --bodyHeight: var(--lockWidth);
+    --bodyTop: calc(var(--lockHeight) / 2 + var(--underLockHeight));
+    --transition: transform 0.35s cubic-bezier(0.71, 0.13, 0.33, 1.08);
+    --fontSize: 24px;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    user-select: none;
+}
+
+.fixContainerHeight {
+    position: relative;
+    visibility: hidden;
+    z-index: -1;
+    height: calc(var(--bodyHeight) - var(--underLockHeight) + var(--borderSize) / 4);
+}
+
+.lockContainer {
+    transition: var(--transition);
+}
+
+.lock {
+    width: var(--lockWidth);
+    height: var(--lockWidth);
+    border: var(--borderSize) solid;
+    border-radius: 50%;
+}
+
+.underlock {
+    position: absolute;
+    top: var(--underlockTop);
+    width: var(--lockWidth);
+    height: var(--underLockHeight);
+    border-left: var(--borderSize) solid;
+    border-right: var(--borderSize) solid;
+}
+
+.lockHide {
+    position: absolute;
+    top: var(--lockHideTop);
+    width: var(--lockWidth);
+    height: var(--underLockHeight);
+    border: var(--borderSize) solid;
+}
+
+.bodyContainer {
+    position: absolute;
+    top: var(--bodyTop);
+    z-index: 10;
+}
+
+.body {
+    position: relative;
+    width: var(--bodyWidth);
+    height: var(--bodyHeight);
+    border: var(--borderSize) solid;
+    border-radius: calc(var(--borderSize) / 2);
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: var(--fontSize);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.bodyContainer:hover + .lockContainer {
+    transform: translateX(calc(100% - var(--borderSize))) scaleX(-1);
+}
+
+.animate {
+    transform: translateX(calc(100% - var(--borderSize))) scaleX(-1);
+}
+
+@media screen and (max-width: 700px) {
+    .main {
+        --fontSize: 16px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .main {
+        --fontSize: 10px;
+    }
+}

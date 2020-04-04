@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
+	wrapper: {
+		backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+	},
 	button: {
 		marginTop: '20vh',
 	}
@@ -33,9 +36,11 @@ let LoginPage = () => {
 	const classes = useStyles();
 	return (
 		<Grid container component="main" className={classes.root}>
-			<CssBaseline />
-			<Grid item xs={false} sm={4} md={7} className={classes.image} />
-			<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+			<CssBaseline/>
+			<Grid item xs={false} sm={4} md={7} className={classes.image}/>
+			<Grid item xs={12} sm={8} md={5}
+				  className={classes.wrapper} component={Paper}
+				  elevation={6} square>
 				<div className={classes.paper}>
 					<Typography component="h1" variant="h5">
 						Welcome, Log in
