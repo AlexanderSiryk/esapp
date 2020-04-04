@@ -64,14 +64,9 @@
     border: var(--borderSize) solid;
 }
 
-.bodyContainer {
+.body {
     position: absolute;
     top: var(--bodyTop);
-    z-index: 10;
-}
-
-.body {
-    position: relative;
     width: var(--bodyWidth);
     height: var(--bodyHeight);
     border: var(--borderSize) solid;
@@ -83,9 +78,10 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    z-index: 5;
 }
 
-.bodyContainer:hover + .lockContainer {
+.body:hover + .lockContainer {
     transform: translateX(calc(100% - var(--borderSize))) scaleX(-1);
 }
 

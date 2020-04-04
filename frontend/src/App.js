@@ -6,7 +6,7 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {MuiThemeProvider} from "@material-ui/core";
 
 function App() {
-	const themeMode = "light";
+	const themeMode = "dark";
 	const theme = createMuiTheme({
 		palette: {
 			type: themeMode,

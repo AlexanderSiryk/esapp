@@ -12,7 +12,6 @@ const useStyles = (canvW, canvH) => makeStyles(() => ({
 		left: -canvH + "px",
 	},
 	filesOverlay: {
-		background: "rgba(255,0,0,0.5)",
 		height: 100 + "vh",
 		width: 100 + "vw",
 		position: "absolute",
@@ -110,7 +109,10 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 			/>
 			<LockContainer animationTriggered={fileDropping}
 						   onFileHandle={(file) => setImageFromFile(file)}>
-				<label htmlFor="fileInput" className={s.dropLabel}>
+				<label htmlFor="fileInput"
+					   className={s.dropLabel}
+					   onDragEnter={onFileEnter}
+					   onDragLeave={onFileDragLeave}>
 					Pick/Drop<br/>your key
 				</label>
 			</LockContainer>

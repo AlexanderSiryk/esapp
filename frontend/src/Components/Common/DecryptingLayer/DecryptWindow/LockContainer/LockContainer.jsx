@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => {
 
 let LockContainer = ({children, animationTriggered, onFileHandle}) => {
 	const t = useStyles();
+
 	const clearDefaultBehaviour = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -48,31 +49,17 @@ let LockContainer = ({children, animationTriggered, onFileHandle}) => {
 		clearDefaultBehaviour(e);
 		if (e.dataTransfer?.files.length) onFileHandle(e.dataTransfer.files[0]);
 	}
-	const onDragEnter = (e) => {
-		e.stopPropagation();
-		console.log("i'm in");
-	}
-	const onFileDragOver = (e) => {
-		clearDefaultBehaviour(e);
-	}
-	const onDragLeave = (e) => {
-		e.stopPropagation();
-		console.log("i'm out");
-	}
+
 	return (
 		<div className={`${s.main} ${t.main}`}>
 			<div className={s.container}>
-				<div className={s.bodyContainer}>
-					<div className={`${s.body} ${t.body}`}
-						 onDragEnter={onDragEnter}
-						 onDrop={onDrop}
-						 onDragOver={onFileDragOver}
-						 onDragLeave={onDragLeave}>{children}</div>
-				</div>
+				<div className={`${s.body} ${t.body}`}
+					 onDrop={onDrop}
+					 onDragOver={clearDefaultBehaviour}
+				>{children}</div>
 				<div className={animationTriggered
 					? `${s.lockContainer} ${t.lockContainer} ${s.animate}`
-					: `${s.lockContainer} ${t.lockContainer}`
-				}>
+					: `${s.lockContainer} ${t.lockContainer}`}>
 					<div className={`${s.lock} ${t.lock}`}/>
 					<div className={`${s.underlock} ${t.underlock}`}/>
 					<div className={`${s.lockHide} ${t.lockHide}`}/>
