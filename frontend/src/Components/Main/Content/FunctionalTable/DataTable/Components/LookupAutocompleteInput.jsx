@@ -13,18 +13,21 @@ const LookupAutocompleteInput = (props) => {
 	for (const prop in lookupObj) {
 		if (lookupObj.hasOwnProperty(prop)) lookupArr.push({["title"]: lookupObj[prop]});
 	}
+
+	const handleInputChange = (event, value) => {
+		if (!event || event.type === "keydown") return;
+		setState({...state, value: value});
+	}
 	const handleChange = (event, value) => {
 		if (!event) return;
-		if (value.title) setState({...state, value: value.title});
-		else setState({...state, value: value});
-
+		if (value?.title && value !== "") setState({...state, value: value.title});
 	}
 
 	return <Autocomplete
 		options={lookupArr}
 		freeSolo
 		inputValue={state.value}
-		onInputChange={handleChange}
+		onInputChange={handleInputChange}
 		onChange={handleChange}
 		getOptionLabel={(option) => option.title}
 		renderInput={(params) => <TextField {...params} label={labelTitle}/>}
