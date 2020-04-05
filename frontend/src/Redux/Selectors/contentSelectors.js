@@ -18,7 +18,7 @@ export const getUniqueTags = createSelector(
 		});
 	});
 
-export const getFilteredTable = createSelector(
+export const getFilteredTable = createSelector( // Get the table on search
 	getTableEntries,
 	getTagSelected,
 	getSearchBarText,

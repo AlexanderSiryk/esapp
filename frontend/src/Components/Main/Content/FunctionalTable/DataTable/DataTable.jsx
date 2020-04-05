@@ -1,127 +1,106 @@
-import React, {useState} from "react";
-import s from "./DataTable.module.css"
+import React, {forwardRef, useState} from "react";
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
 import MaterialTable from "material-table";
-import {
-	Add, Check, Clear, DeleteOutline, ChevronRight, Edit,
-	SaveAlt, FilterList, FirstPage, LastPage, ChevronLeft,
-	Search, ArrowUpward, Remove, ViewColumn
-} from "@material-ui/icons";
+import LookupAutocompleteInput from "./Components/LookupAutocompleteInput";
+import onTableRowAdd from "./tableOperations/onTableRowAdd";
+import onTableRowUpdate from "./tableOperations/onTableRowUpdate";
+import onTableRowDelete from "./tableOperations/onTableRowDelete";
+import PasswordInput from "./Components/PasswordInput";
+import FieldInput from "./Components/FieldInput";
 
-const icons = {
-	Add,
-	Check,
-	Clear,
-	Delete: DeleteOutline,
-	DetailPanel: ChevronRight,
-	Edit,
-	Export: SaveAlt,
-	Filter: FilterList,
-	FirstPage,
-	LastPage,
-	NextPage: ChevronRight,
-	PreviousPage: ChevronLeft,
-	ResetSearch: Clear,
-	Search,
-	SortArrow: ArrowUpward,
-	ThirdStateCheck: Remove,
-	ViewColumn,
-}
+const tableIcons = {
+	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+	Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+	Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+	Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+	DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+	Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+	Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+	Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+	FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+	LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+	NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+	PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+	ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+	Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+	SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref}/>),
+	ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
+};
 
 let DataTable = (props) => {
-	let headRow = <div className={`${s.tableRow} ${s.tableRowHead}`} key={0}>
-		<div className={s.tableCol}>Name</div>
-		<div className={s.tableCol}>Login</div>
-		<div className={s.tableCol}>Password</div>
-		<div className={s.tableCol}>Tag</div>
-	</div>
-
-	let onNameDbClick = (id) => {
-		props.toggleEditWindow(id);
+	let tableEntries = props.filteredTableEntries;
+	let tags = props.tags;
+	let tableLookup = {};
+	for (let i = 0; i < tags.length; i++) {
+		tableLookup[tags[i]] = tags[i];
 	}
+	let tableData = tableEntries.map((item) => ({
+		name: item.name,
+		login: item.login,
+		password: item.password,
+		tag: item.tag,
+	}));
 
-	let rows = [headRow, ...props.filteredTableEntries.map((item) => {
-		return <div className={`${s.tableRow}`} key={item.id}>
-			<div
-				className={s.tableCol}
-				onDoubleClick={onNameDbClick.bind(null, item.id)}
-			>{item.name}</div>
-			<div className={s.tableCol}>{item.login}</div>
-			<div className={s.tableCol}>{item.password}</div>
-			<div className={s.tableCol}>{`#${item.tag || ""}`}</div>
-		</div>
-	})];
-	let dataTableOld = <div className={s.tableContainer}>
-		{rows}
-	</div>;
-	return MaterialDataTable();
+	const [state, setState] = useState({
+		columns: [
+			{
+				title: "Name",
+				field: "name",
+				filtering: false,
+				editComponent: FieldInput,
+			},
+			{
+				title: "Login",
+				field: "login",
+				filtering: false,
+				editComponent: FieldInput,
+			},
+			{
+				title: "Password",
+				field: "password",
+				filtering: false,
+				editComponent: PasswordInput,
+			},
+			{
+				title: "Tag",
+				field: "tag",
+				lookup: tableLookup,
+				editComponent: LookupAutocompleteInput,
+			},
+		],
+		data: tableData,
+	});
+
+	return <MaterialTable
+		title="Accounts"
+		columns={state.columns}
+		data={state.data}
+		icons={tableIcons}
+		options={{
+			draggable: false,
+			filtering: true,
+		}}
+		editable={{
+			onRowAdd: onTableRowAdd(setState),
+			onRowUpdate: onTableRowUpdate(setState),
+			onRowDelete: onTableRowDelete(setState),
+		}}
+	/>
 }
 
 export default DataTable;
-
-
-function MaterialDataTable() {
-	const [state, setState] = useState({
-		columns: [
-			{title: 'Name', field: 'name'},
-			{title: 'Surname', field: 'surname'},
-			{title: 'Birth Year', field: 'birthYear', type: 'numeric'},
-			{
-				title: 'Birth Place',
-				field: 'birthCity',
-				lookup: {34: 'New York', 63: 'London'},
-			},
-		],
-		data: [
-			{name: 'John', surname: 'Smith', birthYear: 1987, birthCity: 63},
-			{
-				name: 'Dale',
-				surname: 'Cooper',
-				birthYear: 2017,
-				birthCity: 34,
-			},
-		],
-	});
-
-	return (
-		<MaterialTable
-			title="Accounts"
-			columns={state.columns}
-			data={state.data}
-			icons={icons}
-			editable={{
-				onRowAdd: (newData) => new Promise((resolve) => {
-					setTimeout(() => {
-						resolve();
-						setState((prevState) => {
-							const data = [...prevState.data];
-							data.push(newData);
-							return {...prevState, data};
-						});
-					}, 600);
-				}),
-				onRowUpdate: (newData, oldData) => new Promise((resolve) => {
-					setTimeout(() => {
-						resolve();
-						if (oldData) {
-							setState((prevState) => {
-								const data = [...prevState.data];
-								data[data.indexOf(oldData)] = newData;
-								return {...prevState, data};
-							});
-						}
-					}, 600);
-				}),
-				onRowDelete: (oldData) => new Promise((resolve) => {
-					setTimeout(() => {
-						resolve();
-						setState((prevState) => {
-							const data = [...prevState.data];
-							data.splice(data.indexOf(oldData), 1);
-							return {...prevState, data};
-						});
-					}, 600);
-				}),
-			}}
-		/>
-	);
-}
