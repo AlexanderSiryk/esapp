@@ -1,3 +1,5 @@
+// Side effects: 0
+
 function onTableRowDelete(setState) {
 	return (oldData) => new Promise((resolve) => {
 		setTimeout(() => {

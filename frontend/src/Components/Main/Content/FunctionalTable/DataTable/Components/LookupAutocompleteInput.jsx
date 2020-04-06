@@ -5,15 +5,10 @@ import TextField from "@material-ui/core/TextField";
 const LookupAutocompleteInput = (props) => {
 	const labelTitle = props.columnDef.title;
 	const [state, setState] = useState({
-		value: props.rowData[props.columnDef.field],
+		value: props.rowData[props.columnDef.field] || "",
 	});
 	const lookupObj = props.columnDef.lookup;
-	const lookupArr = [];		// Lookup for select
-	for (const prop in lookupObj) {
-		if (lookupObj.hasOwnProperty(prop)) {
-			lookupArr.push({["title"]: lookupObj[prop]});
-		}
-	}
+	const lookupArr = Object.values(lookupObj);
 
 	const handleInputChange = (event, value) => {
 		if (!event || event.type === "keydown" || value === state.value) return;
@@ -22,10 +17,8 @@ const LookupAutocompleteInput = (props) => {
 	}
 	const handleChange = (event, value) => {
 		if (!event) return;
-		if (value?.title && value !== "") {
-			props.onChange(value.title);
-			setState({...state, value: value.title});
-		}
+		props.onChange(value.title || value);
+		setState({...state, value: value.title || value});
 	}
 
 	return <Autocomplete
@@ -34,7 +27,7 @@ const LookupAutocompleteInput = (props) => {
 		inputValue={state.value}
 		onInputChange={handleInputChange}
 		onChange={handleChange}
-		getOptionLabel={(option) => option.title}
+		getOptionLabel={(option) => option.title || option}
 		renderInput={(params) => <TextField {...params} label={labelTitle}/>}
 	/>
 }

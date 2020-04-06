@@ -13,7 +13,7 @@ const PasswordInput = (props) => {
 
 	const labelTitle = props.columnDef.title;
 	const [state, setState] = useState({
-		value: props.rowData[props.columnDef.field],
+		value: props.rowData[props.columnDef.field] || "",
 		showPassword: false,
 	});
 
