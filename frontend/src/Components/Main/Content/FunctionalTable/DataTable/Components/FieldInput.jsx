@@ -8,6 +8,7 @@ const FieldInput = (props) => {
 	});
 
 	const handleChange = (event) => {
+		props.onChange(event.target.value);
 		setState({...state, value: event.target.value});
 	}
 

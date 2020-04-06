@@ -3,24 +3,29 @@ import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 
 const LookupAutocompleteInput = (props) => {
-	console.log(props);
 	const labelTitle = props.columnDef.title;
 	const [state, setState] = useState({
 		value: props.rowData[props.columnDef.field],
 	});
 	const lookupObj = props.columnDef.lookup;
-	const lookupArr = [];
+	const lookupArr = [];		// Lookup for select
 	for (const prop in lookupObj) {
-		if (lookupObj.hasOwnProperty(prop)) lookupArr.push({["title"]: lookupObj[prop]});
+		if (lookupObj.hasOwnProperty(prop)) {
+			lookupArr.push({["title"]: lookupObj[prop]});
+		}
 	}
 
 	const handleInputChange = (event, value) => {
-		if (!event || event.type === "keydown") return;
-		setState({...state, value: value});
+		if (!event || event.type === "keydown" || value === state.value) return;
+		props.onChange(value);
+		setState({...state, value});
 	}
 	const handleChange = (event, value) => {
 		if (!event) return;
-		if (value?.title && value !== "") setState({...state, value: value.title});
+		if (value?.title && value !== "") {
+			props.onChange(value.title);
+			setState({...state, value: value.title});
+		}
 	}
 
 	return <Autocomplete

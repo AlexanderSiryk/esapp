@@ -16,11 +16,11 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import MaterialTable from "material-table";
 import LookupAutocompleteInput from "./Components/LookupAutocompleteInput";
-import onTableRowAdd from "./tableOperations/onTableRowAdd";
 import onTableRowUpdate from "./tableOperations/onTableRowUpdate";
 import onTableRowDelete from "./tableOperations/onTableRowDelete";
 import PasswordInput from "./Components/PasswordInput";
 import FieldInput from "./Components/FieldInput";
+import onTableRowAdd from "./tableOperations/onTableRowAdd";
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -50,6 +50,7 @@ let DataTable = (props) => {
 		tableLookup[tags[i]] = tags[i];
 	}
 	let tableData = tableEntries.map((item) => ({
+		id: item.id,
 		name: item.name,
 		login: item.login,
 		password: item.password,
