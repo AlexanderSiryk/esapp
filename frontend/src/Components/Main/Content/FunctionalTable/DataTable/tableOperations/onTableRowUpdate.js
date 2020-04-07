@@ -1,7 +1,5 @@
 // Side effects: 0
 
-// TODO remove unused tags from lookup
-
 import updateColumnsLookup from "./updateColumnsLookup";
 
 function onTableRowUpdate(setState) {
@@ -9,7 +7,7 @@ function onTableRowUpdate(setState) {
 		setTimeout(() => {
 			if (oldData) {
 				setState((prevState) => {
-					const columns = updateColumnsLookup(newData, prevState);
+					let columns = updateColumnsLookup(prevState, newData, oldData);
 					const data = [...prevState.data];
 					data[data.indexOf(oldData)] = newData;
 					return {...prevState, data, columns};

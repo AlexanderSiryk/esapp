@@ -6,7 +6,7 @@ function onTableRowAdd(setState) {
 	return (newData) => new Promise((resolve) => {
 		setTimeout(() => {
 			setState((prevState) => {
-				const columns = updateColumnsLookup(newData, prevState);
+				const columns = updateColumnsLookup(prevState, newData, null);
 				const data = [...prevState.data];
 				data.push(newData);
 				return {...prevState, data, columns};
