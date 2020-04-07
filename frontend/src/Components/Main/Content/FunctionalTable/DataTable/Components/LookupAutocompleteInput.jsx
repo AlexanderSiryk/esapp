@@ -16,7 +16,7 @@ const LookupAutocompleteInput = (props) => {
 		setState({...state, value});
 	}
 	const handleChange = (event, value) => {
-		if (!event) return;
+		if (!event || !value) return;
 		props.onChange(value.title || value);
 		setState({...state, value: value.title || value});
 	}
