@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const URL = "http://localhost/public/accounts";
-export const server = {
+const server = {
 	fetchPasswords() {
 		return axios.get(URL).then(response => {
 			return response;
@@ -33,3 +33,5 @@ export const server = {
 		});*/
 	},
 }
+
+export default server;

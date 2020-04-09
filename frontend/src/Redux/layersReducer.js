@@ -1,4 +1,4 @@
-import {server} from "../API/DAL_API";
+import server from "../API/DAL_API";
 import {setTableEntries} from "./contentReducer";
 
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";

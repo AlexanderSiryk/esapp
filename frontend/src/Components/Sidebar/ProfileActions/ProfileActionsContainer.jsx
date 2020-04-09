@@ -3,6 +3,7 @@ import ProfileActions from "./ProfileActions";
 import {setIsProfileWindowShown} from "../../../Redux/sidebarReducer";
 import {getUserEmail, getUserImageURL, getUserLogin} from "../../../Redux/Selectors/layersSelectors";
 
+
 let mapStateToProps = (state) => ({
 	image: getUserImageURL(state),
 	login: getUserLogin(state),

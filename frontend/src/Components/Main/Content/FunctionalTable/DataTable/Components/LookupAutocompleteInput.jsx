@@ -28,7 +28,7 @@ const LookupAutocompleteInput = (props) => {
 		onInputChange={handleInputChange}
 		onChange={handleChange}
 		getOptionLabel={(option) => option.title || option}
-		renderInput={(params) => <TextField {...params} label={labelTitle}/>}
+		renderInput={(params) => <TextField {...params} label={labelTitle || ""}/>}
 	/>
 }
 

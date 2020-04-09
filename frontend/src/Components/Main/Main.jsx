@@ -1,23 +1,21 @@
 import React from "react";
-import s from "./Main.module.css"
 import {Route} from "react-router-dom";
 import Content from "./Content/Content";
-import Tags from "./Tags/Tags";
-import Preferences from "./Preferences/Preferences";
+import Trash from "./Trash/Trash";
+import HeadBarContainer from "./HeadBar/HeadBarContainer";
+import SideDrawerContainer from "./SideDrawer/SideDrawerContainer";
 
 let Main = () => {
-	return <div className={s.container}>
+	return <div>
+		<HeadBarContainer/>
+		<SideDrawerContainer/>
 		<Route
 			path="/content"
 			render={() => <Content/>}
 		/>
 		<Route
-			path="/tags"
-			render={() => <Tags/>}
-		/>
-		<Route
-			path="/preferences"
-			render={() => <Preferences/>}
+			path="/trash"
+			render={() => <Trash/>}
 		/>
 	</div>
 }
