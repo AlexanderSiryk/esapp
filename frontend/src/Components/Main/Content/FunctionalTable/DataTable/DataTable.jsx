@@ -63,7 +63,7 @@ let DataTable = (props) => {
 				title: "Name",
 				field: "name",
 				filtering: false,
-				editComponent: FieldInput,
+				editComponent: props => <FieldInput {...props} useAutofocus={true}/>,
 			},
 			{
 				title: "Login",

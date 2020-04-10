@@ -1,25 +1,18 @@
 import aesjs from "aes-js";
+import {pbkdf2Sync} from "pbkdf2";
 
-export const getImage = (imgURL) => {
-	return new Promise(resolve => {
-		let img = new Image();
-		img.src = imgURL;
-		img.onload = () => resolve(img);
-	});
-}
+const PERMISSIBLE_COLOR_DEVIATION = 25;
+const ROWS_QUANTITY = 16;
+const COLS_QUANTITY = 33; // 16data + 17margins
+const SIDE_COLS_QUANTITY = 2;
+const LAST_COL_OFFSET = 4;
+const CELL_SIZE = 6;
+const HORIZONTAL_MARGIN = 35;
+const WORK_ROW_WIDTH = CELL_SIZE * (COLS_QUANTITY - SIDE_COLS_QUANTITY) - LAST_COL_OFFSET; // 182
+const VERTICAL_MARGIN = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 29;
+const IDENT_BETWEEN_ROWS = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 15;
 
-let calcBits = (imgArr) => {
-	const PERMISSIBLE_COLOR_DEVIATION = 25;
-	const ROWS_QUANTITY = 16;
-	const COLS_QUANTITY = 33; // 16data + 17margins
-	const SIDE_COLS_QUANTITY = 2;
-	const LAST_COL_OFFSET = 4;
-	const CELL_SIZE = 6;
-	const HORIZONTAL_MARGIN = 35;
-	const WORK_ROW_WIDTH = CELL_SIZE * (COLS_QUANTITY - SIDE_COLS_QUANTITY) - LAST_COL_OFFSET; // 182
-	const VERTICAL_MARGIN = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 29;
-	const IDENT_BETWEEN_ROWS = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 15;
-
+function imageToBits(imgArr) {
 	let startPoint = VERTICAL_MARGIN + HORIZONTAL_MARGIN;
 	let step = CELL_SIZE * 2;
 
@@ -49,8 +42,61 @@ let calcBits = (imgArr) => {
 	return bitsArr;
 }
 
-export let calcKey = (imgArr) => {
-	let bitsArr = calcBits(imgArr);
+function keyToBits(key) {
+	const strKey = aesjs.utils.hex.fromBytes(key);
+	const bits = new Uint8Array(strKey.length * 4);
+	let counter = 0;
+	strKey.split("").forEach(item => {
+		let bin = parseInt(item, 16).toString(2);
+
+		// ex. 3(16) = 11(2) => 0011(2)
+		while (bin.length !== 4) {
+			bin = "0".concat(bin);
+		}
+		for (let j = 0; j < bin.length; j++) {
+			bits[counter] = parseInt(bin[j], 10)
+			counter++;
+		}
+	});
+	return bits;
+}
+
+export const generateImageKey = (password, salt, width = 252, length = 285) => {
+	const key = pbkdf2Sync(password, salt, 1, 256 / 8, 'sha512');
+	const bits = keyToBits(key);
+	const arr = new Uint8ClampedArray(width * length * 4);
+
+	let startPoint = VERTICAL_MARGIN + HORIZONTAL_MARGIN;
+	let step = CELL_SIZE * 2;
+	let counter = 0;
+	for (let i = 0; i < arr.length; i++) {
+		if (!((i + 1) % 4)) arr[i] = 255;
+		else arr[i] = 0;
+	}
+	for (let n = 0; n < ROWS_QUANTITY; n++) {
+		for (let i = startPoint * 4; i <= (startPoint + WORK_ROW_WIDTH) * 4; i += step * 4) {
+			if (bits[counter]) arr[i] = arr[i + 1] = arr[i + 2] = 255;
+			else arr[i] = arr[i + 1] = arr[i + 2] = 0;
+			counter++;
+		}
+		startPoint += IDENT_BETWEEN_ROWS;
+	}
+	return arr;
+}
+
+export const getImage = (imgURL) => {
+	return new Promise(resolve => {
+		let img = new Image();
+		img.src = imgURL;
+		img.onload = () => resolve(img);
+	});
+}
+export const generateKey = (password, salt) => {
+	const key = pbkdf2Sync(password, salt, 1, 256 / 8, 'sha512');
+	return aesjs.utils.hex.fromBytes(key);
+}
+export const calcKey = (imgArr) => {
+	let bitsArr = imageToBits(imgArr);
 	let key = "";
 	for (let i = 0; i < bitsArr.length; i++) {
 		let bitLetter = bitsArr[i].join("");
@@ -59,7 +105,7 @@ export let calcKey = (imgArr) => {
 	}
 	return key;
 }
-export let encryptEntry = (entry, keyStr) => {
+export const encryptEntry = (entry, keyStr) => {
 	let key = new Uint8Array(aesjs.utils.hex.toBytes(keyStr));
 	let obj = {...entry};
 	for (const prop in obj) {
@@ -71,8 +117,7 @@ export let encryptEntry = (entry, keyStr) => {
 	}
 	return obj;
 }
-
-export let decryptEntries = (entries, keyStr) => {
+export const decryptEntries = (entries, keyStr) => {
 	let key = new Uint8Array(aesjs.utils.hex.toBytes(keyStr));
 	return entries.map((item) => {
 		let obj = {...item};
@@ -86,18 +131,15 @@ export let decryptEntries = (entries, keyStr) => {
 		return obj;
 	});
 }
-
-let encryptString = (text, key) => {
+function encryptString(text, key) {
 	let textBytes = aesjs.utils.utf8.toBytes(text);
 	let aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(10));
 	let encryptedBytes = aesCtr.encrypt(textBytes);
 	return aesjs.utils.hex.fromBytes(encryptedBytes);
 }
-
-let decryptString = (encryptedHex, key) => {
+function decryptString(encryptedHex, key) {
 	let encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex);
 	let aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(10));
 	let decryptedBytes = aesCtr.decrypt(encryptedBytes);
 	return aesjs.utils.utf8.fromBytes(decryptedBytes);
 }
-

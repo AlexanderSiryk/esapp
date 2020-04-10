@@ -45,7 +45,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 		if (file.type !== "image/png" &&
 			file.type !== "image/jpeg") {
 			alert("Wrong file type");
-			throw new Error("Wrong file type");
+			return;
 		}
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
@@ -59,7 +59,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, ...props}) =>
 			if (img.width !== IMAGE_KEY_WIDTH ||
 				img.height !== IMAGE_KEY_HEIGHT) {
 				alert("Incorrect image key");
-				throw new Error("Incorrect image key");
+				return;
 			}
 			canvas.current.width = img.width;
 			canvas.current.height = img.height;

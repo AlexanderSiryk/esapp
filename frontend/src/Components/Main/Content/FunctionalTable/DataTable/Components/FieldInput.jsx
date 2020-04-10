@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
+import PropTypes from 'prop-types';
 
-const FieldInput = (props) => {
+const FieldInput = ({useAutofocus, ...props}) => {
 	const labelTitle = props.columnDef.title;
 	const [state, setState] = useState({
 		value: props.rowData[props.columnDef.field] || "",
@@ -16,7 +17,12 @@ const FieldInput = (props) => {
 		value={state.value}
 		label={labelTitle}
 		onChange={handleChange}
+		autoFocus={useAutofocus}
 	/>
+}
+
+FieldInput.propTypes = {
+	useAutofocus: PropTypes.bool,
 }
 
 export default FieldInput;

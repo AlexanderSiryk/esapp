@@ -25,16 +25,14 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const HeadBar = ({toggleSidebar, userImageURL, userLogin, userEmail}) => {
+const HeadBar = ({toggleSidebar, userImageURL, userLogin, userEmail, toggleKeyModal}) => {
 	const classes = useStyles();
 	return <AppBar position="static">
 		<Toolbar>
 			<IconButton edge="start"
 						className={classes.menuButton}
 						color="inherit" aria-label="menu"
-						onClick={() => {
-							toggleSidebar();
-						}}
+						onClick={toggleSidebar}
 			>
 				<MenuIcon/>
 			</IconButton>
@@ -44,6 +42,7 @@ const HeadBar = ({toggleSidebar, userImageURL, userLogin, userEmail}) => {
 			<Button
 				variant="contained"
 				color="primary"
+				onClick={toggleKeyModal}
 				className={classes.button}
 				startIcon={<VpnKeyIcon/>}
 			>
