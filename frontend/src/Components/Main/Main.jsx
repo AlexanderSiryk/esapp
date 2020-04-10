@@ -4,9 +4,18 @@ import Content from "./Content/Content";
 import Trash from "./Trash/Trash";
 import HeadBarContainer from "./HeadBar/HeadBarContainer";
 import SideDrawerContainer from "./SideDrawer/SideDrawerContainer";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Box from "@material-ui/core/Box";
+
 
 let Main = () => {
-	return <div>
+	const classes = makeStyles(() => ({
+		container: {
+			width: 100 + "vw",
+			height: 100 + "vh",
+		}
+	}))();
+	return <Box className={classes.container}>
 		<HeadBarContainer/>
 		<SideDrawerContainer/>
 		<Route
@@ -17,7 +26,7 @@ let Main = () => {
 			path="/trash"
 			render={() => <Trash/>}
 		/>
-	</div>
+	</Box>
 }
 
 export default Main;

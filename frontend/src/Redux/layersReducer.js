@@ -10,7 +10,7 @@ const SET_KEY = "SET_KEY";
 
 const initialState = {
 	isDecrypted: false,		// False in production
-	isSignedIn: true,		// False in production
+	isSignedIn: false,		// False in production
 	isFetching: true,		// True in production
 	userEmail: null,
 	userLogin: null,

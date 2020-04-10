@@ -10,6 +10,7 @@ const CLEAR_SEARCH_FIELD = "CLEAR_SEARCH_FIELD";
 const RESET_CONTENT = "RESET_CONTENT";
 const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
 const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
+const TOGGLE_GETTING_KEY_MODAL = "const TOGGLE_GETTING_KEY_MODAL";
 
 const initialState = {
 	editingEntryId: null,
@@ -18,6 +19,7 @@ const initialState = {
 	tableEntries: null, 	//[{id: null, name: null, login: null, password: null, tag: null,}],
 	addWindowShown: false,
 	editWindowShown: false,
+	getKeyWindowShown: false,
 }
 
 let contentReducer = (state = initialState, action) => {
@@ -104,6 +106,11 @@ let contentReducer = (state = initialState, action) => {
 				...state,
 				tableEntries: [...action.tableEntries],
 			}
+		case TOGGLE_GETTING_KEY_MODAL:
+			return {
+				...state,
+				getKeyWindowShown: !state.getKeyWindowShown,
+			}
 		case RESET_CONTENT:
 			return {...initialState}
 		default:
@@ -154,6 +161,9 @@ export const setDecryptedTableEntries = (tableEntries) => ({
 export const setTableEntries = (tableEntries) => ({
 	type: SET_TABLE_ENTRIES,
 	tableEntries,
+});
+export const toggleKeyModal = () => ({
+	type: TOGGLE_GETTING_KEY_MODAL,
 });
 
 export default contentReducer;

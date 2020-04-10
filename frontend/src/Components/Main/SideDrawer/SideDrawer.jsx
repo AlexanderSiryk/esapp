@@ -9,11 +9,15 @@ import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import AllInboxRoundedIcon from '@material-ui/icons/AllInboxRounded';
 import {NavLink} from "react-router-dom";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	list: {
 		width: 250,
 	},
-});
+	item: {
+		textDecoration: "none",
+		color: theme.palette.text.primary,
+	}
+}));
 
 const SideDrawer = ({isSidebarShown, toggleSidebar}) => {
 	return <>
@@ -21,17 +25,17 @@ const SideDrawer = ({isSidebarShown, toggleSidebar}) => {
 				open={isSidebarShown}
 				onClose={toggleSidebar}
 		>
-			<NavList/>
+			<NavList {...{toggleSidebar}}/>
 		</Drawer>
 	</>
 }
 
-const NavList = () => {
+const NavList = ({toggleSidebar}) => {
 	const classes = useStyles();
 	return <>
-		<div className={classes.list}>
+		<div className={classes.list} onClick={toggleSidebar}>
 			<List component="nav" aria-label="main mailbox folders">
-				<NavLink to="content">
+				<NavLink to="content" className={classes.item}>
 					<ListItem button>
 						<ListItemIcon>
 							<AllInboxRoundedIcon/>
@@ -39,7 +43,7 @@ const NavList = () => {
 						<ListItemText primary="Content"/>
 					</ListItem>
 				</NavLink>
-				<NavLink to="trash">
+				<NavLink to="trash" className={classes.item}>
 					<ListItem button>
 						<ListItemIcon>
 							<DeleteRoundedIcon/>
