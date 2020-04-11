@@ -28,9 +28,11 @@ import Container from "@material-ui/core/Container";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Slide from '@material-ui/core/Slide';
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
 
 function SlideTransition(props) {
-	return <Slide {...props} direction="up" />;
+	return <Slide {...props} direction="up"/>;
 }
 
 const tableIcons = {
@@ -75,6 +77,8 @@ let DataTable = (props) => {
 		tag: item.tag,
 	}));
 
+	const sortFunc = (field) => (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
+
 	const [snackBarOpen, setSnackBarOpen] = useState(false);
 	const [state, setState] = useState({
 		columns: [
@@ -83,27 +87,33 @@ let DataTable = (props) => {
 				field: "name",
 				filtering: false,
 				editComponent: props => <FieldInput {...props} useAutofocus={true}/>,
+				cellStyle: {cursor: "default"},
+				customSort: sortFunc("name"),
 			},
 			{
 				title: "Login",
 				field: "login",
 				filtering: false,
 				editComponent: FieldInput,
+				cellStyle: {cursor: "default"},
+				render: props => <CellItem copyFunc={copyFunc} field={props.login}/>,
+				customSort: sortFunc("login"),
 			},
 			{
 				title: "Password",
 				field: "password",
 				filtering: false,
+				sorting: false,
 				editComponent: PasswordInput,
-				cellStyle: {
-
-				},
+				render: props => <CellItem hiddenText copyFunc={copyFunc} field={props.password}/>,
 			},
 			{
 				title: "Tag",
 				field: "tag",
 				lookup: tableLookup,
 				editComponent: LookupAutocompleteInput,
+				cellStyle: {cursor: "default"},
+				customSort: sortFunc("tag"),
 			},
 		],
 		data: tableData,
@@ -119,6 +129,16 @@ let DataTable = (props) => {
 			document.body.removeChild(dummy);
 			setSnackBarOpen(true);
 		}
+	}
+
+	function copyFunc(item) {
+		let dummy = document.createElement("textarea");
+		document.body.appendChild(dummy);
+		dummy.value = item.target.innerText;
+		dummy.select();
+		document.execCommand("copy");
+		document.body.removeChild(dummy);
+		setSnackBarOpen(true);
 	}
 
 	const handleClose = (event, reason) => {
@@ -146,16 +166,14 @@ let DataTable = (props) => {
 				loadingType: "linear",
 				padding: "dense",
 				tableLayout: "fixed",
-				actionsCellStyle: {
-
-				}
 			}}
 			editable={{
 				onRowAdd: onTableRowAdd(setState),
 				onRowUpdate: onTableRowUpdate(setState),
 				onRowDelete: onTableRowDelete(setState),
 			}}
-			onRowClick={() => {}}
+			onRowClick={() => {
+			}}
 			actions={[
 				{
 					icon: PersonSharpIcon,
@@ -176,6 +194,20 @@ let DataTable = (props) => {
 			</Alert>
 		</Snackbar>
 	</Container>
+}
+
+function CellItem({copyFunc, field, hiddenText}) {
+	return <Tooltip title="Copy" placement="left">
+		<Button onClick={copyFunc}
+				style={{
+					textTransform: "none",
+					fontFamily: hiddenText
+						? `'Libre Barcode 128', cursive`
+						: `'Roboto', sans-serif`,
+				}}
+		>
+			{field}</Button>
+	</Tooltip>
 }
 
 export default DataTable;

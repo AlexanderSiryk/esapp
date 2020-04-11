@@ -32,6 +32,7 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 			ctx.putImageData(mgDataModified, 0, 0);
 		}
 	}
+
 	return <>
 		<Dialog
 			fullScreen={fullScreen}
@@ -43,7 +44,10 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 			<DialogContent>
 				<PasswordField onChange={handleInputChange} autoFocus/>
 				<Typography className={classes.text} noWrap>{key}</Typography>
-				<canvas ref={canvas} width={252} height={285}/>
+				<canvas ref={canvas} width={252} height={285} style={{
+					background: "black",
+					borderRadius: "5px",
+				}}/>
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={toggleKeyModal} color="primary">
