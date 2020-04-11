@@ -14,8 +14,6 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import PersonSharpIcon from '@material-ui/icons/PersonSharp';
 import MaterialTable from "material-table";
 import LookupAutocompleteInput from "./Components/LookupAutocompleteInput";
 import onTableRowUpdate from "./tableOperations/onTableRowUpdate";
@@ -120,18 +118,6 @@ let DataTable = (props) => {
 		data: tableData,
 	});
 
-	const handleCopy = (fieldToCopy) => {
-		return (event, rowData) => {
-			let dummy = document.createElement("textarea");
-			document.body.appendChild(dummy);
-			dummy.value = rowData[fieldToCopy];
-			dummy.select();
-			document.execCommand("copy");
-			document.body.removeChild(dummy);
-			setSnackBarOpen(true);
-		}
-	}
-
 	function copyFunc(item) {
 		let dummy = document.createElement("textarea");
 		document.body.appendChild(dummy);
@@ -143,9 +129,7 @@ let DataTable = (props) => {
 	}
 
 	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
+		if (reason === 'clickaway') return;
 		setSnackBarOpen(false);
 	};
 
@@ -175,18 +159,6 @@ let DataTable = (props) => {
 			}}
 			onRowClick={() => {
 			}}
-			actions={[
-				{
-					icon: PersonSharpIcon,
-					tooltip: 'Copy login',
-					onClick: handleCopy("login"),
-				},
-				{
-					icon: LockOpenIcon,
-					tooltip: 'Copy password',
-					onClick: handleCopy("password"),
-				},
-			]}
 		/>
 		<Snackbar open={snackBarOpen} autoHideDuration={1500}
 				  onClose={handleClose} TransitionComponent={SlideTransition}>
