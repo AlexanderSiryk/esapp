@@ -105,6 +105,7 @@ let DataTable = (props) => {
 				filtering: false,
 				sorting: false,
 				editComponent: PasswordInput,
+				cellStyle: {cursor: "default"},
 				render: props => <CellItem hiddenText copyFunc={copyFunc} field={props.password}/>,
 			},
 			{
