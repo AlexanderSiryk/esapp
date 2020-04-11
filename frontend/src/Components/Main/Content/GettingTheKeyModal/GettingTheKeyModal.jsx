@@ -13,7 +13,7 @@ import {generateImageKey} from "../../../../API/encryptingOperations";
 
 const useStyle = makeStyles(() => ({
 	text: {
-		maxWidth: 32 + "ch",
+		maxWidth: 24 + "ch",
 	}
 }));
 
@@ -27,7 +27,6 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 		setKey(generateKey(value, salt));
 		const arr = generateImageKey(value, salt);
 		if (canvas.current) {
-			debugger;
 			let mgDataModified = new ImageData(arr, 252, 285);
 			const ctx = canvas.current.getContext('2d');
 			ctx.putImageData(mgDataModified, 0, 0);

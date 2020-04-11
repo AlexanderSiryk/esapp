@@ -11,8 +11,7 @@ import Box from "@material-ui/core/Box";
 let Main = () => {
 	const classes = makeStyles(() => ({
 		container: {
-			width: 100 + "vw",
-			height: 100 + "vh",
+			height: 100 + "%",
 		}
 	}))();
 	return <Box className={classes.container}>
