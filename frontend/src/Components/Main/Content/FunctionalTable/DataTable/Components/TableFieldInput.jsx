@@ -2,12 +2,13 @@ import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
 
-const FieldInput = ({useAutofocus, ...props}) => {
+const TableFieldInput = ({useAutofocus, ...props}) => {
 	const labelTitle = props.columnDef.title;
 	const [state, setState] = useState({
 		value: props.rowData[props.columnDef.field] || "",
 		addMode: false,
 	});
+
 	const handleChange = (event) => {
 		props.onChange(event.target.value);
 		setState({...state, value: event.target.value});
@@ -21,8 +22,8 @@ const FieldInput = ({useAutofocus, ...props}) => {
 	/>
 }
 
-FieldInput.propTypes = {
+TableFieldInput.propTypes = {
 	useAutofocus: PropTypes.bool,
 }
 
-export default FieldInput;
+export default TableFieldInput;

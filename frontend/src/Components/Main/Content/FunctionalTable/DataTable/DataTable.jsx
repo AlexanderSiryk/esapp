@@ -18,16 +18,15 @@ import MaterialTable from "material-table";
 import LookupAutocompleteInput from "./Components/LookupAutocompleteInput";
 import onTableRowUpdate from "./tableOperations/onTableRowUpdate";
 import onTableRowDelete from "./tableOperations/onTableRowDelete";
-import PasswordInput from "./Components/PasswordInput";
-import FieldInput from "./Components/FieldInput";
+import TablePasswordInput from "./Components/TablePasswordInput";
+import TableFieldInput from "./Components/TableFieldInput";
 import onTableRowAdd from "./tableOperations/onTableRowAdd";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Slide from '@material-ui/core/Slide';
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
+import CellItem from "./Components/CellItem";
 
 function SlideTransition(props) {
 	return <Slide {...props} direction="up"/>;
@@ -75,8 +74,6 @@ let DataTable = (props) => {
 		tag: item.tag,
 	}));
 
-	const sortFunc = (field) => (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
-
 	const [snackBarOpen, setSnackBarOpen] = useState(false);
 	const [state, setState] = useState({
 		columns: [
@@ -84,7 +81,7 @@ let DataTable = (props) => {
 				title: "Name",
 				field: "name",
 				filtering: false,
-				editComponent: props => <FieldInput {...props} useAutofocus={true}/>,
+				editComponent: props => <TableFieldInput {...props} useAutofocus={true}/>,
 				cellStyle: {cursor: "default"},
 				customSort: sortFunc("name"),
 			},
@@ -92,8 +89,8 @@ let DataTable = (props) => {
 				title: "Login",
 				field: "login",
 				filtering: false,
-				editComponent: FieldInput,
-				cellStyle: {cursor: "default"},
+				editComponent: TableFieldInput,
+				cellStyle: {cursor: "default", paddingLeft: 8, flexWrap: "wrap"},
 				render: props => <CellItem copyFunc={copyFunc} field={props.login}/>,
 				customSort: sortFunc("login"),
 			},
@@ -102,8 +99,8 @@ let DataTable = (props) => {
 				field: "password",
 				filtering: false,
 				sorting: false,
-				editComponent: PasswordInput,
-				cellStyle: {cursor: "default"},
+				editComponent: TablePasswordInput,
+				cellStyle: {cursor: "default", paddingLeft: 8},
 				render: props => <CellItem hiddenText copyFunc={copyFunc} field={props.password}/>,
 			},
 			{
@@ -118,20 +115,24 @@ let DataTable = (props) => {
 		data: tableData,
 	});
 
-	function copyFunc(item) {
+	function sortFunc(field) {
+		return (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
+	}
+
+	function copyFunc(field) {
 		let dummy = document.createElement("textarea");
 		document.body.appendChild(dummy);
-		dummy.value = item.target.innerText;
+		dummy.value = field;
 		dummy.select();
 		document.execCommand("copy");
 		document.body.removeChild(dummy);
 		setSnackBarOpen(true);
 	}
 
-	const handleClose = (event, reason) => {
+	function handleClose(event, reason) {
 		if (reason === 'clickaway') return;
 		setSnackBarOpen(false);
-	};
+	}
 
 	return <Container maxWidth="xl" className={classes.container}>
 		<MaterialTable
@@ -139,9 +140,7 @@ let DataTable = (props) => {
 			columns={state.columns}
 			data={state.data}
 			icons={tableIcons}
-			style={{
-				userSelect: "none",
-			}}
+			style={{userSelect: "none"}}
 			options={{
 				draggable: false,
 				filtering: true,
@@ -150,8 +149,16 @@ let DataTable = (props) => {
 				debounceInterval: 100,
 				loadingType: "linear",
 				padding: "dense",
-				tableLayout: "fixed",
+				actionsCellStyle: {cursor: "default"},
 			}}
+			actions={[
+				{
+					hidden: true,
+					icon: "dummy",
+					onClick: () => {
+					},
+				}
+			]}
 			editable={{
 				onRowAdd: onTableRowAdd(setState),
 				onRowUpdate: onTableRowUpdate(setState),
@@ -167,20 +174,6 @@ let DataTable = (props) => {
 			</Alert>
 		</Snackbar>
 	</Container>
-}
-
-function CellItem({copyFunc, field, hiddenText}) {
-	return <Tooltip title="Copy" placement="left">
-		<Button onClick={copyFunc}
-				style={{
-					textTransform: "none",
-					fontFamily: hiddenText
-						? `'Libre Barcode 128', cursive`
-						: `'Roboto', sans-serif`,
-				}}
-		>
-			{field}</Button>
-	</Tooltip>
 }
 
 export default DataTable;
