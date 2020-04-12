@@ -1,16 +1,10 @@
 import DataTableContainer from "./DataTable/DataTableContainer";
-import ModalWindowAddContainer from "../../../Common/ModalWindows/ModalWindowAdd/ModalWindowAddContainer";
 import React from "react";
-import ModalWindowEditContainer from "../../../Common/ModalWindows/ModalWindowEdit/ModalWindowEditContainer";
-import HeadRow from "./HeadRow/HeadRow";
+
+// TODO remove components: HeadRow, ModalWindowEditContainer, ModalWindowAddContainer
 
 let FunctionalTable = () => {
-	return <>
-		<HeadRow/>
-		<DataTableContainer/>
-		<ModalWindowAddContainer/>
-		<ModalWindowEditContainer/>
-	</>
+	return <DataTableContainer/>
 }
 
 export default FunctionalTable;

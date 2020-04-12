@@ -1,12 +1,13 @@
 import React from "react";
-import s from "./Content.module.css"
 import FunctionalTable from "./FunctionalTable/FunctionalTable";
+import GettingTheKeyModalContainer from "./GettingTheKeyModal/GettingTheKeyModalContainer";
 
 
 let Content = () => {
-	return <div className={s.container}>
+	return <>
 		<FunctionalTable/>
-	</div>
+		<GettingTheKeyModalContainer/>
+	</>
 }
 
 export default Content;

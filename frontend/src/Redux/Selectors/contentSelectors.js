@@ -6,6 +6,7 @@ export const getSearchBarText = state => state.content.searchBarText;
 export const getEditingEntryId = state => state.content.editingEntryId;
 export const getEditWindowShown = state => state.content.editWindowShown;
 export const getAddWindowShown = state => state.content.addWindowShown;
+export const getIsKeyWindowShown = state => state.content.getKeyWindowShown;
 
 export const getUniqueTags = createSelector(
 	getTableEntries,
@@ -18,7 +19,7 @@ export const getUniqueTags = createSelector(
 		});
 	});
 
-export const getFilteredTable = createSelector(
+export const getFilteredTable = createSelector( // Get the table on search
 	getTableEntries,
 	getTagSelected,
 	getSearchBarText,

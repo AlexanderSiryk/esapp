@@ -1,4 +1,4 @@
-import {server} from "../API/DAL_API";
+import server from "../API/DAL_API";
 import {setTableEntries} from "./contentReducer";
 
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
@@ -10,7 +10,7 @@ const SET_KEY = "SET_KEY";
 
 const initialState = {
 	isDecrypted: false,		// False in production
-	isSignedIn: false,		// False in production
+	isSignedIn: true,		// False in production
 	isFetching: true,		// True in production
 	userEmail: null,
 	userLogin: null,
