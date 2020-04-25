@@ -11,6 +11,10 @@
 |
 */
 
+Auth::routes([
+    'reset' => false,
+]);
+
 Route::get('/', function () {
     return view('welcome');
 });
