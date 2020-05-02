@@ -4,11 +4,12 @@ import {fetchEntries, setIsDecrypted, setKey} from "../../../../Redux/layersRedu
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {getTableEntries} from "../../../../Redux/Selectors/contentSelectors";
 import {setDecryptedTableEntries} from "../../../../Redux/contentReducer";
-import {getIsFetching} from "../../../../Redux/Selectors/layersSelectors";
+import {getFetchError, getIsFetching} from "../../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
 	tableEntries: getTableEntries(state),
 	isFetching: getIsFetching(state),
+	fetchError: getFetchError(state),
 	calcKey: calcKey,
 	getImage: getImage,
 });
