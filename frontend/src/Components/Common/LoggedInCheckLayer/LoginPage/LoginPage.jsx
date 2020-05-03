@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 	},
 	wrapper: {
-		backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+		backgroundColor: theme.palette.type === 'light'
+			? theme.palette.grey[50]
+			: theme.palette.grey[900],
 	},
 	button: {
 		marginTop: '20vh',

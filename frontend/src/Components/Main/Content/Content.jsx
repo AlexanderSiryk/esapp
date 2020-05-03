@@ -1,6 +1,6 @@
 import React from "react";
 import FunctionalTable from "./FunctionalTable/FunctionalTable";
-import GettingTheKeyModalContainer from "./GettingTheKeyModal/GettingTheKeyModalContainer";
+import GettingTheKeyModalContainer from "../../Common/GettingTheKeyModal/GettingTheKeyModalContainer";
 
 
 let Content = () => {

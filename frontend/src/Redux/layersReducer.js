@@ -13,6 +13,7 @@ const initialState = {
 	isDecrypted: false,		// False in production
 	isSignedIn: true,		// False in production
 	isFetching: true,		// True in production
+	firstSignIn: false,
 	fetchError: false,
 	userEmail: null,
 	userLogin: null,

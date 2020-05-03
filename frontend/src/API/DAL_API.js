@@ -2,7 +2,7 @@ import axios from "axios"
 
 const URL = "http://localhost/public/accounts";
 const server = {
-	fetchPasswords() {
+	/*fetchPasswords() {
 		return new Promise((resolve) => {
 			resolve({
 				data: [
@@ -61,18 +61,18 @@ const server = {
 			.then(response => {
 				return response;
 			})
-	},
-	/*fetchPasswords() {
+	},*/
+	fetchPasswords() {
 		return axios.get(URL).catch(() => {
 			return null;
 		}).then(response => {
 			return response;
 		});
-	},*/
+	},
 	postPassword(obj) {
-		return axios.put(URL, obj).then(() => 0);
-		/*axios({
-			method: 'post',
+		/*return axios.put(URL, obj);*/
+		axios({
+			method: 'put',
 			url: URL,
 			data: {
 				id: 10,
@@ -81,9 +81,8 @@ const server = {
 				password: "test",
 				tag: "test",
 			},
-			headers: {"X-CSRFToken": prompt()},
 		});
-		return 0;*/
+		return 0;
 		/*return axios.post(URL, {
 			id: 10,
 			name: "test",
