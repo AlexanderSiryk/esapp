@@ -22,6 +22,7 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 	const classes = useStyle();
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [key, setKey] = useState("");
+	const [keyImg, setKeyImg] = useState(null);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 	const handleInputChange = (value) => {
@@ -33,10 +34,19 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 			let mgDataModified = new ImageData(arr, 252, 285);
 			const ctx = canvas.current.getContext('2d');
 			ctx.putImageData(mgDataModified, 0, 0);
+			setKeyImg(canvas.current.toDataURL())
 		}
 	}
 	const handleDownloadClick = () => {
 		localStorage.setItem("keyGenerated", key);
+		let element = document.createElement('a');
+		element.setAttribute('href', keyImg.toString());
+		element.setAttribute('download', "key");
+		element.style.display = 'none';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+		setDisabledButton(true);
 		toggleKeyModal();
 	}
 
