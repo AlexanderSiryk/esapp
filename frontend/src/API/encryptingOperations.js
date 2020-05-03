@@ -1,6 +1,8 @@
 import aesjs from "aes-js";
 import {pbkdf2Sync} from "pbkdf2";
 
+const WIDTH = 252;
+const LENGTH = 285;
 const PERMISSIBLE_COLOR_DEVIATION = 25;
 const ROWS_QUANTITY = 16;
 const COLS_QUANTITY = 33; // 16data + 17margins
@@ -11,7 +13,6 @@ const HORIZONTAL_MARGIN = 35;
 const WORK_ROW_WIDTH = CELL_SIZE * (COLS_QUANTITY - SIDE_COLS_QUANTITY) - LAST_COL_OFFSET; // 182
 const VERTICAL_MARGIN = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 29;
 const IDENT_BETWEEN_ROWS = (HORIZONTAL_MARGIN * 2 + WORK_ROW_WIDTH) * 15;
-
 function imageToBits(imgArr) {
 	let startPoint = VERTICAL_MARGIN + HORIZONTAL_MARGIN;
 	let step = CELL_SIZE * 2;
@@ -41,7 +42,6 @@ function imageToBits(imgArr) {
 	}
 	return bitsArr;
 }
-
 function keyToBits(key) {
 	const strKey = aesjs.utils.hex.fromBytes(key);
 	const bits = new Uint8Array(strKey.length * 4);
@@ -60,30 +60,36 @@ function keyToBits(key) {
 	});
 	return bits;
 }
-
-export const generateImageKey = (password, salt, width = 252, length = 285) => {
+function paintBitSquare(arr, i) {
+	const rowSize = WIDTH * 4;
+	i = i - 2 * rowSize - 2 * 4;
+	for (let j = 0; j < CELL_SIZE ** 2; j++) {
+		arr[i] = arr[i + 1] = arr[i + 2] = 255;
+		if (!((j + 1) % CELL_SIZE)) i += rowSize - CELL_SIZE * 4 + 4;
+		else i += 4;
+	}
+}
+export const generateImageKey = (password, salt) => {
 	const key = pbkdf2Sync(password, salt, 1, 256 / 8, 'sha512');
 	const bits = keyToBits(key);
-	const arr = new Uint8ClampedArray(width * length * 4);
-
+	const arr = new Uint8ClampedArray(WIDTH * LENGTH * 4);
 	let startPoint = VERTICAL_MARGIN + HORIZONTAL_MARGIN;
 	let step = CELL_SIZE * 2;
-	let counter = 0;
+	let bitIndex = 0;
 	for (let i = 0; i < arr.length; i++) {
 		if (!((i + 1) % 4)) arr[i] = 255;
 		else arr[i] = 0;
 	}
 	for (let n = 0; n < ROWS_QUANTITY; n++) {
 		for (let i = startPoint * 4; i <= (startPoint + WORK_ROW_WIDTH) * 4; i += step * 4) {
-			if (bits[counter]) arr[i] = arr[i + 1] = arr[i + 2] = 255;
-			else arr[i] = arr[i + 1] = arr[i + 2] = 0;
-			counter++;
+			// 0 or 1
+			if (bits[bitIndex]) paintBitSquare(arr, i);
+			bitIndex++;
 		}
 		startPoint += IDENT_BETWEEN_ROWS;
 	}
 	return arr;
 }
-
 export const getImage = (imgURL) => {
 	return new Promise(resolve => {
 		let img = new Image();
