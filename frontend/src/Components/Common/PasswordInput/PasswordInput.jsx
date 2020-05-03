@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-function PasswordInput({onChange, value, autoFocus}) {
+function PasswordInput({onChange, value, autoFocus, ...props}) {
 	const classes = useStyles();
 	const inputId = `password-${Math.floor(Math.random() * 100)}-${Date.now()}`;
 
@@ -35,7 +35,7 @@ function PasswordInput({onChange, value, autoFocus}) {
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
 	}
-	return <FormControl className={`${classes.textField}`}>
+	return <FormControl className={`${classes.textField}`} {...props}>
 		<InputLabel htmlFor={inputId}>Enter your password</InputLabel>
 		<Input
 			id={inputId}
