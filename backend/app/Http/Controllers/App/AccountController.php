@@ -94,13 +94,16 @@ class AccountController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($request)
     {
+
+        $data = json_decode($request);
+
         $account = new Account();
-        $account->name = $request->name;
-        $account->login = $request->login;
-        $account->password = $request->password;
-        $account->tag = $request->tag;
+        $account->name = $data['name'];
+        $account->login = $data['login'];
+        $account->password = $data['password'];
+        $account->tag = $data['tag'];
         $account->save();
 
         if($account){
