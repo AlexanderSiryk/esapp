@@ -1,4 +1,4 @@
-import {server} from "../API/DAL_API";
+import server from "../API/DAL_API";
 import {setTableEntries} from "./contentReducer";
 
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
@@ -7,11 +7,14 @@ const SET_IS_DECRYPTED = "SET_IS_DECRYPTED";
 const RESET_LAYERS = "RESET_LAYERS";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_KEY = "SET_KEY";
+const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 
 const initialState = {
 	isDecrypted: false,		// False in production
-	isSignedIn: false,		// False in production
+	isSignedIn: true,		// False in production
 	isFetching: true,		// True in production
+	firstSignIn: false,
+	fetchError: false,
 	userEmail: null,
 	userLogin: null,
 	userToken: null,
@@ -49,6 +52,11 @@ let layersReducer = (state = initialState, action) => {
 				...state,
 				key: action.key,
 			}
+		case SET_FETCH_ERROR:
+			return {
+				...state,
+				fetchError: true,
+			}
 		case RESET_LAYERS:
 			return {...initialState}
 		default:
@@ -79,11 +87,17 @@ export const setKey = (key) => ({
 	type: SET_KEY,
 	key,
 });
-// TODO add on error exception
+export const setFetchError = () => ({
+	type: SET_FETCH_ERROR,
+});
 export const fetchEntries = () => (dispatch) => {
 	server.fetchPasswords().then((response) => {
 		dispatch(setIsFetching(false));
-		dispatch(setTableEntries(response.data));
+		if (response) {
+			dispatch(setTableEntries(response.data));
+		} else {
+			dispatch(setFetchError());
+		}
 	});
 }
 export const postEntry = (encryptedEntry) => () => {

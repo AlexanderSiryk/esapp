@@ -10,8 +10,8 @@ let LogOutButton = (props) => {
 
 	}
 	return <GoogleLogout
-		clientId={props.clientId}
-		buttonText="Logout"
+		{...props.ownProps}
+		buttonText={props.buttonText}
 		onLogoutSuccess={logOut}
 	/>
 }

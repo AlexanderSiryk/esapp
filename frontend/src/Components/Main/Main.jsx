@@ -1,25 +1,31 @@
 import React from "react";
-import s from "./Main.module.css"
 import {Route} from "react-router-dom";
 import Content from "./Content/Content";
-import Tags from "./Tags/Tags";
-import Preferences from "./Preferences/Preferences";
+import Trash from "./Trash/Trash";
+import HeadBarContainer from "./HeadBar/HeadBarContainer";
+import SideDrawerContainer from "./SideDrawer/SideDrawerContainer";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Box from "@material-ui/core/Box";
+
 
 let Main = () => {
-	return <div className={s.container}>
+	const classes = makeStyles(() => ({
+		container: {
+			height: 100 + "%",
+		}
+	}))();
+	return <Box className={classes.container}>
+		<HeadBarContainer/>
+		<SideDrawerContainer/>
 		<Route
 			path="/content"
 			render={() => <Content/>}
 		/>
 		<Route
-			path="/tags"
-			render={() => <Tags/>}
+			path="/trash"
+			render={() => <Trash/>}
 		/>
-		<Route
-			path="/preferences"
-			render={() => <Preferences/>}
-		/>
-	</div>
+	</Box>
 }
 
 export default Main;

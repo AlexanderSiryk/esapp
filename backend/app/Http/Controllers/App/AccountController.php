@@ -25,10 +25,15 @@ class AccountController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $accounts = $this->accountRepository->getAllAccounts(Cookie::get('token'));
-        return response()->json($accounts->toArray());
+        $accounts = $this->accountRepository->getAllAccounts($request->token);
+        if($accounts) {
+            return response()->json($accounts->toArray());
+        }
+        else{
+            return response()->json(['accounts' => null]);
+        }
     }
 
     /**
@@ -66,10 +71,10 @@ class AccountController extends BaseController
                     ->save();
 
         if($result){
-            return response('success');
+            return response()->json(['update' => true]);
         }
         else{
-            return response('error');
+            return response()->json(['update' => false]);
         }
     }
 
@@ -89,17 +94,23 @@ class AccountController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($request)
     {
+
+        $data = json_decode($request);
+
         $account = new Account();
-        $account->name = $request->name;
-        $account->login = $request->login;
-        $account->password = $request->password;
-        $account->tag = $request->tag;
+        $account->name = $data['name'];
+        $account->login = $data['login'];
+        $account->password = $data['password'];
+        $account->tag = $data['tag'];
         $account->save();
 
         if($account){
-            return response()->json(['message' => 'create']);
+            return response()->json(['create' => true]);
+        }
+        else{
+            return response()->json(['create' => false]);
         }
     }
 
@@ -126,7 +137,9 @@ class AccountController extends BaseController
         $account->delete();
 
         if($account){
-            return response()->json(['message' => 'delete']);
+            return response()->json(['delete' => true]);
+        }else{
+            return response()->json(['delete' => false]);
         }
     }
 }

@@ -5,3 +5,5 @@ export const getIsDecrypted = state => state.layers.isDecrypted;
 export const getIsSignedIn = state => state.layers.isSignedIn;
 export const getIsFetching = state => state.layers.isFetching;
 export const getKey = state => state.layers.key;
+export const getFetchError = state => state.layers.fetchError;
+export const getFirstSignIn = state => state.layers.firstSignIn;
