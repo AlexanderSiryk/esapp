@@ -1,10 +1,16 @@
 import axios from "axios"
 
+function getCookie(name) {
+	let value = "; " + document.cookie;
+	let parts = value.split("; " + name + "=");
+	if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
 const URL = "http://localhost/public/accounts";
 const server = {
 	/*fetchPasswords() {
 		return new Promise((resolve) => {
-			resolve({
+			rwesolve({
 				data: [
 					{
 						id: 1,
@@ -80,6 +86,9 @@ const server = {
 				login: "test",
 				password: "test",
 				tag: "test",
+			},
+			headers: {
+				'X-CSRF-TOKEN': getCookie("XSRF-TOKEN"),
 			},
 		});
 		return 0;
