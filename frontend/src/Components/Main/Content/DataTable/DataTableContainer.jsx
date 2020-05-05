@@ -3,8 +3,8 @@ import DataTable from "./DataTable";
 import {
 	getFilteredTable,
 	getUniqueTags
-} from "../../../../../Redux/Selectors/contentSelectors";
-import {toggleEditWindow} from "../../../../../Redux/contentReducer";
+} from "../../../../Redux/Selectors/contentSelectors";
+import {toggleEditWindow} from "../../../../Redux/contentReducer";
 
 let mapStateToProps = (state) => ({
 	filteredTableEntries: getFilteredTable(state),
