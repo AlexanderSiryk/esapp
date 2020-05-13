@@ -5,7 +5,6 @@ import {encryptEntry} from "../../../../../API/encryptingOperations";
 function onTableRowAdd(setState, key, user_id, id) {
     return newData => new Promise(resolve => {
         let en = encryptEntry(newData, key);
-        en.id = id + 1;
         en.user_id = user_id;
         server.postPassword(en)
             .then(res => {
@@ -15,7 +14,7 @@ function onTableRowAdd(setState, key, user_id, id) {
                     setState((prevState) => {
                         const columns = updateColumnsLookup(prevState, newData, null);
                         const data = [...prevState.data];
-                        data.push(newData);
+                        data.push({...newData, id});
                         return {...prevState, data, columns};
                     });
                     resolve();

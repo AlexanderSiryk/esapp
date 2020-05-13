@@ -5,8 +5,14 @@ const URL = "http://esapp/public/accounts";
 const server = {
 	fetchPasswords() {
 		return axios.get(URL)
-            .catch(() => null)
-            .then(response => response);
+            .then(res => {
+                console.log("-========-");
+                console.log("get:");
+                console.dir(res);
+                console.log("-========-");
+                return res;
+            })
+            .catch(() => null);
 	},
 	postPassword(obj) {
         return axios.post(URL, obj).then(res => {
