@@ -15,6 +15,7 @@ const initialState = {
 	isFetching: true,		// True in production
 	firstSignIn: false,
 	fetchError: false,
+    userId: 0,
 	userEmail: null,
 	userLogin: null,
 	userToken: null,
@@ -99,9 +100,6 @@ export const fetchEntries = () => (dispatch) => {
 			dispatch(setFetchError());
 		}
 	});
-}
-export const postEntry = (encryptedEntry) => () => {
-	server.postPassword(encryptedEntry).then(r => console.log(r));
 }
 
 export default layersReducer;

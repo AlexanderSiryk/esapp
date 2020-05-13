@@ -1,31 +1,40 @@
 import axios from "axios"
 
-function getCookie(name) {
-	let value = "; " + document.cookie;
-	let parts = value.split("; " + name + "=");
-	if (parts.length === 2) return parts.pop().split(";").shift();
-}
-
 const URL = "http://esapp/public/accounts";
+
 const server = {
 	fetchPasswords() {
-		return axios.get(URL).catch(() => {
-			return null;
-		}).then(response => {
-			return response;
-		});
+		return axios.get(URL)
+            .catch(() => null)
+            .then(response => response);
 	},
 	postPassword(obj) {
-		axios({
-			method: 'put',
-			url: URL,
-			data: obj,
-			headers: {
-				'X-CSRF-TOKEN': getCookie("XSRF-TOKEN"),
-			},
-		});
-		return 0;
+        return axios.post(URL, obj).then(res => {
+                console.log("-========-");
+                console.log("post:");
+                console.dir(res);
+                console.log("-========-");
+                return res;
+            }).catch((error) => error);
 	},
+    deletePassword(id) {
+        axios.delete(URL+`/${id}`, { data: id })
+            .then(res => {
+                console.log("-========-");
+                console.log("delete:");
+                console.die(res);
+                console.log("-========-");
+        });
+    },
+    editPasswords(id, data) {
+        axios.patch(URL+`/${id}`, data)
+            .then(res => {
+                console.log("-========-");
+                console.log("edit:");
+                console.die(res);
+                console.log("-========-");
+        });
+    }
 }
 
 export default server;
