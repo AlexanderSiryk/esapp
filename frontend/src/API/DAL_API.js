@@ -6,7 +6,7 @@ function getCookie(name) {
 	if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-const URL = "http://localhost/public/accounts";
+const URL = "http://esapp/public/accounts";
 const server = {
 	fetchPasswords() {
 		return axios.get(URL).catch(() => {
