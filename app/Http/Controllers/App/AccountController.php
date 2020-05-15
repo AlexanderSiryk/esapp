@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\BaseController;
 use App\Models\Account;
 use App\Repositories\AccountRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -14,10 +15,15 @@ class AccountController extends BaseController
      * @var AccountRepository
      */
     public $accountRepository;
+    /**
+     * @var UserRepository
+     */
+    public $userRepository;
 
     public function __construct()
     {
         $this->accountRepository = app(AccountRepository::class);
+        $this->userRepository = app(UserRepository::class);
     }
 
     /**
@@ -60,9 +66,12 @@ class AccountController extends BaseController
     {
         $account = $this->accountRepository->getForUpdate($id);
 
-        if(empty($account)){
+        $user_id = $this->userRepository->getIdByToken($request->token);
+
+        if(empty($account) || $user_id != $account->user_id ){
             return back()->withErrors('error','error');
         }
+
 
         $data = $request->all();
 
@@ -71,10 +80,10 @@ class AccountController extends BaseController
                     ->save();
 
         if($result){
-            return response()->json(['update' => true]);
+            return response(['update' => true]);
         }
         else{
-            return response()->json(['update' => false]);
+            return response(['update' => false]);
         }
     }
 
@@ -94,23 +103,25 @@ class AccountController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-//<script src="{{asset('/js/main.888104c6.chunk.js')}}"></script>
-//<script src="{{asset('/js/2.c3946578.chunk.js')}}"></script>
+
+
     public function store(Request $request)
     {
+        $user_id = $this->userRepository->getIdByToken($request->token);
+
         $account = new Account();
         $account->name = $request->name;
         $account->login = $request->login;
         $account->password = $request->password;
         $account->tag = $request->tag;
-        $account->user_id = $request->user_id;
+        $account->user_id = $user_id;
         $account->save();
 
         if($account){
-            return response()->json(['create' => true]);
+            return response()->json(['id' => $account->id]);
         }
         else{
-            return null;
+            return response()->json(['create' => false]);
         }
     }
 
@@ -131,12 +142,18 @@ class AccountController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $account = Account::findOrFail($id);
-        $account->delete();
 
-        if($account){
+        $account = Account::findOrFail($request->id);
+        $user_id = $this->userRepository->getIdByToken($request->token);
+
+        if($account->user_id == $user_id){
+            $account = $account->delete();
+        }
+
+
+        if($account === true){
             return response()->json(['delete' => true]);
         }else{
             return response()->json(['delete' => false]);

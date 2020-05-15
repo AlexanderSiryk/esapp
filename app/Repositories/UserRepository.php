@@ -39,6 +39,7 @@ class UserRepository extends BaseRepository
         return false;
     }
 
+
     public function getForUpdate($token)
     {
         $result = $this->startCondition()
@@ -47,5 +48,19 @@ class UserRepository extends BaseRepository
 
         return $result;
     }
+
+    public function getIdByToken($token)
+    {
+        $columns = ['id'];
+        $result = $this->startCondition()
+            ->select($columns)
+            ->where('token', $token)
+            ->first()
+            ->id;
+
+        return $result;
+    }
+
+
 
 }
