@@ -31,8 +31,8 @@ class LogController extends BaseController
         $user = $this->userRepository->getUser($request->token);
 
         if(count($user) != 0){
-            //return $user;
-            return response()->json($user->toArray());
+
+            return response(['log' => 'login']);
         }
         else{
             $user = $this->userRepository->regUser($request);
@@ -40,16 +40,13 @@ class LogController extends BaseController
         }
     }
 
-    public function salt(Request $request, $id)
+    public function salt(Request $request, $token)
     {
 
         $user = $this->userRepository->getForUpdate($request->token);
 
         if(empty($user)){
             return response(['error' => 'user not found']);
-        }
-        if($id != $user->id){
-            return response(['error' => 'id error']);
         }
 
         $data = $request->all();
