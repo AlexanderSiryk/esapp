@@ -10,96 +10,97 @@ const SET_KEY = "SET_KEY";
 const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 
 const initialState = {
-	isDecrypted: false,		// False in production
-	isSignedIn: true,		// False in production
-	isFetching: true,		// True in production
-	firstSignIn: false,
-	fetchError: false,
-    userId: 0,
-	userEmail: null,
-	userLogin: null,
-	userToken: null,
-	userImageURL: null,
-	key: null,
+    isDecrypted: false,		// False in production
+    isSignedIn: true,		// False in production
+    isFetching: true,		// True in production
+    firstSignIn: false,
+    fetchError: false,
+    userId: 1,
+    userEmail: null,
+    userLogin: null,
+    userToken: null,
+    userImageURL: null,
+    key: null,
 }
 
 let layersReducer = (state = initialState, action) => {
-	switch (action.type) {
-		case SET_IS_SIGNED_IN:
-			return {
-				...state,
-				isSignedIn: action.isSignedIn,
-			}
-		case SET_USER_DATA:
-			return {
-				...state,
-				userEmail: action.data.email,
-				userLogin: action.data.login,
-				userToken: action.data.token,
-				userImageURL: action.data.image,
-			}
-		case SET_IS_DECRYPTED:
-			return {
-				...state,
-				isDecrypted: action.isDecrypted,
-			}
-		case SET_IS_FETCHING:
-			return {
-				...state,
-				isFetching: action.isFetching,
-			}
-		case SET_KEY:
-			return {
-				...state,
-				key: action.key,
-			}
-		case SET_FETCH_ERROR:
-			return {
-				...state,
-				fetchError: true,
-			}
-		case RESET_LAYERS:
-			return {...initialState}
-		default:
-			return state;
-	}
+    switch (action.type) {
+        case SET_IS_SIGNED_IN:
+            return {
+                ...state,
+                isSignedIn: action.isSignedIn,
+            }
+        case SET_USER_DATA:
+            return {
+                ...state,
+                userEmail: action.data.email,
+                userLogin: action.data.login,
+                userToken: action.data.token,
+                userImageURL: action.data.image,
+            }
+        case SET_IS_DECRYPTED:
+            return {
+                ...state,
+                isDecrypted: action.isDecrypted,
+            }
+        case SET_IS_FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching,
+            }
+        case SET_KEY:
+            return {
+                ...state,
+                key: action.key,
+            }
+        case SET_FETCH_ERROR:
+            return {
+                ...state,
+                fetchError: true,
+            }
+        case RESET_LAYERS:
+            return {...initialState}
+        default:
+            return state;
+    }
 }
 
 export const setIsSignedIn = (isSignedIn) => ({
-	type: SET_IS_SIGNED_IN,
-	isSignedIn,
+    type: SET_IS_SIGNED_IN,
+    isSignedIn,
 });
 export const setUserData = (data) => ({
-	type: SET_USER_DATA,
-	data,
+    type: SET_USER_DATA,
+    data,
 });
 export const setIsDecrypted = (isDecrypted) => ({
-	type: SET_IS_DECRYPTED,
-	isDecrypted,
+    type: SET_IS_DECRYPTED,
+    isDecrypted,
 });
 export const resetLayers = () => ({
-	type: RESET_LAYERS,
+    type: RESET_LAYERS,
 });
 export const setIsFetching = (isFetching) => ({
-	type: SET_IS_FETCHING,
-	isFetching,
+    type: SET_IS_FETCHING,
+    isFetching,
 });
 export const setKey = (key) => ({
-	type: SET_KEY,
-	key,
+    type: SET_KEY,
+    key,
 });
 export const setFetchError = () => ({
-	type: SET_FETCH_ERROR,
+    type: SET_FETCH_ERROR,
 });
 export const fetchEntries = () => (dispatch) => {
-	server.fetchPasswords().then((response) => {
-		dispatch(setIsFetching(false));
-		if (response) {
-			dispatch(setTableEntries(response.data));
-		} else {
-			dispatch(setFetchError());
-		}
-	});
+    server.fetchPasswords()
+        .then((response) => {
+            dispatch(setIsFetching(false));
+            if (!response.isAxiosError) {
+                dispatch(setTableEntries(response.data));
+            } else {
+                dispatch(setFetchError());
+            }
+        });
 }
 
 export default layersReducer;

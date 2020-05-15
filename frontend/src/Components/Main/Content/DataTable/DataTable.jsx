@@ -114,7 +114,6 @@ let DataTable = (props) => {
 		],
 		data: tableData,
 	});
-	const lastId = tableData[tableData.length - 1].id;
 
 	function sortFunc(field) {
 		return (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
@@ -164,9 +163,11 @@ let DataTable = (props) => {
 				onRowAdd: onTableRowAdd(setState,
                     props.$key,
                     props.userId,
-                    lastId,
                 ),
-				onRowUpdate: onTableRowUpdate(setState),
+				onRowUpdate: onTableRowUpdate(setState,
+                    props.$key,
+                    props.userId,
+                ),
 				onRowDelete: onTableRowDelete(setState),
 			}}
 			onRowClick={() => {
