@@ -9,7 +9,7 @@ import lime from "@material-ui/core/colors/lime";
 import orange from "@material-ui/core/colors/orange";
 
 function App() {
-	const themeMode = "dark";
+	const themeMode = "light";
 	const theme = createMuiTheme({
 		palette: {
 			type: themeMode,

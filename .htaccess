@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    RewriteCond %{HTTP_HOST} ^http://cor/$ [NC]
+    RewriteRule ^(.*)$ http://cor/public$1 [R=301,L]
+</IfModule>

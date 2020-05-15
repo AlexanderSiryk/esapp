@@ -7,4 +7,3 @@ export const getIsFetching = state => state.layers.isFetching;
 export const getKey = state => state.layers.key;
 export const getFetchError = state => state.layers.fetchError;
 export const getFirstSignIn = state => state.layers.firstSignIn;
-export const getUserId = state => state.layers.userId;

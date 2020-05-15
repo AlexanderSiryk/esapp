@@ -9,6 +9,7 @@ import Avatar from "@material-ui/core/Avatar";
 import UserActionsModal from "./UserActionsModal/UserActionsModal";
 import Button from "@material-ui/core/Button";
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import server from "../../../API/DAL_API";
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -48,6 +49,20 @@ const HeadBar = ({toggleSidebar, userImageURL, userLogin, userEmail, toggleKeyMo
                 disabled
             >
                 Get the key
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                    server.postPassword({
+                        id: 10,
+                        name: "test",
+                        login: "test",
+                        password: "test",
+                        tag: "test",
+                    })
+                }}>
+                click me
             </Button>
             <UserActionsModal {...{userEmail, userLogin}}>
                 <Avatar className={classes.clickIcon}
