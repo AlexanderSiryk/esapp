@@ -25,18 +25,31 @@ class LogController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function auth($request)
+    public function auth(Request $request)
     {
-        $data = json_decode($request);
 
-        $user = $this->userRepository->getUser($data['token']);
-        if($user){
+        $user = $this->userRepository->getUser($request->token);
+        if($user == NULL){
             //return $user;
             return response()->json($user->toArray());
         }
         else{
-            $user = $this->userRepository->regUser($data);
+            $user = $this->userRepository->regUser($request);
+            return response(['log' => 'create']);
+        }
+    }
+
+    public function salt(Request $request)
+    {
+
+        $user = $this->userRepository->getUser($request->token);
+        if($user == NULL){
+            //return $user;
             return response()->json($user->toArray());
+        }
+        else{
+            $user = $this->userRepository->regUser($request);
+            return response(['log' => 'create']);
         }
     }
 
