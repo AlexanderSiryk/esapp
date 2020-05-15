@@ -29,7 +29,8 @@ class LogController extends BaseController
     {
 
         $user = $this->userRepository->getUser($request->token);
-        if($user == NULL){
+
+        if(count($user) != 0){
             //return $user;
             return response()->json($user->toArray());
         }
@@ -39,17 +40,29 @@ class LogController extends BaseController
         }
     }
 
-    public function salt(Request $request)
+    public function salt(Request $request, $id)
     {
 
-        $user = $this->userRepository->getUser($request->token);
-        if($user == NULL){
-            //return $user;
-            return response()->json($user->toArray());
+        $user = $this->userRepository->getForUpdate($request->token);
+
+        if(empty($user)){
+            return response(['error' => 'user not found']);
+        }
+        if($id != $user->id){
+            return response(['error' => 'id error']);
+        }
+
+        $data = $request->all();
+
+        $result = $user
+            ->fill($data)
+            ->save();
+
+        if($result){
+            return response()->json(['update' => true]);
         }
         else{
-            $user = $this->userRepository->regUser($request);
-            return response(['log' => 'create']);
+            return response()->json(['update' => false]);
         }
     }
 

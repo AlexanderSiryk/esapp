@@ -28,16 +28,24 @@ class UserRepository extends BaseRepository
     public function regUser($data){
         $user = new User();
         //fix names google request
-        $user->name = 'test';
+        $user->name = $data->name;
         $user->token = $data->token;
-        $user->salt = 'salt';
+        $user->salt = 'Not defined';
         $user->save();
 
         if($user){
             return true;
         }
         return false;
+    }
 
+    public function getForUpdate($token)
+    {
+        $result = $this->startCondition()
+                        ->where('token', $token)
+                        ->first();
+
+        return $result;
     }
 
 }

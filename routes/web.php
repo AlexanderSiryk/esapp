@@ -19,4 +19,7 @@ Route::group(['namespace'=>'App'],function (){
     Route::resource('accounts', 'AccountController');
 });
 
+Route::post('log', 'App\LogController@auth');
+Route::patch('log/{token}', 'App\LogController@salt');
+
 //Route::post('accounts', 'App\AccountController@store');
