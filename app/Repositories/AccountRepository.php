@@ -10,13 +10,13 @@ class AccountRepository extends BaseRepository
         return Model::class;
     }
 
-    public function getAllAccounts($token)
+    public function getAllAccounts($id)
     {
         $columns = ['id','name','login','password','tag'];
 
         $result = $this->startCondition()
                         ->select($columns)
-                        ->where('user_id', '!=', 0)
+                        ->where('user_id', $id)
                         ->get();
 
         return $result;
