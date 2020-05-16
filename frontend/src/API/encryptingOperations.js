@@ -115,7 +115,7 @@ export const encryptEntry = (entry, keyStr) => {
 	let key = new Uint8Array(aesjs.utils.hex.toBytes(keyStr));
 	let obj = {...entry};
 	for (const prop in obj) {
-		if (prop !== "id" && prop !== "user_id") {
+		if (prop !== "id") {
 			if (obj.hasOwnProperty(prop)) {
 				obj[prop] = encryptString(obj[prop], key);
 			} else throw new Error(`There is no instance ${prop} in ${obj}`);
