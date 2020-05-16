@@ -11,16 +11,17 @@ const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 const SET_IS_FIRST_SIGN_IN = "SET_IS_FIRST_SIGN_IN";
 
 const initialState = {
-    isDecrypted: false,		// False
-    isSignedIn: false,		// False
-    isFetching: true,		// True
-    firstSignIn: true,      // True
-    fetchError: false,      // False
+    isDecrypted: false,
+    isSignedIn: false,
+    isFetching: true,
+    firstSignIn: true,
+    fetchError: false,
     userEmail: null,
     userLogin: null,
     userToken: null,
     userImageURL: null,
     key: null,
+    salt: null,
 }
 
 let layersReducer = (state = initialState, action) => {

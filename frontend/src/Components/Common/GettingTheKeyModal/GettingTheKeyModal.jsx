@@ -8,38 +8,41 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {generateImageKey} from "../../../API/encryptingOperations";
 import server from "../../../API/DAL_API";
 
 const useStyle = makeStyles(() => ({
-	text: {
-		width: 252 + "px",
-		marginBottom: 5 + "px",
-	}
+    text: {
+        width: 252 + "px",
+        marginBottom: 5 + "px",
+    }
 }));
 
-const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey, userToken}) => {
-	const canvas = useRef(null);
-	const classes = useStyle();
-	const [disabledButton, setDisabledButton] = useState(true);
-	const [key, setKey] = useState("");
-	const [keyImg, setKeyImg] = useState(null);
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-	const handleInputChange = (value) => {
-		setKey(generateKey(value, salt));
-		if (disabledButton) setDisabledButton(false);
-		if (!value) setDisabledButton(true);
-		const arr = generateImageKey(value, salt);
-		if (canvas.current) {
-			let mgDataModified = new ImageData(arr, 252, 285);
-			const ctx = canvas.current.getContext('2d');
-			ctx.putImageData(mgDataModified, 0, 0);
-			setKeyImg(canvas.current.toDataURL())
-		}
-	}
-	const handleSaveClick = () => {
-		server.performRegistration(userToken, salt).then(res => {
+const GettingTheKeyModal = ({
+                                isShown, toggleKeyModal, generateSalt,
+                                generateKey, userToken, generateImageKey
+                            }) => {
+    const canvas = useRef(null);
+    const classes = useStyle();
+    const salt = generateSalt();
+    const [disabledButton, setDisabledButton] = useState(true);
+    const [key, setKey] = useState("");
+    const [keyImg, setKeyImg] = useState(null);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const handleInputChange = (value) => {
+        setKey(generateKey(value, salt));
+        if (disabledButton) setDisabledButton(false);
+        if (!value) setDisabledButton(true);
+        const arr = generateImageKey(value, salt);
+        if (canvas.current) {
+            let mgDataModified = new ImageData(arr, 252, 285);
+            const ctx = canvas.current.getContext('2d');
+            ctx.putImageData(mgDataModified, 0, 0);
+            setKeyImg(canvas.current.toDataURL())
+        }
+    }
+    const handleSaveClick = () => {
+        server.performRegistration(userToken, salt).then(res => {
             if (!res.isAxiosError) {
                 localStorage.setItem("keyGenerated", key);
                 let element = document.createElement('a');
@@ -54,31 +57,31 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey, userTok
             }
         })
 
-	}
+    }
 
-	return <>
-		<Dialog
-			fullScreen={fullScreen}
-			open={isShown}
-			aria-labelledby="responsive-dialog-title"
-		>
-			<DialogTitle id="responsive-dialog-title">Key generation</DialogTitle>
-			<DialogContent>
-				<PasswordInput className={classes.text} onChange={handleInputChange} autoFocus/>
-				<div>
-					<canvas ref={canvas} width={252} height={285} style={{
-						background: "black",
-						borderRadius: "5px",
-					}}/>
-				</div>
-			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleSaveClick} color="primary" disabled={disabledButton}>
-					Save the key
-				</Button>
-			</DialogActions>
-		</Dialog>
-	</>
+    return <>
+        <Dialog
+            fullScreen={fullScreen}
+            open={isShown}
+            aria-labelledby="responsive-dialog-title"
+        >
+            <DialogTitle id="responsive-dialog-title">Key generation</DialogTitle>
+            <DialogContent>
+                <PasswordInput className={classes.text} onChange={handleInputChange} autoFocus/>
+                <div>
+                    <canvas ref={canvas} width={252} height={285} style={{
+                        background: "black",
+                        borderRadius: "5px",
+                    }}/>
+                </div>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleSaveClick} color="primary" disabled={disabledButton}>
+                    Save the key
+                </Button>
+            </DialogActions>
+        </Dialog>
+    </>
 }
 
 export default GettingTheKeyModal;
