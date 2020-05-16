@@ -2,7 +2,7 @@ import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 import {encryptEntry} from "../../../../../API/encryptingOperations";
 
-function onTableRowUpdate(setState, key, user_id) {
+function onTableRowUpdate(setState, key, token) {
     return (newData, oldData) => new Promise(resolve => {
         let objectsAreEqual = true;
         for (const prop in newData) {
@@ -17,8 +17,9 @@ function onTableRowUpdate(setState, key, user_id) {
             resolve();
             return;
         }
-        let en = encryptEntry({...newData, user_id}, key);
+        let en = encryptEntry(newData, key);
         delete en.id;
+        en.token = token;
         server.editPassword(oldData.id, en)
             .then(res => {
                 if (res.isAxiosError === false) {

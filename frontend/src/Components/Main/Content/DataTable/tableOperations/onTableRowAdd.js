@@ -2,9 +2,10 @@ import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 import {encryptEntry} from "../../../../../API/encryptingOperations";
 
-function onTableRowAdd(setState, key, user_id) {
+function onTableRowAdd(setState, key, token) {
     return newData => new Promise(resolve => {
-        let en = encryptEntry({...newData, user_id}, key);
+        let en = encryptEntry(newData, key);
+        en.token = token;
         server.postPassword(en)
             .then(res => {
                 if (res.isAxiosError) {

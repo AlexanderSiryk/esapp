@@ -8,14 +8,14 @@ const RESET_LAYERS = "RESET_LAYERS";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_KEY = "SET_KEY";
 const SET_FETCH_ERROR = "SET_FETCH_ERROR";
+const SET_IS_FIRST_SIGN_IN = "SET_IS_FIRST_SIGN_IN";
 
 const initialState = {
-    isDecrypted: false,		// False in production
-    isSignedIn: true,		// False in production
-    isFetching: true,		// True in production
-    firstSignIn: false,
-    fetchError: false,
-    userId: 1,
+    isDecrypted: false,		// False
+    isSignedIn: false,		// False
+    isFetching: true,		// True
+    firstSignIn: true,      // True
+    fetchError: false,      // False
     userEmail: null,
     userLogin: null,
     userToken: null,
@@ -58,6 +58,11 @@ let layersReducer = (state = initialState, action) => {
                 ...state,
                 fetchError: true,
             }
+        case SET_IS_FIRST_SIGN_IN:
+            return {
+                ...state,
+                firstSignIn: action.isFirstSignIn,
+            }
         case RESET_LAYERS:
             return {...initialState}
         default:
@@ -91,8 +96,12 @@ export const setKey = (key) => ({
 export const setFetchError = () => ({
     type: SET_FETCH_ERROR,
 });
-export const fetchEntries = () => (dispatch) => {
-    server.fetchPasswords()
+export const setIsFirstSignIn = (isFirstSignIn) => ({
+    type: SET_IS_FIRST_SIGN_IN,
+    isFirstSignIn,
+});
+export const fetchEntries = (token) => (dispatch) => {
+    server.fetchPasswords(token)
         .then((response) => {
             dispatch(setIsFetching(false));
             if (!response.isAxiosError) {
