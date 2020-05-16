@@ -40,7 +40,7 @@ class LogController extends BaseController
         }
     }
 
-    public function salt(Request $request, $token)
+    public function salt(Request $request)
     {
 
         $user = $this->userRepository->getForUpdate($request->token);

@@ -21,6 +21,6 @@ Route::group(['namespace'=>'App'],function (){
 });
 
 Route::post('log', 'App\LogController@auth');
-Route::patch('log/{token}', 'App\LogController@salt');
+Route::post('log/salt', 'App\LogController@salt');
 
 //Route::post('accounts', 'App\AccountController@store');
