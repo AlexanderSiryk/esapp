@@ -41,7 +41,7 @@ const server = {
             .catch(error => error);
     },
     performRegistration(token, salt) {
-        return axios.patch(`${URL}/log/${token}`, {
+        return axios.post(`${URL}/log/salt`, {
             token,
             salt,
         })
