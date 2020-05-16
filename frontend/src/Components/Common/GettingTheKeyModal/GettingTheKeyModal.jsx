@@ -18,21 +18,21 @@ const useStyle = makeStyles(() => ({
 }));
 
 const GettingTheKeyModal = ({
-                                isShown, toggleKeyModal, generateSalt,
+                                isShown, toggleKeyModal, generateSalt, setKey,
                                 generateKey, userToken, generateImageKey
                             }) => {
     const canvas = useRef(null);
     const classes = useStyle();
     const salt = generateSalt();
     const [disabledButton, setDisabledButton] = useState(true);
-    const [key, setKey] = useState("");
     const [keyImg, setKeyImg] = useState(null);
+    const [$key, $setKey] = useState(null);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const handleInputChange = (value) => {
-        setKey(generateKey(value, salt));
         if (disabledButton) setDisabledButton(false);
         if (!value) setDisabledButton(true);
+        $setKey(generateKey(value, salt));
         const arr = generateImageKey(value, salt);
         if (canvas.current) {
             let mgDataModified = new ImageData(arr, 252, 285);
@@ -44,7 +44,8 @@ const GettingTheKeyModal = ({
     const handleSaveClick = () => {
         server.performRegistration(userToken, salt).then(res => {
             if (!res.isAxiosError) {
-                localStorage.setItem("keyGenerated", key);
+                localStorage.setItem("key", $key.toString());
+                setKey($key);
                 let element = document.createElement('a');
                 element.setAttribute('href', keyImg.toString());
                 element.setAttribute('download', "key");
