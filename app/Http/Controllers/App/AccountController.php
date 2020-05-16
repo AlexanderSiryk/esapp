@@ -143,10 +143,10 @@ class AccountController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
 
-        $account = Account::findOrFail($request->id);
+        $account = Account::findOrFail($id);
         $user_id = $this->userRepository->getIdByToken($request->token);
 
         if($account->user_id == $user_id){
