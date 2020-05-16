@@ -2,6 +2,6 @@
 
     RewriteEngine On
 
-    RewriteCond %{HTTP_HOST} ^http://cor/$ [NC]
-    RewriteRule ^(.*)$ http://cor/public$1 [R=301,L]
+RewriteCond %{REQUEST_URI} !^/(accounts|log|log/salt)$
+RewriteRule ^.*$ http://esapp/public/ [R=301,L]
 </IfModule>
