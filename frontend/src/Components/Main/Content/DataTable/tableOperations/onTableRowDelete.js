@@ -1,9 +1,9 @@
 import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 
-function onTableRowDelete(setState) {
+function onTableRowDelete(setState, token) {
     return (oldData) => new Promise(resolve => {
-        server.deletePassword(oldData.id)
+        server.deletePassword(oldData.id, token)
             .then(res => {
                 if (res.isAxiosError) {
                     resolve();

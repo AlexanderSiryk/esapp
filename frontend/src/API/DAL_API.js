@@ -29,8 +29,13 @@ const server = {
                 return error
             });
     },
-    deletePassword(id) {
-        return axios.delete(URL + `/${id}`, {data: id})
+    deletePassword(id, token) {
+        return axios.delete(URL + `/${id}`,
+            {
+                data: {
+                    token: token,
+                }
+            })
             .then(res => {
                 console.log("-========-");
                 console.log("delete:");

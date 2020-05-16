@@ -11,11 +11,10 @@ const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 
 const initialState = {
     isDecrypted: false,		// False in production
-    isSignedIn: true,		// False in production
+    isSignedIn: false,		// False in production
     isFetching: true,		// True in production
     firstSignIn: false,
     fetchError: false,
-    userId: 1,
     userEmail: null,
     userLogin: null,
     userToken: null,
