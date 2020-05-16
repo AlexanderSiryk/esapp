@@ -6,7 +6,7 @@ import Main from "../../Main/Main";
 let DecryptingLayer = ({isDecrypted, firstSignIn, toggleKeyModal, setTableEntries}) => {
 	isDecrypted = firstSignIn ? true : isDecrypted;
 	if (firstSignIn) {
-		setTableEntries([{id: 0, name: "first", login: "log", password: "pass", tag: "tag"}]);
+		setTableEntries([]);
 		toggleKeyModal();
 	}
     return isDecrypted
