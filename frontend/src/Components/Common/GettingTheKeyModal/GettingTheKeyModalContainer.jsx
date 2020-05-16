@@ -4,10 +4,12 @@ import {getIsKeyWindowShown} from "../../../Redux/Selectors/contentSelectors";
 import {toggleKeyModal} from "../../../Redux/contentReducer";
 import {generateKey} from "../../../API/encryptingOperations";
 import {getSalt} from "../../../Redux/Selectors/applicationSelectors";
+import {getUserToken} from "../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
 	isShown: getIsKeyWindowShown(state),
 	salt: getSalt(state),
+    userToken: getUserToken(state),
 	generateKey,
 });
 

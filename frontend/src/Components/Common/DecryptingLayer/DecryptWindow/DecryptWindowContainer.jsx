@@ -4,7 +4,7 @@ import {fetchEntries, setIsDecrypted, setKey} from "../../../../Redux/layersRedu
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {getTableEntries} from "../../../../Redux/Selectors/contentSelectors";
 import {setDecryptedTableEntries} from "../../../../Redux/contentReducer";
-import {getFetchError, getIsFetching} from "../../../../Redux/Selectors/layersSelectors";
+import {getFetchError, getIsFetching, getUserToken} from "../../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
 	tableEntries: getTableEntries(state),
@@ -12,6 +12,7 @@ let mapStateToProps = (state) => ({
 	fetchError: getFetchError(state),
 	calcKey: calcKey,
 	getImage: getImage,
+    userToken: getUserToken(state),
 });
 
 let DecryptWindowContainer = connect(mapStateToProps, {

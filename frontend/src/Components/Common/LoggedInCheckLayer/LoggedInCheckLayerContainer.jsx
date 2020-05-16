@@ -3,7 +3,7 @@ import LoggedInCheckLayer from "./LoggedInCheckLayer";
 import {getIsSignedIn} from "../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
-	isSignedIn: getIsSignedIn(state),
+    isSignedIn: getIsSignedIn(state),
 });
 
 let LoggedInCheckLayerContainer = connect(mapStateToProps, {})(LoggedInCheckLayer);

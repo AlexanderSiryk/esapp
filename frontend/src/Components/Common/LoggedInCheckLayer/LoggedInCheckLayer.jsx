@@ -4,19 +4,19 @@ import DecryptingLayerContainer from "../DecryptingLayer/DecryptingLayerContaine
 import LoginPage from "./LoginPage/LoginPage";
 
 let LoggedInCheckLayer = ({isSignedIn}) => {
-	return isSignedIn
-		? <DecryptingLayerContainer/>
-		: <>
-			<Route
-				path="/login"
-				render={() => <LoginPage/>}
-			/>
-			<Redirect
-				to={{
-					pathname: "/login"
-				}}
-			/>
-		</>
+    return isSignedIn
+        ? <DecryptingLayerContainer/>
+        : <>
+            <Route
+                path="/login"
+                render={() => <LoginPage/>}
+            />
+            <Redirect
+                to={{
+                    pathname: "/login"
+                }}
+            />
+        </>
 }
 
 export default LoggedInCheckLayer;

@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {generateImageKey} from "../../../API/encryptingOperations";
+import server from "../../../API/DAL_API";
 
 const useStyle = makeStyles(() => ({
 	text: {
@@ -17,7 +18,7 @@ const useStyle = makeStyles(() => ({
 	}
 }));
 
-const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
+const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey, userToken}) => {
 	const canvas = useRef(null);
 	const classes = useStyle();
 	const [disabledButton, setDisabledButton] = useState(true);
@@ -37,17 +38,22 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 			setKeyImg(canvas.current.toDataURL())
 		}
 	}
-	const handleDownloadClick = () => {
-		localStorage.setItem("keyGenerated", key);
-		let element = document.createElement('a');
-		element.setAttribute('href', keyImg.toString());
-		element.setAttribute('download', "key");
-		element.style.display = 'none';
-		document.body.appendChild(element);
-		element.click();
-		document.body.removeChild(element);
-		setDisabledButton(true);
-		toggleKeyModal();
+	const handleSaveClick = () => {
+		server.performRegistration(userToken, salt).then(res => {
+            if (!res.isAxiosError) {
+                localStorage.setItem("keyGenerated", key);
+                let element = document.createElement('a');
+                element.setAttribute('href', keyImg.toString());
+                element.setAttribute('download', "key");
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+                setDisabledButton(true);
+                toggleKeyModal();
+            }
+        })
+
 	}
 
 	return <>
@@ -67,8 +73,8 @@ const GettingTheKeyModal = ({isShown, toggleKeyModal, salt, generateKey}) => {
 				</div>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleDownloadClick} color="primary" disabled={disabledButton}>
-					Download the key
+				<Button onClick={handleSaveClick} color="primary" disabled={disabledButton}>
+					Save the key
 				</Button>
 			</DialogActions>
 		</Dialog>

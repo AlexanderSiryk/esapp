@@ -40,7 +40,7 @@ const useStyles = (canvW, canvH) => makeStyles(() => ({
 }))
 
 let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, ...props}) => {
-    if (isFetching) props.fetchEntries();
+    if (isFetching) props.fetchEntries(props.userToken);
     const canvas = useRef(null);
     const [imageKey, setImageKey] = useState(null);
     const [fileDropping, setFileDropping] = useState(false);
