@@ -164,6 +164,7 @@ let DataTable = (props) => {
                     props.$key,
                     props.userToken,
                 ),
+
                 onRowUpdate: onTableRowUpdate(setState,
                     props.$key,
                     props.userToken,

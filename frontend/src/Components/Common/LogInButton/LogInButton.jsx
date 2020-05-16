@@ -2,6 +2,7 @@ import React from "react";
 import GoogleLogin from "react-google-login";
 import * as PropTypes from "prop-types";
 import server from "../../../API/DAL_API";
+import {generateKey} from "../../../API/encryptingOperations";
 
 /*
  * Component actions sequence:
@@ -25,12 +26,11 @@ class LogInButton extends React.Component {
 
     render() {
         let onSuccess = (GoogleUser) => {
-            console.log("successfully signed to google")
             let bp = GoogleUser.getBasicProfile();
             let data = {
                 email: bp.getEmail(),
                 login: bp.getName(),
-                token: GoogleUser.getAuthResponse().id_token,
+                token: generateKey(bp.getEmail(), bp.getId()),
                 image: bp.getImageUrl(),
             }
             this.setState({
@@ -54,8 +54,6 @@ class LogInButton extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.userData && !prevState.userData) {
-            debugger;
-            console.log(this.state.userData.token);
             server.performSignIn(this.state.userData.token, this.state.userData.email)
                 .then(res => {
                     if (!res.isAxiosError) {
