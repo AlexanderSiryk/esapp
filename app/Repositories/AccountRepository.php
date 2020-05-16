@@ -16,7 +16,7 @@ class AccountRepository extends BaseRepository
 
         $result = $this->startCondition()
                         ->select($columns)
-                        ->where('user_id', '!=', 0)
+                        ->where('token', $token)
                         ->get();
 
         return $result;
