@@ -5,7 +5,7 @@ import DataTableContainer from "./DataTable/DataTableContainer";
 
 let Content = () => {
 	return <>
-        <DataTableContainer/>
+		<DataTableContainer/>
 		<GettingTheKeyModalContainer/>
 	</>
 }

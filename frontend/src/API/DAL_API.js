@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const URL = "http://esapp/public/accounts";
+const URL = "http://cor/public/accounts";
 
 const server = {
     fetchPasswords() {
@@ -17,7 +17,7 @@ const server = {
             });
     },
     postPassword(obj) {
-        return axios.post(URL, obj)
+        return axios.post(URL, {...obj, token: 'v46g8thj65rthbdgnhyuk6'})
             .then(res => {
                 console.log("-========-");
                 console.log("post:");
@@ -30,7 +30,7 @@ const server = {
             });
     },
     deletePassword(id) {
-        return axios.delete(URL + `/${id}`, {data: id})
+        return axios.delete(URL + `/${id}`, {data: {id: id, token: 'v46g8thj65rthbdgnhyuk6'}})
             .then(res => {
                 console.log("-========-");
                 console.log("delete:");
@@ -43,7 +43,7 @@ const server = {
             });
     },
     editPassword(id, data) {
-        return axios.patch(URL + `/${id}`, data)
+        return axios.patch(URL + `/${id}`, {...data, token: 'v46g8thj65rthbdgnhyuk6'})
             .then(res => {
                 console.log("-========-");
                 console.log("edit:");
