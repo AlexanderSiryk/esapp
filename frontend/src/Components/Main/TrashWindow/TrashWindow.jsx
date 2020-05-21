@@ -4,7 +4,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-let Trash = () => {
+let TrashWindow = () => {
 	const classes = makeStyles((theme) => ({
 		offset: theme.mixins.toolbar,
 		container: {
@@ -26,4 +26,4 @@ let Trash = () => {
 	</div>
 }
 
-export default Trash;
+export default TrashWindow;

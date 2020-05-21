@@ -57,7 +57,7 @@ checkBrowsers(paths.appPath, isInteractive)
   })
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
-    // if you're in it, you don't end up in Trash
+    // if you're in it, you don't end up in TrashWindow
     fs.emptyDirSync(paths.appBuild);
     // Merge with the public folder
     copyPublicFolder();

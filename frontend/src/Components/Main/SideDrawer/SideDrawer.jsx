@@ -48,7 +48,7 @@ const NavList = ({toggleSidebar}) => {
 						<ListItemIcon>
 							<DeleteRoundedIcon/>
 						</ListItemIcon>
-						<ListItemText primary="Trash"/>
+						<ListItemText primary="TrashWindow"/>
 					</ListItem>
 				</NavLink>
 			</List>

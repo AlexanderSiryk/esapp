@@ -1,7 +1,7 @@
 import React from "react";
 import {Route} from "react-router-dom";
 import Content from "./Content/Content";
-import Trash from "./Trash/Trash";
+import TrashWindow from "./TrashWindow/TrashWindow";
 import HeadBarContainer from "./HeadBar/HeadBarContainer";
 import SideDrawerContainer from "./SideDrawer/SideDrawerContainer";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -23,7 +23,7 @@ let Main = () => {
 		/>
 		<Route
 			path="/trash"
-			render={() => <Trash/>}
+			render={() => <TrashWindow/>}
 		/>
 	</Box>
 }
