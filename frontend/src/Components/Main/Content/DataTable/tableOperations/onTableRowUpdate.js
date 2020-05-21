@@ -2,10 +2,14 @@ import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 import {encryptEntry} from "../../../../../API/encryptingOperations";
 
-function onTableRowUpdate(setState, key, token) {
+function onTableRowUpdate(setState, key, token, validationError) {
     if (!key || key.length !== 64) throw new Error("Key is undefined");
     if (!token) throw new Error("Token is undefined");
-    return (newData, oldData) => new Promise(resolve => {
+    return (newData, oldData) => new Promise((resolve, reject) => {
+        if (validationError) {
+            reject();
+            return;
+        }
         let objectsAreEqual = true;
         for (const prop in newData) {
             if (newData.hasOwnProperty(prop) &&

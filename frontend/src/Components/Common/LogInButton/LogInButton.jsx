@@ -65,6 +65,7 @@ class LogInButton extends React.Component {
                             case "create":
                                 this.props.setIsFirstSignIn(true);
                                 break;
+                            default: throw new Error("Unexpected server response");
                         }
                         this.setState({
                             ...this.state,

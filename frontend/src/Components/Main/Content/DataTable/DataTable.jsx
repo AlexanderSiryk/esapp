@@ -74,6 +74,10 @@ let DataTable = (props) => {
         tag: item.tag,
     }));
 
+    const [nameError, setNameError] = useState(false);
+    const [loginError, setLoginError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [tagError, setTagError] = useState(false);
     const [snackBarOpen, setSnackBarOpen] = useState(false);
     const [state, setState] = useState({
         columns: [
@@ -81,7 +85,13 @@ let DataTable = (props) => {
                 title: "Name",
                 field: "name",
                 filtering: false,
-                editComponent: props => <TableFieldInput {...props} useAutofocus={true}/>,
+                editComponent: props => <TableFieldInput
+                    {...props}
+                    useAutofocus={true}
+                    type="name"
+                    validationError={nameError}
+                    setValidationError={setNameError}
+                />,
                 cellStyle: {cursor: "default"},
                 customSort: sortFunc("name"),
             },
@@ -89,7 +99,12 @@ let DataTable = (props) => {
                 title: "Login",
                 field: "login",
                 filtering: false,
-                editComponent: TableFieldInput,
+                editComponent: props => <TableFieldInput
+                    {...props}
+                    type="login"
+                    validationError={loginError}
+                    setValidationError={setLoginError}
+                />,
                 cellStyle: {cursor: "default", paddingLeft: 8, flexWrap: "wrap"},
                 render: props => <CellItem copyFunc={copyFunc} field={props.login}/>,
                 customSort: sortFunc("login"),
@@ -99,7 +114,11 @@ let DataTable = (props) => {
                 field: "password",
                 filtering: false,
                 sorting: false,
-                editComponent: TablePasswordInput,
+                editComponent: props => <TablePasswordInput
+                    {...props}
+                    validationError={passwordError}
+                    setValidationError={setPasswordError}
+                />,
                 cellStyle: {cursor: "default", paddingLeft: 8},
                 render: props => <CellItem hiddenText copyFunc={copyFunc} field={props.password}/>,
             },
@@ -107,7 +126,11 @@ let DataTable = (props) => {
                 title: "Tag",
                 field: "tag",
                 lookup: tableLookup,
-                editComponent: LookupAutocompleteInput,
+                editComponent: props => <LookupAutocompleteInput
+                    {...props}
+                    validationError={tagError}
+                    setValidationError={setTagError}
+                />,
                 cellStyle: {cursor: "default"},
                 customSort: sortFunc("tag"),
             },
@@ -163,11 +186,13 @@ let DataTable = (props) => {
                 onRowAdd: onTableRowAdd(setState,
                     props.$key,
                     props.userToken,
+                    nameError || loginError || passwordError || tagError,
                 ),
 
                 onRowUpdate: onTableRowUpdate(setState,
                     props.$key,
                     props.userToken,
+                    nameError || loginError || passwordError || tagError,
                 ),
                 onRowDelete: onTableRowDelete(setState,
                     props.userToken,
