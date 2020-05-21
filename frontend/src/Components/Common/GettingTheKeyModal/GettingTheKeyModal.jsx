@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
 
 const GettingTheKeyModal = ({
                                 isShown, toggleKeyModal, generateSalt, setKey,
-                                generateKey, userToken, generateImageKey
+                                generateKey, userToken, generateImageKey, userEmail,
                             }) => {
     const canvas = useRef(null);
     const classes = useStyle();
@@ -44,7 +44,7 @@ const GettingTheKeyModal = ({
     const handleSaveClick = () => {
         server.performRegistration(userToken, salt).then(res => {
             if (!res.isAxiosError) {
-                localStorage.setItem("key", $key.toString());
+                localStorage.setItem(`${userEmail}_key`, $key.toString());
                 setKey($key);
                 let element = document.createElement('a');
                 element.setAttribute('href', keyImg.toString());

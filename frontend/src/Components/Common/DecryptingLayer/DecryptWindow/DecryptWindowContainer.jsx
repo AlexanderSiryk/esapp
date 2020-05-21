@@ -7,7 +7,7 @@ import {
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {
     getFetchError,
-    getIsFetching, getTableEntries,
+    getIsFetching, getTableEntries, getUserEmail,
     getUserToken
 } from "../../../../Redux/Selectors/layersSelectors";
 
@@ -17,6 +17,7 @@ let mapStateToProps = (state) => ({
     fetchError: getFetchError(state),
     calcKey: calcKey,
     getImage: getImage,
+    userEmail: getUserEmail(state),
     userToken: getUserToken(state),
 });
 

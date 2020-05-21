@@ -62,8 +62,8 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
     }
 
     useEffect(() => {
-        if (localStorage.getItem("key") && tableEntries) {
-            const key = localStorage.getItem("key");
+        const key = localStorage.getItem(`${props.userEmail}_key`);
+        if (localStorage.getItem(`${props.userEmail}_key`) && tableEntries) {
             props.setKey(key);
             props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
             props.setIsDecrypted(true);
@@ -81,7 +81,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                     ctx.drawImage(img, 0, 0);
                     let mgData = ctx.getImageData(0, 0, img.width, img.height);
                     const key = calcKey(mgData.data);
-                    localStorage.setItem("key", key);
+                    localStorage.setItem(`${props.userEmail}_key`, key);
                     props.setKey(key);
                     setImageKey(null);
                     props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
