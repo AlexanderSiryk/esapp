@@ -60,7 +60,7 @@ const clsTheme = makeStyles((theme) => ({
 
 let DataTable = (props) => {
     const classes = clsTheme();
-    let tableEntries = {...props.tableEntries};
+    let tableEntries = props.tableEntries;
     let tags = props.tags;
     let tableLookup = {};
     for (let i = 0; i < tags.length; i++) {

@@ -1,16 +1,16 @@
 import {connect} from "react-redux";
 import DecryptingLayer from "./DecryptingLayer";
 import {getFirstSignIn, getIsDecrypted} from "../../../Redux/Selectors/layersSelectors";
-import {setTableEntries, toggleKeyModal} from "../../../Redux/contentReducer";
+import {setTableEntries, toggleKeyModal} from "../../../Redux/layersReducer";
 
 let mapStateToProps = (state) => ({
-	isDecrypted: getIsDecrypted(state),
-	firstSignIn: getFirstSignIn(state),
+    isDecrypted: getIsDecrypted(state),
+    firstSignIn: getFirstSignIn(state),
 });
 
 let DecryptingLayerContainer = connect(mapStateToProps, {
-	toggleKeyModal,
-	setTableEntries,
+    toggleKeyModal,
+    setTableEntries,
 })(DecryptingLayer);
 
 export default DecryptingLayerContainer;

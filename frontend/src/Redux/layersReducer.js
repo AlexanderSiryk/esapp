@@ -1,5 +1,4 @@
 import server from "../API/DAL_API";
-import {setTableEntries} from "./contentReducer";
 
 const SET_IS_SIGNED_IN = "SET_IS_SIGNED_IN";
 const SET_USER_DATA = "SET_USER_DATA";
@@ -9,13 +8,18 @@ const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_KEY = "SET_KEY";
 const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 const SET_IS_FIRST_SIGN_IN = "SET_IS_FIRST_SIGN_IN";
+const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
+const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
+const TOGGLE_GETTING_KEY_MODAL = "TOGGLE_GETTING_KEY_MODAL";
 
 const initialState = {
+    tableEntries: null,
     isDecrypted: false,
     isSignedIn: false,
     isFetching: true,
     firstSignIn: true,
     fetchError: false,
+    getKeyWindowShown: false,
     userEmail: null,
     userLogin: null,
     userToken: null,
@@ -26,6 +30,21 @@ const initialState = {
 
 let layersReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_TABLE_ENTRIES:
+            return {
+                ...state,
+                tableEntries: action.tableEntries,
+            }
+        case SET_DECRYPTED_TABLE_ENTRIES:
+            return {
+                ...state,
+                tableEntries: [...action.tableEntries],
+            }
+        case TOGGLE_GETTING_KEY_MODAL:
+            return {
+                ...state,
+                getKeyWindowShown: !state.getKeyWindowShown,
+            }
         case SET_IS_SIGNED_IN:
             return {
                 ...state,
@@ -101,6 +120,18 @@ export const setIsFirstSignIn = (isFirstSignIn) => ({
     type: SET_IS_FIRST_SIGN_IN,
     isFirstSignIn,
 });
+export const setDecryptedTableEntries = (tableEntries) => ({
+    type: SET_DECRYPTED_TABLE_ENTRIES,
+    tableEntries,
+});
+export const setTableEntries = (tableEntries) => ({
+    type: SET_TABLE_ENTRIES,
+    tableEntries,
+});
+export const toggleKeyModal = () => ({
+    type: TOGGLE_GETTING_KEY_MODAL,
+});
+
 export const fetchEntries = (token) => (dispatch) => {
     server.fetchPasswords(token)
         .then((response) => {
