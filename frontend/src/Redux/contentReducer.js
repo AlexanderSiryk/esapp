@@ -1,27 +1,15 @@
-const TOGGLE_EDIT_WINDOW = "TOGGLE_EDIT_WINDOW";
 const RESET_CONTENT = "RESET_CONTENT";
 const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
 const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
-const TOGGLE_GETTING_KEY_MODAL = "const TOGGLE_GETTING_KEY_MODAL";
+const TOGGLE_GETTING_KEY_MODAL = "TOGGLE_GETTING_KEY_MODAL";
 
 const initialState = {
-    editingEntryId: null,
-    searchBarText: "",
-    tagSelected: "blank",
-    tableEntries: null,
-    addWindowShown: false,
-    editWindowShown: false,
+    tableEntries: [{name: "a", login: "b", password: "c", tag: "d"}],
     getKeyWindowShown: false,
 }
 
 let contentReducer = (state = initialState, action) => {
     switch (action.type) {
-        case TOGGLE_EDIT_WINDOW:
-            return {
-                ...state,
-                editWindowShown: !state.editWindowShown,
-                editingEntryId: action.editingEntryId,
-            }
         case SET_TABLE_ENTRIES:
             return {
                 ...state,
@@ -44,10 +32,6 @@ let contentReducer = (state = initialState, action) => {
     }
 }
 
-export const toggleEditWindow = (editingEntryId) => ({
-    type: TOGGLE_EDIT_WINDOW,
-    editingEntryId,
-});
 export const resetContent = () => ({
     type: RESET_CONTENT,
 });

@@ -1,18 +1,15 @@
 import {connect} from "react-redux";
 import DataTable from "./DataTable";
-import {getFilteredTable, getUniqueTags} from "../../../../Redux/Selectors/contentSelectors";
-import {toggleEditWindow} from "../../../../Redux/contentReducer";
+import {getTableEntries, getUniqueTags} from "../../../../Redux/Selectors/contentSelectors";
 import {getKey, getUserToken} from "../../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
-	filteredTableEntries: getFilteredTable(state),
+	tableEntries: getTableEntries(state),
 	tags: getUniqueTags(state),
     $key: getKey(state),
     userToken: getUserToken(state),
 });
 
-let DataTableContainer = connect(mapStateToProps, {
-	toggleEditWindow,
-})(DataTable);
+let DataTableContainer = connect(mapStateToProps, {})(DataTable);
 
 export default DataTableContainer;
