@@ -40,8 +40,9 @@ class LogInButton extends React.Component {
             });
         }
         let onFailure = (response) => {
+            alert("Failure signing in via Google");
             console.dir(response);
-            alert("Failure");
+            throw new Error("Failure signing in via Google");
         }
         return <GoogleLogin
             clientId={this.props.clientId}
@@ -69,6 +70,9 @@ class LogInButton extends React.Component {
                             ...this.state,
                             serverDidResponse: true,
                         });
+                    } else {
+                        alert("Failure signing in");
+                        throw new Error("Failure signing in");
                     }
                 });
         }

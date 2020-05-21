@@ -3,6 +3,8 @@ import server from "../../../../../API/DAL_API";
 import {encryptEntry} from "../../../../../API/encryptingOperations";
 
 function onTableRowUpdate(setState, key, token) {
+    if (!key || key.length !== 64) throw new Error("Key is undefined");
+    if (!token) throw new Error("Token is undefined");
     return (newData, oldData) => new Promise(resolve => {
         let objectsAreEqual = true;
         for (const prop in newData) {

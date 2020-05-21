@@ -2,6 +2,7 @@ import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 
 function onTableRowDelete(setState, token) {
+    if (!token) throw new Error("Token is undefined");
     return (oldData) => new Promise(resolve => {
         server.deletePassword(oldData.id, token)
             .then(res => {
