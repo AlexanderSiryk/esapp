@@ -11,6 +11,7 @@ const SET_IS_FIRST_SIGN_IN = "SET_IS_FIRST_SIGN_IN";
 const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
 const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
 const TOGGLE_GETTING_KEY_MODAL = "TOGGLE_GETTING_KEY_MODAL";
+const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 
 const initialState = {
     tableEntries: null,
@@ -26,6 +27,7 @@ const initialState = {
     userImageURL: null,
     key: null,
     salt: null,
+    isSidebarShown: false,
 }
 
 let layersReducer = (state = initialState, action) => {
@@ -83,6 +85,11 @@ let layersReducer = (state = initialState, action) => {
                 ...state,
                 firstSignIn: action.isFirstSignIn,
             }
+        case TOGGLE_SIDEBAR:
+            return {
+                ...state,
+                isSidebarShown: !state.isSidebarShown,
+            }
         case RESET_LAYERS:
             return {...initialState}
         default:
@@ -130,6 +137,9 @@ export const setTableEntries = (tableEntries) => ({
 });
 export const toggleKeyModal = () => ({
     type: TOGGLE_GETTING_KEY_MODAL,
+});
+export const toggleSidebar = () => ({
+    type: TOGGLE_SIDEBAR,
 });
 
 export const fetchEntries = (token) => (dispatch) => {

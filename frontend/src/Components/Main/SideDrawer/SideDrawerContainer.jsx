@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import SideDrawer from "./SideDrawer";
-import {toggleSidebar} from "../../../Redux/sidebarReducer";
-import {getIsSidebarShown} from "../../../Redux/Selectors/sidebarSelectors";
+import {toggleSidebar} from "../../../Redux/layersReducer";
+import {getIsSidebarShown} from "../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
 	isSidebarShown: getIsSidebarShown(state),

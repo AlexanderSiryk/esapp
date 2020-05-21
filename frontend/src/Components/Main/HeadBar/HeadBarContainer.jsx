@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
-import {toggleSidebar} from "../../../Redux/sidebarReducer";
 import HeadBar from "./HeadBar";
 import {getUserEmail, getUserImageURL, getUserLogin} from "../../../Redux/Selectors/layersSelectors";
+import {toggleSidebar} from "../../../Redux/layersReducer";
 
 let mapStateToProps = (state) => ({
     userImageURL: getUserImageURL(state),

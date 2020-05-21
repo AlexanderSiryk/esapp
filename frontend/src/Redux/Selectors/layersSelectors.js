@@ -12,6 +12,7 @@ export const getFetchError = state => state.layers.fetchError;
 export const getFirstSignIn = state => state.layers.firstSignIn;
 export const getTableEntries = state => state.layers.tableEntries;
 export const getIsKeyWindowShown = state => state.layers.getKeyWindowShown;
+export const getIsSidebarShown = state => state.layers.isSidebarShown;
 export const getUniqueTags = createSelector(
     getTableEntries,
     (table) => {
