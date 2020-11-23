@@ -17,7 +17,9 @@ class UserRepository extends BaseRepository
         $result = $this->startCondition()
             ->select()
             ->where('token' , $token)
-            ->get();
+            ->limit(1)
+            ->first();
+        if (!$result) throw  new \Exception('User not found');
 
         return $result;
     }
@@ -44,7 +46,10 @@ class UserRepository extends BaseRepository
     {
         $result = $this->startCondition()
                         ->where('token', $token)
+                        ->limit(1)
                         ->first();
+
+        if(!$result) throw new \Exception('User not found');
 
         return $result;
     }
@@ -55,10 +60,10 @@ class UserRepository extends BaseRepository
         $result = $this->startCondition()
             ->select($columns)
             ->where('token', $token)
-            ->first()
-            ->id;
+            ->first();
 
-        return $result;
+        if(!$result) throw new \Exception('User not found');
+        return $result->id;
     }
 
 

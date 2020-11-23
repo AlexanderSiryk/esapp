@@ -27,27 +27,23 @@ class LogController extends BaseController
      */
     public function auth(Request $request)
     {
-
-        $user = $this->userRepository->getUser($request->token);
-
-        if(count($user) != 0){
-
+        try {
+            $this->userRepository->getUser($request->token);
             return response(['log' => 'login']);
-        }
-        else{
-            $user = $this->userRepository->regUser($request);
+        } catch (\Exception $e){
+            $this->userRepository->regUser($request);
             return response(['log' => 'create']);
         }
     }
 
     public function salt(Request $request)
     {
+        try{
 
-        $user = $this->userRepository->getForUpdate($request->token);
-
-        if(empty($user)){
+        }catch (\Exception $e){
             return response(['error' => 'user not found']);
         }
+        $user = $this->userRepository->getForUpdate($request->token);
 
         $data = $request->all();
 

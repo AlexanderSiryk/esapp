@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\BaseController;
-use App\Models\Account;
 use App\Repositories\AccountRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class AccountController extends BaseController
 {
@@ -27,137 +25,80 @@ class AccountController extends BaseController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a list of users accounts.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $user_id = $this->userRepository->getIdByToken($request->token);
-        $accounts = $this->accountRepository->getAllAccounts($user_id);
-        if($accounts) {
+        try {
+            $userId = $this->userRepository->getIdByToken($request->token);
+            $accounts = $this->accountRepository->getAllAccounts($userId);
             return response()->json($accounts->toArray());
+        } catch (\Exception $e) {
+            return response()->json([]);
         }
-        else{
-            return response()->json(['accounts' => null]);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $account = $this->accountRepository->getAccountForEdit($id,Cookie::get('token'));
-
-        return response()->json($account->toArray());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return
      */
     public function update(Request $request, $id)
     {
-        $account = $this->accountRepository->getForUpdate($id);
+        try {
+            $userId = $this->userRepository->getIdByToken($request->token);
+            $result = $this->accountRepository->updateAccount($request->all(),$userId, $id);
 
-        $user_id = $this->userRepository->getIdByToken($request->token);
-
-        if(empty($account) || $user_id != $account->user_id ){
-            return back()->withErrors('error','error');
+            $result = $account
+                ->fill($data)
+                ->save();
+            return ['update' => $result];
+        } catch (\Exception $e) {
+            return ['Error' => $e->getMessage()];
         }
-
-
-        $data = $request->all();
-
-        $result = $account
-                    ->fill($data)
-                    ->save();
-
-        if($result){
-            return response(['update' => true]);
-        }
-        else{
-            return response(['update' => false]);
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
 
     public function store(Request $request)
     {
-        $user_id = $this->userRepository->getIdByToken($request->token);
-
-        $account = new Account();
-        $account->name = $request->name;
-        $account->login = $request->login;
-        $account->password = $request->password;
-        $account->tag = $request->tag;
-        $account->user_id = $user_id;
-        $account->save();
-
-        if($account){
+        try {
+            $userId = $this->userRepository->getIdByToken($request->token);
+            $account = $this->accountRepository->createAccount($request->all(), $userId);
             return response()->json(['id' => $account->id]);
-        }
-        else{
-            return response()->json(['create' => false]);
+        } catch (\Exception $e) {
+            return ['Error' => $e->getMessage()];
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @param \http\Env\Request $request
+     * @return
      */
     public function destroy(Request $request, $id)
     {
-
-        $account = Account::findOrFail($id);
-        $user_id = $this->userRepository->getIdByToken($request->token);
-
-        if($account->user_id == $user_id){
+        try {
+            $userId = $this->userRepository->getIdByToken($request->token);
+            $account = $this->accountRepository->getForUpdate($id, $userId);
             $account = $account->delete();
-        }
 
-
-        if($account === true){
-            return response()->json(['delete' => true]);
-        }else{
-            return response()->json(['delete' => false]);
+            return response()->json(['delete' => $account]);
+        } catch (\Exception $e) {
+            return response()->json(['Error: ' => $e->getMessage()]);
         }
     }
 }

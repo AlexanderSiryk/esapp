@@ -13,6 +13,10 @@ class Account extends Model
         'name',
         'login',
         'password',
-        'tag'
+        'tag_id'
     ];
+
+    public function tags(){
+        return $this->hasMany(Tag::class, 'id','tag_id');
+    }
 }

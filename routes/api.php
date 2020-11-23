@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+//Route::get('/', function () {
+//    return view('app');
+//});
+
+
+Route::resource('accounts', 'App\AccountController');
+
+Route::post('log', 'App\LogController@auth');
+Route::post('log/salt', 'App\LogController@salt');
