@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Account;
 use App\Models\Account as Model;
 
 class AccountRepository extends BaseRepository
@@ -87,6 +88,21 @@ class AccountRepository extends BaseRepository
         $account->save();
 
         return $account;
+    }
+
+
+    public function setToAccount($delAccount)
+    {
+        $account = new Account();
+        $account->id = $delAccount->id;
+        $account->name = $delAccount->name;
+        $account->login = $delAccount->login;
+        $account->password = $delAccount->password;
+        $account->tag_id = $delAccount->tag_id;
+        $account->user_id = $delAccount->user_id;
+
+
+        return $account->save();
     }
 
 }

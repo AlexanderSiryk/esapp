@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\BaseController;
+use App\Repositories\AddRepository;
 use App\Repositories\UserRepository;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,10 +29,12 @@ class LogController extends BaseController
     public function auth(Request $request)
     {
         try {
-            $this->userRepository->getUser($request->token);
+            $user = $this->userRepository->getUser($request->token);
+            AddRepository::setEnter($user->id);
             return response(['log' => 'login']);
         } catch (\Exception $e){
-            $this->userRepository->regUser($request);
+            $user = $this->userRepository->regUser($request);
+            AddRepository::setEnter($user->id);
             return response(['log' => 'create']);
         }
     }

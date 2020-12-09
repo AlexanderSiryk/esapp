@@ -24,7 +24,22 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::resource('accounts', 'App\AccountController');
+Route::get('init','App\AppController@init');
+
+
+//Route::resource('accounts', 'App\AccountController');
+
+Route::get('accounts', 'App\AccountController@index');
+Route::post('accounts', 'App\AccountController@store');
+Route::delete('accounts/{account}', 'App\AccountController@destroy');
+Route::put('accounts/{account}', 'App\AccountController@update');
+
+
+Route::get('accounts/del', 'App\DelAccountController@index');
+Route::post('accounts/del/{account}', 'App\DelAccountController@restore');
+Route::post('accounts/del', 'App\DelAccountController@restore');
+Route::delete('accounts/del/{account}', 'App\DelAccountController@destroy');
+
 
 Route::post('log', 'App\LogController@auth');
 Route::post('log/salt', 'App\LogController@salt');

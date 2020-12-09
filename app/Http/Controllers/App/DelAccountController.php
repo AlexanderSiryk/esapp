@@ -8,10 +8,10 @@ use App\Repositories\DelAccountRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
-class AccountController extends BaseController
+class DelAccountController extends BaseController
 {
     /**
-     * @var AccountRepository
+     * @var DelAccountRepository
      */
     public $accountRepository;
     /**
@@ -21,7 +21,7 @@ class AccountController extends BaseController
 
     public function __construct()
     {
-        $this->accountRepository = app(AccountRepository::class);
+        $this->accountRepository = app(DelAccountRepository::class);
         $this->userRepository = app(UserRepository::class);
     }
 
@@ -37,28 +37,10 @@ class AccountController extends BaseController
             $accounts = $this->accountRepository->getAllAccounts($userId);
             return response()->json($accounts->toArray());
         } catch (\Exception $e) {
-            return response()->json([]);
+            return response()->json(['Error: ' => $e->getMessage()]);
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return
-     */
-    public function update(Request $request, $id)
-    {
-        try {
-            $userId = $this->userRepository->getIdByToken($request->token);
-            $result = $this->accountRepository->updateAccount($request->all(),$userId, $id);
-
-            return ['update' => $result];
-        } catch (\Exception $e) {
-            return ['Error' => $e->getMessage()];
-        }
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -67,13 +49,18 @@ class AccountController extends BaseController
      * @return \Illuminate\Http\Response
      */
 
-
-    public function store(Request $request)
+    public function restore(Request $request,$account)
     {
         try {
+            $accRep = new AccountRepository();
+
             $userId = $this->userRepository->getIdByToken($request->token);
-            $account = $this->accountRepository->createAccount($request->all(), $userId);
-            return response()->json(['id' => $account->id]);
+            $delAccount = $this->accountRepository->getForDelete($account, $userId);
+
+            $remove = $accRep->setToAccount($delAccount);
+            if($remove) $delAccount->delete();
+
+            return response()->json(['id' => $delAccount->id]);
         } catch (\Exception $e) {
             return ['Error' => $e->getMessage()];
         }
@@ -87,21 +74,16 @@ class AccountController extends BaseController
      * @param \http\Env\Request $request
      * @return
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $account)
     {
         try {
-            $delAccRep = new DelAccountRepository();
-
             $userId = $this->userRepository->getIdByToken($request->token);
-            $account = $this->accountRepository->getForUpdate($id, $userId);
+            $account = $this->accountRepository->getForDelete($account, $userId);
+            $account = $account->delete();
 
-            $remove = $delAccRep->setDelAccount($account);
-            if ($remove) $account = $account->delete();
-
-            return response()->json(['delete' => 'The record moved to trash']);
+            return response()->json(['delete' => $account]);
         } catch (\Exception $e) {
             return response()->json(['Error: ' => $e->getMessage()]);
         }
     }
-
 }

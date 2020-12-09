@@ -33,12 +33,12 @@ class UserRepository extends BaseRepository
         $user->name = $data->name;
         $user->token = $data->token;
         $user->salt = 'Not defined';
-        $user->save();
+        $save = $user->save();
 
-        if($user){
-            return true;
+        if($save){
+            return $user;
         }
-        return false;
+        throw new \Exception('upssss......');
     }
 
 
