@@ -27,8 +27,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('init','App\AppController@init');
 
 
-//Route::resource('accounts', 'App\AccountController');
-
 Route::get('accounts', 'App\AccountController@index');
 Route::post('accounts', 'App\AccountController@store');
 Route::delete('accounts/{account}', 'App\AccountController@destroy');
