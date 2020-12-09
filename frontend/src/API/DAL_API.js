@@ -10,10 +10,10 @@ function getLocation() {
 
             axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=4f629fce7fa14bce932b8300b27e353b`)
                 .then(response => {
-                    const localtime = response.data.timestamp.created_http;
+                    const date = new Date();
                     const components = response.data.results[0].components;
                     resolve({
-                        localtime,
+                        localtime: date.toISOString(),
                         location: `${components.continent}, ${components.country}, ${components.city}`,
                     });
                 })
@@ -21,7 +21,7 @@ function getLocation() {
             const date = new Date();
             resolve({
                 timezone: "unknown",
-                localtime: date.toGMTString() || "unknown",
+                localtime: date.toISOString() || "unknown",
                 location: "unknown",
             });
         })
