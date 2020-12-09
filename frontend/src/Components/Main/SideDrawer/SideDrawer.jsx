@@ -43,12 +43,20 @@ const NavList = ({toggleSidebar}) => {
 						<ListItemText primary="Content"/>
 					</ListItem>
 				</NavLink>
+                <NavLink to="visits" className={classes.item}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <DeleteRoundedIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Visits"/>
+                    </ListItem>
+                </NavLink>
 				<NavLink to="trash" className={classes.item}>
 					<ListItem button>
 						<ListItemIcon>
 							<DeleteRoundedIcon/>
 						</ListItemIcon>
-						<ListItemText primary="TrashWindow"/>
+						<ListItemText primary="Trash"/>
 					</ListItem>
 				</NavLink>
 			</List>
