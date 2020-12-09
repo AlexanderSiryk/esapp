@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\BaseController;
 use App\Repositories\AccountRepository;
+use App\Repositories\DelAccountRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
@@ -53,9 +54,6 @@ class AccountController extends BaseController
             $userId = $this->userRepository->getIdByToken($request->token);
             $result = $this->accountRepository->updateAccount($request->all(),$userId, $id);
 
-            $result = $account
-                ->fill($data)
-                ->save();
             return ['update' => $result];
         } catch (\Exception $e) {
             return ['Error' => $e->getMessage()];
@@ -92,13 +90,18 @@ class AccountController extends BaseController
     public function destroy(Request $request, $id)
     {
         try {
+            $delAccRep = new DelAccountRepository();
+
             $userId = $this->userRepository->getIdByToken($request->token);
             $account = $this->accountRepository->getForUpdate($id, $userId);
-            $account = $account->delete();
 
-            return response()->json(['delete' => $account]);
+            $remove = $delAccRep->setDelAccount($account);
+            if ($remove) $account = $account->delete();
+
+            return response()->json(['delete' => 'The record moved to trash']);
         } catch (\Exception $e) {
             return response()->json(['Error: ' => $e->getMessage()]);
         }
     }
+
 }
