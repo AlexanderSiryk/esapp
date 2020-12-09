@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const URL = "http://esapp/public";
+const URL = "http://127.0.0.1:8000/api";
 
 const server = {
     fetchPasswords(token) {
@@ -27,7 +27,7 @@ const server = {
             .catch(error => error);
     },
     editPassword(id, data) {
-        return axios.patch(`${URL}/accounts/${id}`, data)
+        return axios.put(`${URL}/accounts/${id}`, data)
             .then(res => res)
             .catch(error => error);
     },
