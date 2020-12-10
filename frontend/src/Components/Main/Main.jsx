@@ -5,8 +5,8 @@ import HeadBarContainer from "./HeadBar/HeadBarContainer";
 import SideDrawerContainer from "./SideDrawer/SideDrawerContainer";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
-import VisitsWindow from "./VisitsWindow/VisitsWindow";
 import TrashWindowContainer from "./TrashWindow/TrashWindowContainer";
+import VisitsWindowContainer from "./VisitsWindow/VisitsWindowContainer";
 
 
 let Main = () => {
@@ -24,7 +24,7 @@ let Main = () => {
 		/>
 		<Route
 			path="/visits"
-			render={() => <VisitsWindow/>}
+			render={() => <VisitsWindowContainer/>}
 		/>
 		<Route
 			path="/trash"

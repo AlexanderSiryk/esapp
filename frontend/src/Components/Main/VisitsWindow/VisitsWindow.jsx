@@ -19,19 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function createData(location, localtime) {
-    return {location, localtime};
-}
-
-const rows = [
-    createData("Ukraine", new Date().toISOString() ),
-    createData("Sweden", new Date().toISOString() ),
-    createData("Greece", new Date().toISOString() ),
-    createData("Poland", new Date().toISOString() ),
-    createData("USA", new Date().toISOString() ),
-];
-
-export default function VisitsWindow() {
+export default function VisitsWindow(props) {
     const classes = useStyles();
 
     return <div className={classes.container}>
@@ -44,8 +32,8 @@ export default function VisitsWindow() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.localtime + Math.random()}>
+                    {props.visits.map((row) => (
+                        <TableRow key={row.localtime}>
                             <TableCell align="left">{row.location}</TableCell>
                             <TableCell align="left">{new Date(row.localtime).toLocaleString()}</TableCell>
                         </TableRow>

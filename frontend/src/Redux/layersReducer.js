@@ -23,6 +23,7 @@ const DELETE_TABLE_ENTRY = "DELETE_TABLE_ENTRY";
 const initialState = {
     tableEntries: null,
     deletedTableEntries: null,
+    visits: null,
     isDecrypted: false,
     isSignedIn: false,
     firstSignIn: true,
@@ -99,6 +100,7 @@ let layersReducer = (state = initialState, action) => {
                 ...state,
                 tableEntries: action.tableEntries,
                 deletedTableEntries: action.deletedTableEntries,
+                visits: action.visits,
             };
         case SET_DELETED_TABLE_ENTRIES:
             return {
@@ -233,10 +235,11 @@ export const addToDeletedEntries = (entry) => ({
     type: ADD_TO_DELETED_ENTRIES,
     entry,
 });
-export const setAllEntries = (tableEntries, deletedTableEntries) => ({
+export const setAllEntries = (tableEntries, deletedTableEntries, visits) => ({
     type: SET_ALL_ENTRIES,
     tableEntries,
     deletedTableEntries,
+    visits,
 });
 
 export const init = (token) => (dispatch) => {
@@ -244,7 +247,7 @@ export const init = (token) => (dispatch) => {
         .then((response) => {
             dispatch(setIsFetching(false));
             if (!response.isAxiosError) {
-                dispatch(setAllEntries(response.data.accounts, response.data.delAccounts));
+                dispatch(setAllEntries(response.data.accounts, response.data.delAccounts, response.data.entrances));
             } else {
                 dispatch(setFetchError());
             }
