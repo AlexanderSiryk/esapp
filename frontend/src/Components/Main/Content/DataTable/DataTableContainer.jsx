@@ -5,6 +5,8 @@ import {
     getUniqueTags, getUserToken
 } from "../../../../Redux/Selectors/layersSelectors";
 
+import {addTableEntry, updateTableEntry, deleteTableEntry} from "../../../../Redux/layersReducer"
+
 let mapStateToProps = (state) => ({
     tableEntries: getTableEntries(state),
     tags: getUniqueTags(state),
@@ -12,6 +14,10 @@ let mapStateToProps = (state) => ({
     userToken: getUserToken(state),
 });
 
-let DataTableContainer = connect(mapStateToProps, {})(DataTable);
+let DataTableContainer = connect(mapStateToProps, {
+    addTableEntry,
+    updateTableEntry,
+    deleteTableEntry,
+})(DataTable);
 
 export default DataTableContainer;

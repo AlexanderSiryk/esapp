@@ -8,11 +8,17 @@ const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_KEY = "SET_KEY";
 const SET_FETCH_ERROR = "SET_FETCH_ERROR";
 const SET_IS_FIRST_SIGN_IN = "SET_IS_FIRST_SIGN_IN";
-const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
 const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
 const TOGGLE_GETTING_KEY_MODAL = "TOGGLE_GETTING_KEY_MODAL";
 const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 const SET_DELETED_TABLE_ENTRIES = "SET_DELETED_TABLE_ENTRIES";
+const REMOVE_DELETED_TABLE_ENTRY = "REMOVE_DELETED_TABLE_ENTRY";
+const RESTORE_DELETED_TABLE_ENTRY = "RESTORE_DELETED_TABLE_ENTRY";
+const ADD_TO_DELETED_ENTRIES = "ADD_TO_DELETED_ENTRIES";
+const SET_ALL_ENTRIES = "SET_ALL_ENTRIES";
+const ADD_TABLE_ENTRY = "ADD_TABLE_ENTRY";
+const UPDATE_TABLE_ENTRY = "UPDATE_TABLE_ENTRY";
+const DELETE_TABLE_ENTRY = "DELETE_TABLE_ENTRY";
 
 const initialState = {
     tableEntries: null,
@@ -30,30 +36,90 @@ const initialState = {
     key: null,
     salt: null,
     isSidebarShown: false,
-}
+};
 
 let layersReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ADD_TABLE_ENTRY:
+            return {
+                ...state,
+                tableEntries: [action.entry, ...state.tableEntries],
+            };
+        case UPDATE_TABLE_ENTRY:
+            const uEntries = state.tableEntries.map(item => {
+                if (item.id === action.entry.id) {
+                    return action.entry;
+                }
+
+                return item;
+            });
+            return {
+                ...state,
+                tableEntries: uEntries,
+            };
+        case DELETE_TABLE_ENTRY:
+            let deletedItem;
+            const dEntries = state.tableEntries.filter(item => {
+                if (item.id === action.id) {
+                    deletedItem = item;
+                }
+
+                return item.id !== action.id;
+            });
+            return deletedItem
+                ? {
+                    ...state,
+                    tableEntries: dEntries,
+                    deletedTableEntries: [deletedItem, ...state.deletedTableEntries],
+                }
+                : {
+                    ...state,
+                    tableEntries: dEntries,
+                };
+        case ADD_TO_DELETED_ENTRIES:
+            return {
+                ...state,
+                deletedTableEntries: [action.entry, ...state.deletedTableEntries],
+            };
+        case RESTORE_DELETED_TABLE_ENTRY:
+            let newEntries = state.deletedTableEntries.filter(entry => entry.id !== action.id);
+            return {
+                ...state,
+                tableEntries: [action.entry, ...state.tableEntries],
+                deletedTableEntries: newEntries,
+            };
+        case REMOVE_DELETED_TABLE_ENTRY:
+            let newEntries2 = state.deletedTableEntries.filter(entry => entry.id !== action.id);
+            return {
+                ...state,
+                deletedTableEntries: newEntries2,
+            };
+        case SET_ALL_ENTRIES:
+            return {
+                ...state,
+                tableEntries: action.tableEntries,
+                deletedTableEntries: action.deletedTableEntries,
+            };
+        case SET_DELETED_TABLE_ENTRIES:
+            return {
+                ...state,
+                deletedTableEntries: action.deletedTableEntries,
+            };
         case SET_TABLE_ENTRIES:
             return {
                 ...state,
                 tableEntries: action.tableEntries,
-            }
-        case SET_DECRYPTED_TABLE_ENTRIES:
-            return {
-                ...state,
-                tableEntries: [...action.tableEntries],
-            }
+            };
         case TOGGLE_GETTING_KEY_MODAL:
             return {
                 ...state,
                 getKeyWindowShown: !state.getKeyWindowShown,
-            }
+            };
         case SET_IS_SIGNED_IN:
             return {
                 ...state,
                 isSignedIn: action.isSignedIn,
-            }
+            };
         case SET_USER_DATA:
             return {
                 ...state,
@@ -61,43 +127,43 @@ let layersReducer = (state = initialState, action) => {
                 userLogin: action.data.login,
                 userToken: action.data.token,
                 userImageURL: action.data.image,
-            }
+            };
         case SET_IS_DECRYPTED:
             return {
                 ...state,
                 isDecrypted: action.isDecrypted,
-            }
+            };
         case SET_IS_FETCHING:
             return {
                 ...state,
                 isFetching: action.isFetching,
-            }
+            };
         case SET_KEY:
             return {
                 ...state,
                 key: action.key,
-            }
+            };
         case SET_FETCH_ERROR:
             return {
                 ...state,
                 fetchError: true,
-            }
+            };
         case SET_IS_FIRST_SIGN_IN:
             return {
                 ...state,
                 firstSignIn: action.isFirstSignIn,
-            }
+            };
         case TOGGLE_SIDEBAR:
             return {
                 ...state,
                 isSidebarShown: !state.isSidebarShown,
-            }
+            };
         case RESET_LAYERS:
-            return {...initialState}
+            return {...initialState};
         default:
             return state;
     }
-}
+};
 
 export const setIsSignedIn = (isSignedIn) => ({
     type: SET_IS_SIGNED_IN,
@@ -129,13 +195,21 @@ export const setIsFirstSignIn = (isFirstSignIn) => ({
     type: SET_IS_FIRST_SIGN_IN,
     isFirstSignIn,
 });
-export const setDecryptedTableEntries = (tableEntries) => ({
-    type: SET_DECRYPTED_TABLE_ENTRIES,
-    tableEntries,
-});
 export const setTableEntries = (tableEntries) => ({
     type: SET_TABLE_ENTRIES,
     tableEntries,
+});
+export const addTableEntry = (entry) => ({
+    type: ADD_TABLE_ENTRY,
+    entry,
+});
+export const updateTableEntry = (entry) => ({
+    type: UPDATE_TABLE_ENTRY,
+    entry,
+});
+export const deleteTableEntry = (id) => ({
+    type: DELETE_TABLE_ENTRY,
+    id,
 });
 export const toggleKeyModal = () => ({
     type: TOGGLE_GETTING_KEY_MODAL,
@@ -147,39 +221,34 @@ export const setDeletedTableEntries = (deletedTableEntries) => ({
     type: SET_DELETED_TABLE_ENTRIES,
     deletedTableEntries,
 });
+export const removeDeletedEntry = (id) => ({
+    type: REMOVE_DELETED_TABLE_ENTRY,
+    id,
+});
+export const restoreDeletedEntry = (entry) => ({
+    type: RESTORE_DELETED_TABLE_ENTRY,
+    entry,
+});
+export const addToDeletedEntries = (entry) => ({
+    type: ADD_TO_DELETED_ENTRIES,
+    entry,
+});
+export const setAllEntries = (tableEntries, deletedTableEntries) => ({
+    type: SET_ALL_ENTRIES,
+    tableEntries,
+    deletedTableEntries,
+});
 
 export const init = (token) => (dispatch) => {
-    server.fetchPasswords(token)
+    server.init(token)
         .then((response) => {
             dispatch(setIsFetching(false));
             if (!response.isAxiosError) {
-                dispatch(setTableEntries(response.data));
+                dispatch(setAllEntries(response.data.accounts, response.data.delAccounts));
             } else {
                 dispatch(setFetchError());
             }
         });
-}
-/*export const fetchEntries = (token) => (dispatch) => {
-    server.fetchPasswords(token)
-        .then((response) => {
-            dispatch(setIsFetching(false));
-            if (!response.isAxiosError) {
-                dispatch(setTableEntries(response.data));
-            } else {
-                dispatch(setFetchError());
-            }
-        });
-}
-export const fetchDeletedEntries = (token) => (dispatch) => {
-    server.fetchDeletedPasswords(token)
-        .then((response) => {
-            if (!response.isAxiosError) {
-                debugger
-                dispatch(setDeletedTableEntries(response.data));
-            } else {
-                dispatch(setFetchError());
-            }
-        });
-}*/
+};
 
 export default layersReducer;

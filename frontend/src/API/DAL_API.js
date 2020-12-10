@@ -61,13 +61,21 @@ const server = {
             .then(res => res)
             .catch(error => error);
     },
-    restoreEntry(id) {
-        return axios.post(`${URL}/accounts/del/${id}`)
+    restoreEntry(id, token) {
+        return axios.post(`${URL}/accounts/del/${id}`, {
+            data: {
+                token,
+            },
+        })
             .then(res => res)
             .catch(error => error);
     },
-    deleteForever(id) {
-        return axios.delete(`${URL}/accounts/del/${id}`)
+    deleteForever(id, token) {
+        return axios.delete(`${URL}/accounts/del/${id}`, {
+            data: {
+                token,
+            },
+        })
             .then(res => res)
             .catch(error => error);
     },

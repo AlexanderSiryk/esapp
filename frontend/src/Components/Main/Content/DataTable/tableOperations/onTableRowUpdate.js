@@ -2,7 +2,7 @@ import updateColumnsLookup from "./updateColumnsLookup";
 import server from "../../../../../API/DAL_API";
 import {encryptEntry} from "../../../../../API/encryptingOperations";
 
-function onTableRowUpdate(setState, key, token, validationError) {
+function onTableRowUpdate(updateEntry, setState, key, token, validationError) {
     return (newData, oldData) => {
         if (!key || key.length !== 64) throw new Error("Key is undefined");
         if (!token) throw new Error("Token is undefined");
@@ -32,6 +32,7 @@ function onTableRowUpdate(setState, key, token, validationError) {
                     if (res.isAxiosError === false) {
                         resolve();
                     } else {
+                        updateEntry(newData);
                         setState((prevState) => {
                             let columns = updateColumnsLookup(prevState, newData, oldData);
                             const data = [...prevState.data];

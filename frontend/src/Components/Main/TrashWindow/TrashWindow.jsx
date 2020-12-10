@@ -10,9 +10,12 @@ import Container from "@material-ui/core/Container";
 import CellItem from "../Content/DataTable/Components/CellItem";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import onDeleteForever from "./tableOperations/onDeleteForever";
+import onRestore from "./tableOperations/onRestore";
+import LoadingWindow from "../../Common/LoadingWindow/LoadingWindow";
 
 
-const TrashWindow = ({tableEntries}) => {
+const TrashWindow = ({tableEntries, ...props}) => {
     const classes = makeStyles(theme => ({
         container: {
             padding: theme.spacing(4),
@@ -20,13 +23,16 @@ const TrashWindow = ({tableEntries}) => {
     }))();
 
     const [snackBarOpen, setSnackBarOpen] = useState(false);
-    const [tableData, setTableData] = useState(tableEntries.map((item) => ({
+
+    const [isFetching, setIsFetching] = useState(false);
+
+    const tableData = tableEntries.map((item) => ({
         id: item.id,
         name: item.name,
         login: item.login,
         password: item.password,
         tag: item.tag,
-    })));
+    }))
 
     const columns = [
         {
@@ -65,16 +71,16 @@ const TrashWindow = ({tableEntries}) => {
         {
             icon: props => <RestoreFromTrashIcon {...props} style={{color: "#7cdc39"}}/>,
             tooltip: "Restore",
-            onClick: (event, rowData) => alert("You saved " + rowData.name),
+            onClick: onRestore.bind(null, setIsFetching, props.restoreDeletedEntry, props.userToken),
         },
         {
             icon: props => <DeleteForeverIcon {...props} style={{color: "#dc4839"}}/>,
             tooltip: "Delete Forever",
-            onClick: (event, rowData) => alert("You saved " + rowData.name),
+            onClick: onDeleteForever.bind(null, setIsFetching, props.removeDeletedEntry, props.userToken),
         },
     ];
 
-    function handleClose(event, reason) {
+    function handleSnackBarClose(event, reason) {
         if (reason === 'clickaway') return;
         setSnackBarOpen(false);
     }
@@ -97,11 +103,12 @@ const TrashWindow = ({tableEntries}) => {
             }}
         />
         <Snackbar open={snackBarOpen} autoHideDuration={1500}
-                  onClose={handleClose} TransitionComponent={SlideTransition}>
-            <Alert onClose={handleClose} severity="success">
+                  onClose={handleSnackBarClose} TransitionComponent={SlideTransition}>
+            <Alert onClose={handleSnackBarClose} severity="success">
                 Copied to clipboard!
             </Alert>
         </Snackbar>
+        {isFetching && <LoadingWindow/>}
     </Container>;
 };
 
