@@ -14,6 +14,7 @@ export const getTableEntries = state => state.layers.tableEntries;
 export const getDeletedTableEntries = state => state.layers.deletedTableEntries;
 export const getIsKeyWindowShown = state => state.layers.getKeyWindowShown;
 export const getIsSidebarShown = state => state.layers.isSidebarShown;
+export const getVisits = state => state.layers.visits;
 export const getUniqueTags = createSelector(
     getTableEntries,
     (table) => {

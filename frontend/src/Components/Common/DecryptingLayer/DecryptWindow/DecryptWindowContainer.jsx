@@ -8,7 +8,7 @@ import {
     getIsFetching,
     getTableEntries,
     getUserEmail,
-    getUserToken,
+    getUserToken, getVisits,
 } from "../../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
@@ -20,6 +20,7 @@ let mapStateToProps = (state) => ({
     getImage: getImage,
     userEmail: getUserEmail(state),
     userToken: getUserToken(state),
+    visits: getVisits(state),
 });
 
 let DecryptWindowContainer = connect(mapStateToProps, {

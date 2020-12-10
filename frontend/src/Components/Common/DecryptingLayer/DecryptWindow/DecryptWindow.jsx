@@ -69,7 +69,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
             props.setKey(key);
             const te = decryptEntries(tableEntries, key);
             const dte = decryptEntries(props.deletedTableEntries, key)
-            props.setAllEntries(te, dte);
+            props.setAllEntries(te, dte, props.visits);
             props.setIsDecrypted(true);
         } else {
             if (imageKey) {
@@ -90,7 +90,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                     setImageKey(null);
                     const te = decryptEntries(tableEntries, key);
                     const dte = decryptEntries(props.deletedTableEntries, key)
-                    props.setAllEntries(te, dte);
+                    props.setAllEntries(te, dte, props.visits);
                     props.setIsDecrypted(true);
                 });
             }
