@@ -80,8 +80,6 @@ class LogInButton extends React.Component {
         }
         if (this.state.serverDidResponse &&
             !prevState.serverDidResponse) {
-            // TODO remove logging
-            console.log(this.state.userData);
             this.props.setUserData(this.state.userData);
             this.props.setIsSignedIn(this.state.isSignedIn);
         }
