@@ -22,8 +22,8 @@ class AppController extends BaseController
 
            $accounts = $accRep->getAllAccounts($userId);
            $delAccounts = $delAccRep->getAllAccounts($userId);
-           $entrances = AddRepository::getEntrances($userId);
            $restores = AddRepository::getRestores($userId);
+           $entrances = AddRepository::getEntrances($userId);
 
             return response()->json([
                 'accounts' => $accounts,
