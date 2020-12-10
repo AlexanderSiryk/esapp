@@ -58,11 +58,24 @@ let layersReducer = (state = initialState, action) => {
                 tableEntries: uEntries,
             };
         case DELETE_TABLE_ENTRY:
-            const dEntries = state.tableEntries.filter(item => item.id !== action.entry.id);
-            return {
-                ...state,
-                tableEntries: dEntries,
-            };
+            let deletedItem;
+            const dEntries = state.tableEntries.filter(item => {
+                if (item.id === action.id) {
+                    deletedItem = item;
+                }
+
+                return item.id !== action.id;
+            });
+            return deletedItem
+                ? {
+                    ...state,
+                    tableEntries: dEntries,
+                    deletedTableEntries: [deletedItem, ...state.deletedTableEntries],
+                }
+                : {
+                    ...state,
+                    tableEntries: dEntries,
+                };
         case ADD_TO_DELETED_ENTRIES:
             return {
                 ...state,

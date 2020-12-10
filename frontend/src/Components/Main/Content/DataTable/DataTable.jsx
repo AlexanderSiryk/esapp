@@ -187,18 +187,21 @@ let DataTable = (props) => {
                 }
             ]}
             editable={{
-                onRowAdd: onTableRowAdd(setState,
+                onRowAdd: onTableRowAdd(props.addTableEntry,
+                    setState,
                     props.$key,
                     props.userToken,
                     nameError || loginError || passwordError || tagError,
                 ),
 
-                onRowUpdate: onTableRowUpdate(setState,
+                onRowUpdate: onTableRowUpdate(props.updateTableEntry,
+                    setState,
                     props.$key,
                     props.userToken,
                     nameError || loginError || passwordError || tagError,
                 ),
-                onRowDelete: onTableRowDelete(setState,
+                onRowDelete: onTableRowDelete(props.deleteTableEntry,
+                    setState,
                     props.userToken,
                 ),
             }}
