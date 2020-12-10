@@ -18,7 +18,7 @@ class AddRepository
             ->get();
 
         if(!$entrs) return [];
-        return $entrs;
+        return self::toJSON($entrs);
     }
 
 
@@ -38,8 +38,8 @@ class AddRepository
 
     private static function toJSON($array){
         $arr = [];
-        foreach ($array as $a => $b){
-            $arr[$a] = json_decode($b);
+        foreach ($array as $item){
+            $arr[] = json_decode($item->location);
         }
         return $arr;
     }
