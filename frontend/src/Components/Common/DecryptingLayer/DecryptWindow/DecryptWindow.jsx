@@ -67,8 +67,9 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
         const key = localStorage.getItem(`${props.userEmail}_key`);
         if (localStorage.getItem(`${props.userEmail}_key`) && tableEntries) {
             props.setKey(key);
-            props.setTableEntries(decryptEntries(tableEntries, key));
-            props.setDeletedTableEntries(decryptEntries(props.deletedTableEntries, key));
+            const te = decryptEntries(tableEntries, key);
+            const dte = decryptEntries(props.deletedTableEntries, key)
+            props.setAllEntries(te, dte);
             props.setIsDecrypted(true);
         } else {
             if (imageKey) {
@@ -87,7 +88,9 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                     localStorage.setItem(`${props.userEmail}_key`, key);
                     props.setKey(key);
                     setImageKey(null);
-                    props.setTableEntriesDecrypted(decryptEntries(tableEntries, key));
+                    const te = decryptEntries(tableEntries, key);
+                    const dte = decryptEntries(props.deletedTableEntries, key)
+                    props.setAllEntries(te, dte);
                     props.setIsDecrypted(true);
                 });
             }
