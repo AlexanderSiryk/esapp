@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 export default function VisitsWindow(props) {
     const classes = useStyles();
 
+    const emojiList = <><span aria-label="heart-eyes" role="img">😍</span><span aria-label="confetti" role="img">🎉</span></>
+
     return <div className={classes.container}>
         <TableContainer component={Paper}>
             <Table className={classes.table} size="small" aria-label="visits">
@@ -32,12 +34,16 @@ export default function VisitsWindow(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.visits.map((row) => (
-                        <TableRow key={row.localtime}>
-                            <TableCell align="left">{row.location}</TableCell>
-                            <TableCell align="left">{new Date(row.localtime).toLocaleString()}</TableCell>
-                        </TableRow>
-                    )).reverse()}
+                    {props.visits
+                        ? props.visits.map((row) => (
+                            <TableRow key={row.localtime}>
+                                <TableCell align="left">{row.location}</TableCell>
+                                <TableCell align="left">{new Date(row.localtime).toLocaleString()}</TableCell>
+                            </TableRow>
+                        )).reverse()
+                        : <TableRow>
+                            <TableCell align="left">This is your first visit! {emojiList}</TableCell>
+                        </TableRow>}
                 </TableBody>
             </Table>
         </TableContainer>

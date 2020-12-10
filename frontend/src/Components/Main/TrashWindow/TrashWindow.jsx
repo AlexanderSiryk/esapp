@@ -2,10 +2,8 @@ import React, {useState} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MaterialTable from "material-table";
 import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {SlideTransition, tableIcons} from "../Content/DataTable/DataTable";
-import {sortFunc} from "../Content/DataTable/DataTable";
-import {copyFunction as copyFunc} from "../Content/DataTable/DataTable";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import {copyFunction as copyFunc, SlideTransition, sortFunc, tableIcons} from "../Content/DataTable/DataTable";
 import Container from "@material-ui/core/Container";
 import CellItem from "../Content/DataTable/Components/CellItem";
 import Alert from "@material-ui/lab/Alert";
@@ -26,13 +24,15 @@ const TrashWindow = ({tableEntries, ...props}) => {
 
     const [isFetching, setIsFetching] = useState(false);
 
-    const tableData = tableEntries.map((item) => ({
-        id: item.id,
-        name: item.name,
-        login: item.login,
-        password: item.password,
-        tag: item.tag,
-    }))
+    const tableData = tableEntries
+        ? tableEntries.map((item) => ({
+            id: item.id,
+            name: item.name,
+            login: item.login,
+            password: item.password,
+            tag: item.tag,
+        }))
+        : [];
 
     const columns = [
         {
@@ -81,7 +81,7 @@ const TrashWindow = ({tableEntries, ...props}) => {
     ];
 
     function handleSnackBarClose(event, reason) {
-        if (reason === 'clickaway') return;
+        if (reason === "clickaway") return;
         setSnackBarOpen(false);
     }
 
