@@ -35,7 +35,6 @@ Route::put('accounts/{account}', 'App\AccountController@update');
 
 Route::get('accounts/del', 'App\DelAccountController@index');
 Route::post('accounts/del/{account}', 'App\DelAccountController@restore');
-Route::post('accounts/del', 'App\DelAccountController@restore');
 Route::delete('accounts/del/{account}', 'App\DelAccountController@destroy');
 
 

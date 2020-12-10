@@ -30,11 +30,11 @@ class LogController extends BaseController
     {
         try {
             $user = $this->userRepository->getUser($request->token);
-            AddRepository::setEnter($user->id);
+            AddRepository::setEnter($user->id, $request->location);
             return response(['log' => 'login']);
         } catch (\Exception $e){
             $user = $this->userRepository->regUser($request);
-            AddRepository::setEnter($user->id);
+            AddRepository::setEnter($user->id, $request->location);
             return response(['log' => 'create']);
         }
     }
