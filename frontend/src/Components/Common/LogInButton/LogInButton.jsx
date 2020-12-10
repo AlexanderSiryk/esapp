@@ -50,6 +50,7 @@ class LogInButton extends React.Component {
             onSuccess={onSuccess}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
         />
     }
 
@@ -79,6 +80,8 @@ class LogInButton extends React.Component {
         }
         if (this.state.serverDidResponse &&
             !prevState.serverDidResponse) {
+            // TODO remove logging
+            console.log(this.state.userData);
             this.props.setUserData(this.state.userData);
             this.props.setIsSignedIn(this.state.isSignedIn);
         }

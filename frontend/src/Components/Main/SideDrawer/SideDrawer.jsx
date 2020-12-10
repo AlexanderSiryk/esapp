@@ -3,6 +3,7 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import RoomIcon from '@material-ui/icons/Room';
 import ListItemText from "@material-ui/core/ListItemText";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
@@ -43,12 +44,20 @@ const NavList = ({toggleSidebar}) => {
 						<ListItemText primary="Content"/>
 					</ListItem>
 				</NavLink>
+                <NavLink to="visits" className={classes.item}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <RoomIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Visits"/>
+                    </ListItem>
+                </NavLink>
 				<NavLink to="trash" className={classes.item}>
 					<ListItem button>
 						<ListItemIcon>
 							<DeleteRoundedIcon/>
 						</ListItemIcon>
-						<ListItemText primary="TrashWindow"/>
+						<ListItemText primary="Trash"/>
 					</ListItem>
 				</NavLink>
 			</List>

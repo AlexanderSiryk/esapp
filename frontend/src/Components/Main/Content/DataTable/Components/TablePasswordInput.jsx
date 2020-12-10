@@ -38,7 +38,7 @@ const TablePasswordInput = (props) => {
         });
     }
     const handleBlur = () => {
-        const validationError = !isInputValueValid("tag", state.value);
+        const validationError = !isInputValueValid("password", state.value);
         const errorText = validationError ? ": (Incorrect entry)" : "";
         props.setValidationError(validationError);
         setState({
