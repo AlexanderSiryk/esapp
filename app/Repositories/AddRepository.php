@@ -13,12 +13,12 @@ class AddRepository
     public static function getEntrances($userId)
     {
         $entrs = DB::table('entrances')
-            ->select(['date'])
+            ->select(['location'])
             ->where('user_id', $userId)
             ->get();
 
         if(!$entrs) return [];
-        return self::toJSON($entrs);
+        return $entrs;
     }
 
 
