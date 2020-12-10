@@ -1,9 +1,9 @@
 import {connect} from "react-redux";
 import TrashWindow from "./TrashWindow";
-import {getTableEntries} from "../../../Redux/Selectors/layersSelectors";
+import {getDeletedTableEntries} from "../../../Redux/Selectors/layersSelectors";
 
 let mapStateToProps = (state) => ({
-    tableEntries: getTableEntries(state),
+    tableEntries: getDeletedTableEntries(state),
 });
 
 let TrashWindowContainer = connect(mapStateToProps, {
