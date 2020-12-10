@@ -63,9 +63,7 @@ const server = {
     },
     restoreEntry(id, token) {
         return axios.post(`${URL}/accounts/del/${id}`, {
-            data: {
-                token,
-            },
+            token,
         })
             .then(res => res)
             .catch(error => error);

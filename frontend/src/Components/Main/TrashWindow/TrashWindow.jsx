@@ -108,7 +108,7 @@ const TrashWindow = ({tableEntries, ...props}) => {
                 Copied to clipboard!
             </Alert>
         </Snackbar>
-        {isFetching && <LoadingWindow/>}
+        {isFetching && <LoadingWindow clean/>}
     </Container>;
 };
 

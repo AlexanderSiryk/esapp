@@ -82,7 +82,9 @@ let layersReducer = (state = initialState, action) => {
                 deletedTableEntries: [action.entry, ...state.deletedTableEntries],
             };
         case RESTORE_DELETED_TABLE_ENTRY:
-            let newEntries = state.deletedTableEntries.filter(entry => entry.id !== action.id);
+            let newEntries = state.deletedTableEntries.filter(entry => {
+                return entry.id !== action.entry.id;
+            });
             return {
                 ...state,
                 tableEntries: [action.entry, ...state.tableEntries],
