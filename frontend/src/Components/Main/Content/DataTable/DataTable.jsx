@@ -28,11 +28,11 @@ import Alert from "@material-ui/lab/Alert";
 import Slide from '@material-ui/core/Slide';
 import CellItem from "./Components/CellItem";
 
-function SlideTransition(props) {
+export function SlideTransition(props) {
     return <Slide {...props} direction="up"/>;
 }
 
-const tableIcons = {
+export const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
@@ -51,6 +51,19 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
+
+export function sortFunc(field) {
+    return (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
+}
+
+export function copyFunction(field) {
+    let dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = field;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+}
 
 const clsTheme = makeStyles((theme) => ({
     container: {
@@ -138,17 +151,8 @@ let DataTable = (props) => {
         data: tableData,
     });
 
-    function sortFunc(field) {
-        return (a, b) => a[field].toLowerCase() > b[field].toLowerCase() ? 1 : -1;
-    }
-
     function copyFunc(field) {
-        let dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = field;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
+        copyFunction(field);
         setSnackBarOpen(true);
     }
 

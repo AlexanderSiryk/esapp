@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
 import DecryptWindow from "./DecryptWindow";
 import {
-    fetchEntries, setDecryptedTableEntries,
-    setIsDecrypted, setKey
+    init, setDecryptedTableEntries,
+    setIsDecrypted, setKey,
 } from "../../../../Redux/layersReducer";
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {
@@ -24,7 +24,7 @@ let mapStateToProps = (state) => ({
 let DecryptWindowContainer = connect(mapStateToProps, {
     setIsDecrypted,
     setTableEntriesDecrypted: setDecryptedTableEntries,
-    fetchEntries,
+    init,
     setKey,
 })(DecryptWindow);
 

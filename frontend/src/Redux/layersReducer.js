@@ -12,9 +12,11 @@ const SET_DECRYPTED_TABLE_ENTRIES = "SET_DECRYPTED_TABLE_ENTRIES";
 const SET_TABLE_ENTRIES = "SET_TABLE_ENTRIES";
 const TOGGLE_GETTING_KEY_MODAL = "TOGGLE_GETTING_KEY_MODAL";
 const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
+const SET_DELETED_TABLE_ENTRIES = "SET_DELETED_TABLE_ENTRIES";
 
 const initialState = {
     tableEntries: null,
+    deletedTableEntries: null,
     isDecrypted: false,
     isSignedIn: false,
     firstSignIn: true,
@@ -141,8 +143,12 @@ export const toggleKeyModal = () => ({
 export const toggleSidebar = () => ({
     type: TOGGLE_SIDEBAR,
 });
+export const setDeletedTableEntries = (deletedTableEntries) => ({
+    type: SET_DELETED_TABLE_ENTRIES,
+    deletedTableEntries,
+});
 
-export const fetchEntries = (token) => (dispatch) => {
+export const init = (token) => (dispatch) => {
     server.fetchPasswords(token)
         .then((response) => {
             dispatch(setIsFetching(false));
@@ -153,5 +159,27 @@ export const fetchEntries = (token) => (dispatch) => {
             }
         });
 }
+/*export const fetchEntries = (token) => (dispatch) => {
+    server.fetchPasswords(token)
+        .then((response) => {
+            dispatch(setIsFetching(false));
+            if (!response.isAxiosError) {
+                dispatch(setTableEntries(response.data));
+            } else {
+                dispatch(setFetchError());
+            }
+        });
+}
+export const fetchDeletedEntries = (token) => (dispatch) => {
+    server.fetchDeletedPasswords(token)
+        .then((response) => {
+            if (!response.isAxiosError) {
+                debugger
+                dispatch(setDeletedTableEntries(response.data));
+            } else {
+                dispatch(setFetchError());
+            }
+        });
+}*/
 
 export default layersReducer;

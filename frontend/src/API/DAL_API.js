@@ -29,6 +29,15 @@ function getLocation() {
 }
 
 const server = {
+    init(token) {
+        return axios.get(`${URL}/init`, {
+            params: {
+                token,
+            },
+        })
+            .then(res => res)
+            .catch(error => error);
+    },
     fetchPasswords(token) {
         return axios.get(`${URL}/accounts`, {
             params: {
@@ -38,8 +47,27 @@ const server = {
             .then(res => res)
             .catch(error => error);
     },
+    fetchDeletedPasswords(token) {
+        return axios.get(`${URL}/accounts/del`, {
+            params: {
+                token,
+            },
+        })
+            .then(res => res)
+            .catch(error => error);
+    },
     postPassword(obj) {
         return axios.post(`${URL}/accounts`, obj)
+            .then(res => res)
+            .catch(error => error);
+    },
+    restoreEntry(id) {
+        return axios.post(`${URL}/accounts/del/${id}`)
+            .then(res => res)
+            .catch(error => error);
+    },
+    deleteForever(id) {
+        return axios.delete(`${URL}/accounts/del/${id}`)
             .then(res => res)
             .catch(error => error);
     },
