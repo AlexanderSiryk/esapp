@@ -37,7 +37,7 @@ export default function VisitsWindow(props) {
                             <TableCell align="left">{row.location}</TableCell>
                             <TableCell align="left">{new Date(row.localtime).toLocaleString()}</TableCell>
                         </TableRow>
-                    ))}
+                    )).reverse()}
                 </TableBody>
             </Table>
         </TableContainer>
