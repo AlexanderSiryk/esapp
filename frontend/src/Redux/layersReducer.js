@@ -21,9 +21,9 @@ const UPDATE_TABLE_ENTRY = "UPDATE_TABLE_ENTRY";
 const DELETE_TABLE_ENTRY = "DELETE_TABLE_ENTRY";
 
 const initialState = {
-    tableEntries: null,
-    deletedTableEntries: null,
-    visits: null,
+    tableEntries: [],
+    deletedTableEntries: [],
+    visits: [],
     isDecrypted: false,
     isSignedIn: false,
     firstSignIn: true,
