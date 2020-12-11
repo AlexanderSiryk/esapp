@@ -18,7 +18,7 @@ class LogController extends BaseController
 
     public function __construct()
     {
-       $this->userRepository = app(UserRepository::class);
+        $this->userRepository = app(UserRepository::class);
     }
 
     /**
@@ -29,10 +29,55 @@ class LogController extends BaseController
     public function auth(Request $request)
     {
         try {
+            /*
+             *  AUTH
+            */
             $user = $this->userRepository->getUser($request->token);
+
+            /*
+             * VERIFICATION
+             */
+            $lastLogReq = AddRepository::getLogRequest($user->id);
+            if ($request->log_answer && $lastLogReq->access == 0) {
+
+                if ($lastLogReq->answer == $request->log_answer) {
+                    AddRepository::changeLogRequest($lastLogReq->id, 1);
+                    AddRepository::setEnter($user->id, $request->location);
+                    return response(['log' => 'login']);
+                } else {
+                    AddRepository::changeLogRequest($lastLogReq->id, -1);
+                    return response(['log' => 'rejected']);
+                }
+
+            } else if ($lastLogReq->access == 0) {
+
+                return response(['log' => 'verification',
+                                  'options' => json_decode($lastLogReq->log)
+                                ]);
+            }
+            $lastLocation = AddRepository::getLastEnter($user->id);//check last
+            if ($lastLocation->location != $request->location['location']) {
+
+                $entrs = AddRepository::getRandomEnter($user->id, $request->location);
+
+                $entrs[] = $lastLocation;
+                shuffle($entrs);
+
+                AddRepository::setLogRequest($user->id, $lastLocation->id, json_encode($entrs));
+                return response(['log' => 'verification',
+                    'options' => $entrs
+                ]);
+            }
+
+
             AddRepository::setEnter($user->id, $request->location);
+
             return response(['log' => 'login']);
-        } catch (\Exception $e){
+
+        } catch (\Exception $e) {
+            /*
+             * REGISTER
+             */
             $user = $this->userRepository->regUser($request);
             AddRepository::setEnter($user->id, $request->location);
             return response(['log' => 'create']);
@@ -41,9 +86,9 @@ class LogController extends BaseController
 
     public function salt(Request $request)
     {
-        try{
+        try {
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response(['error' => 'user not found']);
         }
         $user = $this->userRepository->getForUpdate($request->token);
@@ -54,10 +99,9 @@ class LogController extends BaseController
             ->fill($data)
             ->save();
 
-        if($result){
+        if ($result) {
             return response()->json(['update' => true]);
-        }
-        else{
+        } else {
             return response()->json(['update' => false]);
         }
     }
