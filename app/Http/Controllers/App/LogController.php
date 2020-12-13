@@ -30,48 +30,10 @@ class LogController extends BaseController
     {
         try {
             /*
-             *  AUTH
+            * LOGIN
             */
             $user = $this->userRepository->getUser($request->token);
-
-            /*
-             * VERIFICATION
-             */
-            $lastLogReq = AddRepository::getLogRequest($user->id);
-            if ($request->log_answer && $lastLogReq->access == 0) {
-
-                if ($lastLogReq->answer == $request->log_answer) {
-                    AddRepository::changeLogRequest($lastLogReq->id, 1);
-                    AddRepository::setEnter($user->id, $request->location);
-                    return response(['log' => 'login']);
-                } else {
-                    AddRepository::changeLogRequest($lastLogReq->id, -1);
-                    return response(['log' => 'rejected']);
-                }
-
-            } else if ($lastLogReq->access == 0) {
-
-                return response(['log' => 'verification',
-                                  'options' => json_decode($lastLogReq->log)
-                                ]);
-            }
-            $lastLocation = AddRepository::getLastEnter($user->id);//check last
-            if ($lastLocation->location != $request->location['location']) {
-
-                $entrs = AddRepository::getRandomEnter($user->id, $request->location);
-
-                $entrs[] = $lastLocation;
-                shuffle($entrs);
-
-                AddRepository::setLogRequest($user->id, $lastLocation->id, json_encode($entrs));
-                return response(['log' => 'verification',
-                    'options' => $entrs
-                ]);
-            }
-
-
-            AddRepository::setEnter($user->id, $request->location);
-
+            AddRepository::setLogRequest($user->id, $request->location);
             return response(['log' => 'login']);
 
         } catch (\Exception $e) {
@@ -83,6 +45,33 @@ class LogController extends BaseController
             return response(['log' => 'create']);
         }
     }
+
+
+    public function checkLocation(Request $request)
+    {
+        try {
+            /*
+            * LOCATION VERIFICATION
+            */
+            $deviation = 0.03;
+            $user = $this->userRepository->getUser($request->token);
+            $lastLogReq = AddRepository::getLogRequest($user->id);
+            $locating = json_decode($lastLogReq->current_location);
+
+            if (abs($locating->lat - $request->lat) <= $deviation &&
+                abs($locating->lng - $request->lng) <= $deviation) {
+
+                AddRepository::changeLogRequest($user->id, 1);
+                AddRepository::setEnter($user->id, $locating);
+                return response(['success' => 'true']);
+            }
+            throw  new \Exception('undetected');
+        } catch (\Exception $e) {
+            AddRepository::changeLogRequest($user->id, -1);
+            return response(['success' => 'false']);
+        }
+    }
+
 
     public function salt(Request $request)
     {
