@@ -15,15 +15,12 @@ function getLocation() {
                     resolve({
                         localtime: date.toISOString(),
                         location: `${components.continent}, ${components.country}, ${components.city}`,
+                        lat,
+                        lng,
                     });
                 })
         }, () => {
-            const date = new Date();
-            resolve({
-                timezone: "unknown",
-                localtime: date.toISOString() || "unknown",
-                location: "unknown",
-            });
+            alert("You have to enable location")
         })
     });
 }
@@ -111,7 +108,15 @@ const server = {
             .then(res => res)
             .catch(error => error);
     },
-
+    checkLastLocation(token, lat, lng) {
+        return axios.post(`${URL}/log/checkLocation`, {
+            token,
+            lat,
+            lng,
+        })
+            .then(res => res)
+            .catch(error => error);
+    }
 }
 
 export default server;

@@ -1,11 +1,11 @@
 import React from "react";
 import {Redirect, Route} from "react-router-dom";
-import DecryptingLayerContainer from "../DecryptingLayer/DecryptingLayerContainer";
 import LoginPage from "./LoginPage/LoginPage";
+import MapLocationLayerContainer from "../MapLocationLayer/MapLocationLayerContainer";
 
 let LoggedInCheckLayer = ({isSignedIn}) => {
     return isSignedIn
-        ? <DecryptingLayerContainer/>
+        ? <MapLocationLayerContainer/>
         : <>
             <Route
                 path="/login"
