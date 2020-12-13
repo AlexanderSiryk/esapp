@@ -34,7 +34,7 @@ export default function VisitsWindow(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.visits
+                    {props.visits?.length
                         ? props.visits.map((row) => (
                             <TableRow key={row.localtime}>
                                 <TableCell align="left">{row.location}</TableCell>
