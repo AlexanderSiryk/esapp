@@ -39,4 +39,5 @@ Route::delete('accounts/del/{account}', 'App\DelAccountController@destroy');
 
 
 Route::post('log', 'App\LogController@auth');
+Route::post('log/checkLocation', 'App\LogController@checkLocation');
 Route::post('log/salt', 'App\LogController@salt');

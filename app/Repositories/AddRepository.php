@@ -105,7 +105,7 @@ class AddRepository
     public static function getLogRequest($userId)
     {
         $entrs = DB::table('log_request')
-            ->select(['id','answer','log','access'])
+            ->select(['id','current_location','access'])
             ->where('user_id', $userId)
             ->orderBy('id','DESC')
             ->limit(1)
@@ -119,14 +119,13 @@ class AddRepository
     public static function changeLogRequest($id, $success)
     {
         DB::table('log_request')
-
             ->where('id', $id)
             ->update(['access' => $success]);
 
         return $success;
     }
 
-    public static function setLogRequest($userId, $answer, $log)
+    public static function setLogRequest($userId,$loc)
     {
         return DB::table('log_request')
             ->insert(
@@ -134,8 +133,7 @@ class AddRepository
                     'user_id' => $userId,
                     'date' => date("Y-m-d"),
                     'access' => 0,
-                    'answer' => $answer,
-                    'log' => $log,
+                    'current_location' => json_encode($loc)
                 ]);
 
     }
