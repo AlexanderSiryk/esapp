@@ -63,12 +63,12 @@ class LogController extends BaseController
 
                 AddRepository::changeLogRequest($user->id, 1);
                 AddRepository::setEnter($user->id, $locating);
-                return response(['success' => 'true']);
+                return response(['success' => true]);
             }
             throw  new \Exception('undetected');
         } catch (\Exception $e) {
             AddRepository::changeLogRequest($user->id, -1);
-            return response(['success' => 'false']);
+            return response(['success' => false]);
         }
     }
 
