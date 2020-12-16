@@ -4,7 +4,7 @@ import {init, setAllEntries, setDeletedTableEntries, setKey, setIsDecrypted} fro
 import {calcKey, getImage} from "../../../../API/encryptingOperations";
 import {
     getDeletedTableEntries,
-    getFetchError,
+    getFetchError, getIsDecrypted,
     getIsFetching,
     getTableEntries,
     getUserEmail,
@@ -21,6 +21,7 @@ let mapStateToProps = (state) => ({
     userEmail: getUserEmail(state),
     userToken: getUserToken(state),
     visits: getVisits(state),
+    isDecrypted: getIsDecrypted(state),
 });
 
 let DecryptWindowContainer = connect(mapStateToProps, {

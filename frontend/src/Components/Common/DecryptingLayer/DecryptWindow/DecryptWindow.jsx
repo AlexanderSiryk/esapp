@@ -6,6 +6,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import Slide from "@material-ui/core/Slide";
+import {Redirect} from "react-router-dom";
+import Main from "../../../Main/Main";
 
 function SlideTransition(props) {
     return <Slide {...props} direction="up"/>;
@@ -36,8 +38,8 @@ const useStyles = (canvW, canvH) => makeStyles(() => ({
         alignItems: "center",
         justifyContent: "center",
         cursor: "pointer",
-    }
-}))
+    },
+}));
 
 let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, ...props}) => {
     if (isFetching) {
@@ -60,15 +62,15 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
         reader.readAsDataURL(file);
         reader.onload = function () {
             setImageKey(this.result);
-        }
-    }
+        };
+    };
 
     useEffect(() => {
         const key = localStorage.getItem(`${props.userEmail}_key`);
         if (localStorage.getItem(`${props.userEmail}_key`) && tableEntries) {
             props.setKey(key);
             const te = decryptEntries(tableEntries, key);
-            const dte = decryptEntries(props.deletedTableEntries, key)
+            const dte = decryptEntries(props.deletedTableEntries, key);
             props.setAllEntries(te, dte, props.visits);
             props.setIsDecrypted(true);
         } else {
@@ -81,7 +83,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                     }
                     canvas.current.width = img.width;
                     canvas.current.height = img.height;
-                    const ctx = canvas.current.getContext('2d');
+                    const ctx = canvas.current.getContext("2d");
                     ctx.drawImage(img, 0, 0);
                     let mgData = ctx.getImageData(0, 0, img.width, img.height);
                     const key = calcKey(mgData.data);
@@ -89,41 +91,51 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                     props.setKey(key);
                     setImageKey(null);
                     const te = decryptEntries(tableEntries, key);
-                    const dte = decryptEntries(props.deletedTableEntries, key)
+                    const dte = decryptEntries(props.deletedTableEntries, key);
                     props.setAllEntries(te, dte, props.visits);
                     props.setIsDecrypted(true);
                 });
             }
         }
-    }, [tableEntries, imageKey, calcKey, getImage, props, fetchError]);
+    }, []);
 
     const onInputChange = (e) => {
         if (e.target?.files.length) setImageFromFile(e.target.files[0]);
-    }
+    };
     const clearDefaultBehaviour = (e) => {
         e.preventDefault();
         e.stopPropagation();
-    }
+    };
     const onFileEnter = (e) => {
         clearDefaultBehaviour(e);
         setFileDropping(true);
-    }
+    };
     const onFileDragOver = (e) => {
         clearDefaultBehaviour(e);
-    }
+    };
     const onFileDragLeave = () => {
         setFileDropping(false);
-    }
+    };
     const onFileDrop = (e) => {
         clearDefaultBehaviour(e);
         setFileDropping(false);
         if (e.dataTransfer?.files.length) setImageFromFile(e.dataTransfer.files[0]);
-    }
+    };
 
     const [snackBarOpen, setSnackBarOpen] = useState(true);
     const closeSnackbar = (event, reason) => {
-        if (reason === 'clickaway') return;
+        if (reason === "clickaway") return;
         setSnackBarOpen(false);
+    };
+
+    if (props.isDecrypted) {
+        return <>
+            <Main/>
+            <Redirect
+                to={{
+                    pathname: "/content",
+                }}
+            /></>;
     }
 
     return (
@@ -162,6 +174,6 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                 </Snackbar>
             </>
     );
-}
+};
 
 export default DecryptWindow;

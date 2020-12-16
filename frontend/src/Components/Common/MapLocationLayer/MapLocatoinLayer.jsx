@@ -59,19 +59,18 @@ const MapLocationLayer = ({userToken, ...props}) => {
                 </Button>
             </div>}
         </>}
-        {serverResponse && serverResponse.success === true
-            ? <DecryptWindowContainer/>
-            : <div style={{
-                color: "crimson",
-                fontSize: "24px",
-                width: "100vw",
-                height: "100vh",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                Oops, looks like you've entered wrong location
-            </div>}
+        {serverResponse && serverResponse.success === true && <DecryptWindowContainer/>}
+        {serverResponse && serverResponse.success === false && <div style={{
+            color: "crimson",
+            fontSize: "24px",
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+        }}>
+            Oops, looks like you've entered wrong location
+        </div>}
         {isLoading && <LoadingWindow/>}
     </>;
 };
