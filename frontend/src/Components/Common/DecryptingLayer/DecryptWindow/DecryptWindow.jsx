@@ -97,7 +97,7 @@ let DecryptWindow = ({getImage, calcKey, tableEntries, isFetching, fetchError, .
                 });
             }
         }
-    }, []);
+    }, [imageKey]);
 
     const onInputChange = (e) => {
         if (e.target?.files.length) setImageFromFile(e.target.files[0]);
