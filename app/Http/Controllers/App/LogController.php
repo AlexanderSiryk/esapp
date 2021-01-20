@@ -5,9 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\BaseController;
 use App\Repositories\AddRepository;
 use App\Repositories\UserRepository;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class LogController extends BaseController
 {
@@ -29,17 +27,13 @@ class LogController extends BaseController
     public function auth(Request $request)
     {
         try {
-            /*
-            * LOGIN
-            */
+            //LOGIN
             $user = $this->userRepository->getUser($request->token);
             AddRepository::setLogRequest($user->id, $request->location);
             return response(['log' => 'login']);
 
         } catch (\Exception $e) {
-            /*
-             * REGISTER
-             */
+            //REGISTER
             $user = $this->userRepository->regUser($request);
             AddRepository::setEnter($user->id, $request->location);
             return response(['log' => 'create']);
@@ -50,9 +44,7 @@ class LogController extends BaseController
     public function checkLocation(Request $request)
     {
         try {
-            /*
-            * LOCATION VERIFICATION
-            */
+            //LOCATION VERIFICATION
             $deviation = 0.03;
             $user = $this->userRepository->getUser($request->token);
             $lastLogReq = AddRepository::getLogRequest($user->id);
@@ -63,37 +55,34 @@ class LogController extends BaseController
 
                 AddRepository::changeLogRequest($user->id, 1);
                 AddRepository::setEnter($user->id, $locating);
-                return response(['success' => true]);
+                return response()->json(['success' => true], 200);
             }
             throw  new \Exception('undetected');
         } catch (\Exception $e) {
             AddRepository::changeLogRequest($user->id, -1);
-            return response(['success' => false]);
+            return response()->json(['success' => false], 400);
         }
     }
 
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function salt(Request $request)
     {
         try {
+            $user = $this->userRepository->getForUpdate($request->token);
 
+            $data = $request->all();
+            $user
+                ->fill($data)
+                ->save();
+            return response()->json(['update' => true], 200);
         } catch (\Exception $e) {
-            return response(['error' => 'user not found']);
-        }
-        $user = $this->userRepository->getForUpdate($request->token);
-
-        $data = $request->all();
-
-        $result = $user
-            ->fill($data)
-            ->save();
-
-        if ($result) {
-            return response()->json(['update' => true]);
-        } else {
-            return response()->json(['update' => false]);
+            return response()->json(['update' => false], 400);
         }
     }
-
 
 }
