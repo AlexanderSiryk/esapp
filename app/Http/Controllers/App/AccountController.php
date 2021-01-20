@@ -25,19 +25,20 @@ class AccountController extends BaseController
         $this->userRepository = app(UserRepository::class);
     }
 
+
     /**
      * Display a list of users accounts.
      *
-     * @return \Illuminate\Http\Response
+     * @return\Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         try {
             $userId = $this->userRepository->getIdByToken($request->token);
             $accounts = $this->accountRepository->getAllAccounts($userId);
-            return response()->json($accounts->toArray());
+            return response()->json($accounts->toArray(),200);
         } catch (\Exception $e) {
-            return response()->json([]);
+            return response()->json([],404);
         }
     }
 
@@ -46,36 +47,36 @@ class AccountController extends BaseController
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return
+     *
+     * @return\Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         try {
             $userId = $this->userRepository->getIdByToken($request->token);
             $result = $this->accountRepository->updateAccount($request->all(),$userId, $id);
-
-            return ['update' => $result];
+            return response()->json(['update' => $result], 200);
         } catch (\Exception $e) {
-            return ['Error' => $e->getMessage()];
+            return response()->json(['Error' => $e->getMessage()],400);
         }
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param\Illuminate\Http\Request $request
+     *
+     * @return\Illuminate\Http\Response
      */
-
-
     public function store(Request $request)
     {
         try {
             $userId = $this->userRepository->getIdByToken($request->token);
             $account = $this->accountRepository->createAccount($request->all(), $userId);
-            return response()->json(['id' => $account->id]);
+            return response()->json(['id' => $account->id],200);
         } catch (\Exception $e) {
-            return ['Error' => $e->getMessage()];
+            return response()->json(['Error' => $e->getMessage()],400);
         }
     }
 
@@ -98,9 +99,9 @@ class AccountController extends BaseController
             $remove = $delAccRep->setDelAccount($account);
             if ($remove) $account = $account->delete();
 
-            return response()->json(['delete' => 'The record moved to trash']);
+            return response()->json(['delete' => true],200);
         } catch (\Exception $e) {
-            return response()->json(['Error: ' => $e->getMessage()]);
+            return response()->json(['Error: ' => $e->getMessage()],400);
         }
     }
 

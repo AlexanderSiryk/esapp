@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class AppController extends BaseController
 {
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
    public function init(Request $request)
    {
        try {
@@ -30,9 +36,9 @@ class AppController extends BaseController
                 'delAccounts' => $delAccounts,
                 'entrances' => $entrances,
                 'restores' => $restores,
-            ]);
+            ],200);
        } catch (\Exception $e) {
-           return response()->json(['Error: ' => $e->getMessage()]);
+           return response()->json(['Error: ' => $e->getMessage()],400);
        }
 
    }

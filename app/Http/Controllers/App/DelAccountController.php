@@ -14,6 +14,7 @@ class DelAccountController extends BaseController
      * @var DelAccountRepository
      */
     public $accountRepository;
+
     /**
      * @var UserRepository
      */
@@ -25,19 +26,21 @@ class DelAccountController extends BaseController
         $this->userRepository = app(UserRepository::class);
     }
 
+
     /**
      * Display a list of users accounts.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
         try {
             $userId = $this->userRepository->getIdByToken($request->token);
             $accounts = $this->accountRepository->getAllAccounts($userId);
-            return response()->json($accounts->toArray());
+
+            return response()->json($accounts->toArray(),200);
         } catch (\Exception $e) {
-            return response()->json(['Error: ' => $e->getMessage()]);
+            return response()->json(['Error: ' => $e->getMessage()],400);
         }
     }
 
@@ -45,7 +48,7 @@ class DelAccountController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function restore(Request $request,$account)
@@ -59,9 +62,9 @@ class DelAccountController extends BaseController
             $remove = $accRep->setToAccount($delAccount);
             if($remove) $delAccount->delete();
 
-            return response()->json(['id' => $delAccount->id]);
+            return response()->json(['id' => $delAccount->id],200);
         } catch (\Exception $e) {
-            return ['Error' => $e->getMessage()];
+            return response()->json(['Error' => $e->getMessage()],400);
         }
     }
 
@@ -78,11 +81,11 @@ class DelAccountController extends BaseController
         try {
             $userId = $this->userRepository->getIdByToken($request->token);
             $account = $this->accountRepository->getForDelete($account, $userId);
-            $account = $account->delete();
+            $account->delete();
 
-            return response()->json(['delete' => $account]);
+            return response()->json(['delete' => true],200);
         } catch (\Exception $e) {
-            return response()->json(['Error: ' => $e->getMessage()]);
+            return response()->json(['Error: ' => $e->getMessage()],400);
         }
     }
 }
