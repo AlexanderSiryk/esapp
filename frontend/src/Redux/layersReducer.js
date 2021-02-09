@@ -252,6 +252,7 @@ export const init = (token) => (dispatch) => {
             } else {
                 dispatch(setFetchError());
             }
+
             dispatch(setIsFetching(false));
         });
 };
