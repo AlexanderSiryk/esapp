@@ -21,8 +21,8 @@ const UPDATE_TABLE_ENTRY = "UPDATE_TABLE_ENTRY";
 const DELETE_TABLE_ENTRY = "DELETE_TABLE_ENTRY";
 
 const initialState = {
-    tableEntries: [],
-    deletedTableEntries: [],
+    tableEntries: null,
+    deletedTableEntries: null,
     visits: [],
     isDecrypted: false,
     isSignedIn: false,
@@ -247,12 +247,12 @@ export const setAllEntries = (tableEntries, deletedTableEntries, visits) => ({
 export const init = (token) => (dispatch) => {
     server.init(token)
         .then((response) => {
-            dispatch(setIsFetching(false));
             if (!response.isAxiosError) {
                 dispatch(setAllEntries(response.data.accounts, response.data.delAccounts, response.data.entrances));
             } else {
                 dispatch(setFetchError());
             }
+            dispatch(setIsFetching(false));
         });
 };
 
