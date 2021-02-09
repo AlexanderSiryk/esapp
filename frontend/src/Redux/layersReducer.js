@@ -67,11 +67,12 @@ let layersReducer = (state = initialState, action) => {
 
                 return item.id !== action.id;
             });
+            const oldDel = state.deletedTableEntries || [];
             return deletedItem
                 ? {
                     ...state,
                     tableEntries: dEntries,
-                    deletedTableEntries: [deletedItem, ...state.deletedTableEntries],
+                    deletedTableEntries: [deletedItem, ...oldDel],
                 }
                 : {
                     ...state,
